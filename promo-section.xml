@@ -1,0 +1,93 @@
+<section class="promo-banners-section oe_structure" style="           background-color: var(--clr-bg, #f4f7fb);           padding: 2rem 1rem 4rem;           font-family: 'Tajawal', sans-serif;           direction: rtl;         ">
+        
+            
+    <div class="pb-grid">
+  
+      
+      <a href="/shop?sale=1" class="pb-banner pb-hero">
+  
+        
+        <div class="pb-img-wrap">
+          <img class="pb-img" src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=900&amp;h=600&amp;fit=crop" alt="عروض موسم الصيف" loading="lazy"/>
+        </div>
+  
+        <div class="pb-overlay"/>
+  
+        
+        <div class="pb-discount-badge">
+          <span class="pb-pct">50%</span>
+          <span class="pb-off">خصم</span>
+        </div>
+  
+        <div class="pb-content">
+          <div class="pb-label pb-label-accent">🔥 عرض محدود</div>
+  
+          <h2 class="pb-title">تخفيضات موسم<br/>الصيف الكبرى</h2>
+          <p class="pb-subtitle">خصومات حتى ٥٠٪ على آلاف المنتجات المختارة — لا تفوّت الفرصة</p>
+  
+          
+          <div class="pb-countdown" id="pbCountdown">
+            <div class="pb-countdown-item">
+              <span class="pb-num" id="pbDays">03</span>
+              <span class="pb-unit">يوم</span>
+            </div>
+            <span class="pb-countdown-sep">:</span>
+            <div class="pb-countdown-item">
+              <span class="pb-num" id="pbHours">14</span>
+              <span class="pb-unit">ساعة</span>
+            </div>
+            <span class="pb-countdown-sep">:</span>
+            <div class="pb-countdown-item">
+              <span class="pb-num" id="pbMins">26</span>
+              <span class="pb-unit">دقيقة</span>
+            </div>
+            <span class="pb-countdown-sep">:</span>
+            <div class="pb-countdown-item">
+              <span class="pb-num" id="pbSecs">48</span>
+              <span class="pb-unit">ثانية</span>
+            </div>
+          </div>
+  
+          <span class="pb-cta">
+            تسوق الآن
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+  
+      
+      <a href="/shop?tag=new" class="pb-banner pb-side">
+        <div class="pb-img-wrap">
+          <img class="pb-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&amp;h=320&amp;fit=crop" alt="وصل حديثاً" loading="lazy"/>
+        </div>
+        <div class="pb-overlay"/>
+        <div class="pb-content">
+          <div class="pb-label pb-label-green">✦ جديد</div>
+          <h3 class="pb-title">أحدث الوافدات</h3>
+          <p class="pb-subtitle">اكتشف ما وصل هذا الأسبوع</p>
+          <span class="pb-cta">
+            اكتشف
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+  
+      
+      <a href="/shop?tag=featured" class="pb-banner pb-side">
+        <div class="pb-img-wrap">
+          <img class="pb-img" src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=500&amp;h=320&amp;fit=crop" alt="اخترنا لكم" loading="lazy"/>
+        </div>
+        <div class="pb-overlay"/>
+        <div class="pb-content">
+          <div class="pb-label">⭐ اختيارنا</div>
+          <h3 class="pb-title">اخترنا لكم</h3>
+          <p class="pb-subtitle">منتقاة بعناية من فريق الخبراء</p>
+          <span class="pb-cta">
+            تصفّح
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+  
+    </div>
+    </section>

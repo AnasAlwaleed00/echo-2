@@ -1,0 +1,810 @@
+<t name="Partner Coupons Page" t-name="partner_website_registration.portal_partner_coupons_page">
+    <t t-call="portal.portal_layout">
+
+        <t t-set="head">
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+            <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+            <style>
+                .eop, .eop *, .eop *::before, .eop *::after {
+                    box-sizing: border-box;
+                    font-family: "Cairo", sans-serif;
+                }
+
+                .o_portal_wrap.eop {
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    max-width: none !important;
+                    background: #f7f5f0 !important;
+                    direction: rtl;
+                }
+
+                .eop h1, .eop h2, .eop h3, .eop p, .eop label {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .eop a { text-decoration: none; color: inherit; }
+
+                .eop {
+                    --gold: #C9982A;
+                    --gold-dark: #A87B1E;
+                    --gold-light: rgba(201, 152, 42, 0.14);
+                    --navy: #0D1B2E;
+                    --bg: #F7F5F0;
+                    --card: #FFFFFF;
+                    --border: #E8E2D9;
+                    --text: #1A1A2E;
+                    --muted: #8A8578;
+                    --green: #16a34a;
+                    --green-bg: #f0fdf4;
+                    --red: #dc2626;
+                    --red-bg: #fef2f2;
+                    --amber: #b45309;
+                    --amber-bg: #fffbeb;
+                    --grey: #6b7280;
+                    --grey-bg: #f3f4f6;
+                }
+
+                .eop-shell {
+                    max-width: 920px;
+                    margin: 0 auto;
+                    padding: 24px 20px 56px;
+                }
+
+                .eop-back {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    font-size: 13px;
+                    font-weight: 600;
+                    color: var(--muted);
+                    margin-bottom: 20px;
+                    padding: 6px 0;
+                    transition: color 0.15s;
+                }
+
+                .eop-back:hover { color: var(--gold-dark); }
+
+                .eop-hero {
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: 14px;
+                    padding: 24px 28px 26px;
+                    margin-bottom: 20px;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .eop-hero::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 4px;
+                    height: 100%;
+                    background: linear-gradient(180deg, #FDE021, var(--gold));
+                }
+
+                .eop-hero-top {
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                    gap: 16px;
+                }
+
+                .eop-hero h1 {
+                    font-size: 20px;
+                    font-weight: 800;
+                    color: var(--navy);
+                    line-height: 1.3;
+                }
+
+                .eop-hero p {
+                    font-size: 13px;
+                    color: var(--muted);
+                    margin-top: 8px !important;
+                    line-height: 1.7;
+                }
+
+                .eop-count {
+                    flex-shrink: 0;
+                    background: var(--gold-light);
+                    color: var(--gold-dark);
+                    font-size: 12px;
+                    font-weight: 700;
+                    padding: 8px 16px;
+                    border-radius: 30px;
+                    border: 1px solid rgba(201, 152, 42, 0.25);
+                    white-space: nowrap;
+                }
+
+                /* Summary pills */
+                .eop-summary {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    margin-bottom: 20px;
+                }
+
+                .eop-pill {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    font-size: 12px;
+                    font-weight: 700;
+                    padding: 8px 14px;
+                    border-radius: 20px;
+                    border: 1px solid var(--border);
+                    background: var(--card);
+                    color: var(--muted);
+                }
+
+                .eop-pill-dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    flex-shrink: 0;
+                }
+
+                .eop-pill.is-active .eop-pill-dot { background: var(--green); }
+                .eop-pill.is-used .eop-pill-dot { background: var(--amber); }
+                .eop-pill.is-expired .eop-pill-dot { background: var(--red); }
+
+                /* Coupon list */
+                .eop-coupon-list {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+                }
+
+                .eop-coupon {
+                    display: flex;
+                    align-items: stretch;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: 14px;
+                    overflow: hidden;
+                    transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+                }
+
+                .eop-coupon:hover:not(.is-expired):not(.is-used) {
+                    border-color: rgba(201, 152, 42, 0.45);
+                    box-shadow: 0 4px 18px rgba(13, 27, 46, 0.08);
+                    transform: translateY(-1px);
+                }
+
+                .eop-coupon.is-expired,
+                .eop-coupon.is-used {
+                    opacity: 0.82;
+                }
+
+                .eop-coupon-stripe {
+                    width: 4px;
+                    flex-shrink: 0;
+                }
+
+                .eop-coupon.is-active .eop-coupon-stripe { background: var(--green); }
+                .eop-coupon.is-warning .eop-coupon-stripe { background: var(--amber); }
+                .eop-coupon.is-expired .eop-coupon-stripe { background: var(--red); }
+                .eop-coupon.is-used .eop-coupon-stripe { background: var(--grey); }
+
+                .eop-coupon-body {
+                    flex: 1;
+                    min-width: 0;
+                    padding: 18px 20px;
+                }
+
+                .eop-coupon-top {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    margin-bottom: 12px;
+                }
+
+                .eop-coupon-code-ticket {
+                    position: relative;
+                    background: linear-gradient(135deg, var(--gold-light) 0%, rgba(253, 224, 33, 0.06) 100%);
+                    border: 2px dashed rgba(201, 152, 42, 0.4);
+                    border-radius: 12px;
+                    padding: 18px 28px 16px;
+                    text-align: center;
+                    margin-bottom: 16px;
+                    overflow: hidden;
+                }
+
+                .eop-coupon-code-ticket::before,
+                .eop-coupon-code-ticket::after {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 16px;
+                    height: 16px;
+                    background: var(--card);
+                    border-radius: 50%;
+                    box-shadow: inset 0 0 0 2px rgba(201, 152, 42, 0.35);
+                }
+
+                .eop-coupon-code-ticket::before { right: -9px; }
+                .eop-coupon-code-ticket::after { left: -9px; }
+
+                .eop-coupon.is-expired .eop-coupon-code-ticket,
+                .eop-coupon.is-used .eop-coupon-code-ticket {
+                    background: var(--grey-bg);
+                    border-color: rgba(107, 114, 128, 0.3);
+                }
+
+                .eop-coupon.is-expired .eop-coupon-code-ticket::before,
+                .eop-coupon.is-expired .eop-coupon-code-ticket::after,
+                .eop-coupon.is-used .eop-coupon-code-ticket::before,
+                .eop-coupon.is-used .eop-coupon-code-ticket::after {
+                    box-shadow: inset 0 0 0 2px rgba(107, 114, 128, 0.25);
+                }
+
+                .eop-coupon-label {
+                    display: block;
+                    font-size: 10px;
+                    font-weight: 700;
+                    color: var(--muted);
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                    margin-bottom: 8px;
+                }
+
+                .eop-coupon-code {
+                    font-size: 22px;
+                    font-weight: 800;
+                    color: var(--gold-dark);
+                    letter-spacing: 0.14em;
+                    word-break: break-all;
+                    line-height: 1.35;
+                    font-family: "Cascadia Code", "SF Mono", "Consolas", monospace;
+                }
+
+                .eop-coupon.is-expired .eop-coupon-code,
+                .eop-coupon.is-used .eop-coupon-code {
+                    color: var(--grey);
+                    letter-spacing: 0.08em;
+                }
+
+                .eop-badge {
+                    flex-shrink: 0;
+                    font-size: 11px;
+                    font-weight: 700;
+                    padding: 5px 12px;
+                    border-radius: 20px;
+                    white-space: nowrap;
+                }
+
+                .eop-badge-active { background: var(--green-bg); color: var(--green); }
+                .eop-badge-warning { background: var(--amber-bg); color: var(--amber); }
+                .eop-badge-used { background: var(--amber-bg); color: var(--amber); }
+                .eop-badge-expired { background: var(--red-bg); color: var(--red); }
+
+                .eop-coupon-mid {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 14px;
+                    margin-bottom: 14px;
+                }
+
+                .eop-discount {
+                    display: flex;
+                    align-items: baseline;
+                    gap: 4px;
+                }
+
+                .eop-discount-value {
+                    font-size: 28px;
+                    font-weight: 800;
+                    color: var(--gold-dark);
+                    line-height: 1;
+                }
+
+                .eop-discount-unit {
+                    font-size: 14px;
+                    font-weight: 700;
+                    color: var(--gold);
+                }
+
+                .eop-coupon.is-expired .eop-discount-value,
+                .eop-coupon.is-used .eop-discount-value {
+                    color: var(--grey);
+                }
+
+                .eop-coupon-meta {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    font-size: 12px;
+                    color: var(--muted);
+                    font-weight: 600;
+                }
+
+                .eop-coupon-meta svg {
+                    flex-shrink: 0;
+                    stroke: var(--gold);
+                }
+
+                .eop-countdown-slot {
+                    min-height: 44px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+                    margin-bottom: 14px;
+                }
+
+                .eop-countdown {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
+                    font-size: 12px;
+                    font-weight: 700;
+                    padding: 8px 14px;
+                    border-radius: 10px;
+                    background: var(--green-bg);
+                    color: var(--green);
+                    border: 1px solid rgba(22, 163, 74, 0.15);
+                    text-align: center;
+                }
+
+                .eop-countdown.is-warning {
+                    background: var(--amber-bg);
+                    color: var(--amber);
+                    border-color: rgba(180, 83, 9, 0.15);
+                }
+
+                .eop-countdown.is-expired {
+                    background: var(--red-bg);
+                    color: var(--red);
+                    border-color: rgba(220, 38, 38, 0.15);
+                }
+
+                .eop-countdown-timer {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                    padding: 10px 12px;
+                    border-radius: 10px;
+                    background: var(--green-bg);
+                    border: 1px solid rgba(22, 163, 74, 0.15);
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+
+                .eop-countdown-timer.is-warning {
+                    background: var(--amber-bg);
+                    border-color: rgba(180, 83, 9, 0.15);
+                }
+
+                .eop-countdown-timer.is-expired {
+                    background: var(--red-bg);
+                    border-color: rgba(220, 38, 38, 0.15);
+                }
+
+                .eop-countdown-part {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    min-width: 40px;
+                }
+
+                .eop-countdown-value {
+                    font-size: 15px;
+                    font-weight: 800;
+                    color: var(--navy);
+                    line-height: 1;
+                }
+
+                .eop-countdown-timer.is-warning .eop-countdown-value { color: var(--amber); }
+                .eop-countdown-timer.is-expired .eop-countdown-value { color: var(--red); }
+
+                .eop-countdown-label {
+                    font-size: 10px;
+                    font-weight: 600;
+                    color: var(--muted);
+                    margin-top: 2px;
+                }
+
+                .eop-coupon-actions {
+                    display: flex;
+                    gap: 10px;
+                    padding-top: 4px;
+                }
+
+                .eop-copy-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                    flex: 1;
+                    padding: 11px 18px;
+                    border: 1px solid var(--border);
+                    border-radius: 10px;
+                    background: var(--bg);
+                    color: var(--navy);
+                    font-size: 13px;
+                    font-weight: 700;
+                    cursor: pointer;
+                    transition: all 0.15s;
+                    font-family: "Cairo", sans-serif;
+                }
+
+                .eop-copy-btn:hover:not(:disabled) {
+                    border-color: var(--gold);
+                    background: var(--gold-light);
+                    color: var(--gold-dark);
+                }
+
+                .eop-copy-btn:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
+
+                .eop-copy-btn.is-copied {
+                    border-color: var(--green);
+                    background: var(--green-bg);
+                    color: var(--green);
+                }
+
+                /* Empty */
+                .eop-empty {
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: 14px;
+                    padding: 56px 32px;
+                    text-align: center;
+                }
+
+                .eop-empty-icon {
+                    width: 56px;
+                    height: 56px;
+                    margin: 0 auto 20px;
+                    background: var(--gold-light);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .eop-empty h3 {
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: var(--navy);
+                    margin-bottom: 10px !important;
+                }
+
+                .eop-empty p {
+                    font-size: 13px;
+                    color: var(--muted);
+                    line-height: 1.8;
+                    max-width: 400px;
+                    margin: 0 auto !important;
+                }
+
+                @media (max-width: 1023px) {
+                    .eop-countdown-slot .eop-countdown {
+                        width: 100%;
+                        box-sizing: border-box;
+                    }
+
+                    .eop-countdown-timer {
+                        justify-content: space-evenly;
+                    }
+                }
+
+                @media (min-width: 1024px) {
+                    .eop-countdown-timer {
+                        width: auto;
+                        min-width: 280px;
+                    }
+                }
+
+                @media (min-width: 768px) {
+                    .eop-shell { padding: 32px 32px 64px; }
+                    .eop-hero { padding: 28px 32px 30px; margin-bottom: 24px; }
+                    .eop-hero h1 { font-size: 24px; }
+                    .eop-coupon-body { padding: 20px 24px; }
+                    .eop-coupon-code { font-size: 24px; }
+                    .eop-coupon-code-ticket { padding: 20px 32px 18px; }
+                }
+            </style>
+        </t>
+
+        <div class="o_portal_wrap eop">
+            <div class="eop-shell">
+
+                <a href="/my" class="eop-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m9 18 6-6-6-6"/>
+                    </svg>
+                    العودة إلى حسابي
+                </a>
+
+                <!-- Hero -->
+                <div class="eop-hero">
+                    <div class="eop-hero-top">
+                        <div>
+                            <h1>كوبوناتي</h1>
+                            <p>استعرض كوبونات الخصم المتاحة وانسخ الرمز لاستخدامه عند الطلب</p>
+                        </div>
+                        <t t-if="coupons">
+                            <span class="eop-count">
+                                <t t-esc="len(coupons)"/> كوبون
+                            </span>
+                        </t>
+                    </div>
+                </div>
+
+                <!-- Empty -->
+                <t t-if="not coupons">
+                    <div class="eop-empty">
+                        <div class="eop-empty-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9982A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 5v14"/>
+                                <path d="M8 5v14"/>
+                                <path d="M12 5v14"/>
+                                <path d="M17 5v14"/>
+                                <path d="M21 5v14"/>
+                            </svg>
+                        </div>
+                        <h3>لا توجد كوبونات حالياً</h3>
+                        <p>لم يتم إصدار أي كوبونات خصم لحسابك بعد.<br/>ستظهر الكوبونات الجديدة هنا فور توفرها.</p>
+                    </div>
+                </t>
+
+                <!-- Coupons -->
+                <t t-if="coupons">
+
+                    <t t-set="active_count" t-value="0"/>
+                    <t t-set="used_count" t-value="0"/>
+                    <t t-set="expired_count" t-value="0"/>
+
+                    <t t-foreach="coupons" t-as="coupon">
+                        <t t-set="is_expired" t-value="coupon['expiration_date'] and coupon['is_expired']"/>
+                        <t t-set="is_used" t-value="coupon['use_count'] and coupon['use_count'] &gt; 0"/>
+                        <t t-if="is_expired">
+                            <t t-set="expired_count" t-value="expired_count + 1"/>
+                        </t>
+                        <t t-elif="is_used">
+                            <t t-set="used_count" t-value="used_count + 1"/>
+                        </t>
+                        <t t-else="">
+                            <t t-set="active_count" t-value="active_count + 1"/>
+                        </t>
+                    </t>
+
+                    <div class="eop-summary">
+                        <span class="eop-pill is-active">
+                            <span class="eop-pill-dot"/>
+                            ساري: <t t-esc="active_count"/>
+                        </span>
+                        <span class="eop-pill is-used">
+                            <span class="eop-pill-dot"/>
+                            مستخدم: <t t-esc="used_count"/>
+                        </span>
+                        <span class="eop-pill is-expired">
+                            <span class="eop-pill-dot"/>
+                            منتهي: <t t-esc="expired_count"/>
+                        </span>
+                    </div>
+
+                    <div class="eop-coupon-list">
+                        <t t-foreach="coupons" t-as="coupon">
+
+                            <t t-set="is_expired" t-value="coupon['expiration_date'] and coupon['is_expired']"/>
+                            <t t-set="is_used" t-value="coupon['use_count'] and coupon['use_count'] &gt; 0"/>
+                            <t t-set="expires_today" t-value="not is_expired and not is_used and coupon['days_left'] == 0"/>
+
+                            <t t-set="card_class" t-value="'is-active'"/>
+                            <t t-set="badge_class" t-value="'eop-badge-active'"/>
+                            <t t-set="badge_text" t-value="'ساري'"/>
+
+                            <t t-if="is_expired">
+                                <t t-set="card_class" t-value="'is-expired'"/>
+                                <t t-set="badge_class" t-value="'eop-badge-expired'"/>
+                                <t t-set="badge_text" t-value="'منتهي'"/>
+                            </t>
+                            <t t-elif="is_used">
+                                <t t-set="card_class" t-value="'is-used'"/>
+                                <t t-set="badge_class" t-value="'eop-badge-used'"/>
+                                <t t-set="badge_text" t-value="'مستخدم'"/>
+                            </t>
+                            <t t-elif="expires_today">
+                                <t t-set="card_class" t-value="'is-warning'"/>
+                                <t t-set="badge_class" t-value="'eop-badge-warning'"/>
+                                <t t-set="badge_text" t-value="'ينتهي اليوم'"/>
+                            </t>
+
+                            <div t-attf-class="eop-coupon #{card_class}">
+
+                                <div class="eop-coupon-stripe"/>
+
+                                <div class="eop-coupon-body">
+
+                                    <div class="eop-coupon-top">
+                                        <span t-attf-class="eop-badge #{badge_class}">
+                                            <t t-esc="badge_text"/>
+                                        </span>
+                                    </div>
+
+                                    <div class="eop-coupon-code-ticket">
+                                        <span class="eop-coupon-label">رمز الكوبون</span>
+                                        <div class="eop-coupon-code">
+                                            <t t-esc="coupon['code']"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="eop-coupon-mid">
+                                        <div class="eop-discount">
+                                            <span class="eop-discount-value">
+                                                <t t-esc="'%d' % int(coupon['points'])"/>
+                                            </span>
+                                            <span class="eop-discount-unit">٪ خصم</span>
+                                        </div>
+                                        <div class="eop-coupon-meta">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect width="18" height="18" x="3" y="4" rx="2"/>
+                                                <path d="M16 2v4M8 2v4M3 10h18"/>
+                                            </svg>
+                                            ينتهي:
+                                            <t t-esc="coupon['expiration_date'] or 'غير محدد'"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="eop-countdown-slot">
+                                        <t t-if="is_expired">
+                                            <span class="eop-countdown is-expired">انتهت صلاحية الكوبون</span>
+                                        </t>
+                                        <t t-elif="is_used">
+                                            <span class="eop-countdown is-expired">تم استخدام هذا الكوبون</span>
+                                        </t>
+                                        <t t-elif="expires_today">
+                                            <span class="eop-countdown is-warning">ينتهي اليوم — استخدمه الآن</span>
+                                        </t>
+                                        <t t-elif="coupon['expiration_date']">
+                                            <span class="eop-countdown" t-att-id="'countdown-' + str(coupon['id'])" t-att-data-expiration="coupon['expiration_date']">
+                                                <t t-esc="coupon['days_left']"/> يوم متبقي
+                                            </span>
+                                        </t>
+                                        <t t-else="">
+                                            <span class="eop-countdown">بدون تاريخ انتهاء</span>
+                                        </t>
+                                    </div>
+
+                                    <div class="eop-coupon-actions">
+                                        <button type="button" class="eop-copy-btn" t-att-data-code="coupon['code']" t-att-disabled="is_expired or is_used">
+                                            <svg class="eop-copy-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                                                <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                                            </svg>
+                                            <span class="eop-copy-label">نسخ الرمز</span>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </t>
+                    </div>
+
+                </t>
+
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+
+                var copyIconSvg = '&lt;svg class="eop-copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;rect width="14" height="14" x="8" y="8" rx="2" ry="2"/&gt;&lt;path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/&gt;&lt;/svg&gt;';
+                var checkIconSvg = '&lt;svg class="eop-copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M20 6 9 17l-5-5"/&gt;&lt;/svg&gt;';
+
+                function setCopyFeedback(btn) {
+                    if (!btn) return;
+                    btn.classList.add('is-copied');
+                    var label = btn.querySelector('.eop-copy-label');
+                    if (label) label.textContent = 'تم النسخ!';
+                    var icon = btn.querySelector('.eop-copy-icon');
+                    if (icon) icon.outerHTML = checkIconSvg;
+                }
+
+                function resetCopyFeedback(btn) {
+                    if (!btn) return;
+                    btn.classList.remove('is-copied');
+                    var label = btn.querySelector('.eop-copy-label');
+                    if (label) label.textContent = 'نسخ الرمز';
+                    var icon = btn.querySelector('.eop-copy-icon');
+                    if (icon) icon.outerHTML = copyIconSvg;
+                }
+
+                document.querySelectorAll('.eop-copy-btn').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        if (btn.disabled) return;
+                        var code = btn.getAttribute('data-code');
+
+                        navigator.clipboard.writeText(code).then(function () {
+                            setCopyFeedback(btn);
+                            setTimeout(function () {
+                                resetCopyFeedback(btn);
+                            }, 1800);
+                        });
+                    });
+                });
+
+                document.querySelectorAll('[id^="countdown-"]').forEach(function (el) {
+                    var expDate = el.getAttribute('data-expiration');
+                    if (!expDate) return;
+
+                    var countDownDate = new Date(expDate).getTime();
+                    var card = el.closest('.eop-coupon');
+
+                    var updateCountdown = function () {
+                        var now = new Date().getTime();
+                        var distance = countDownDate - now;
+
+                        if (distance &lt; 0) {
+                            el.innerHTML = '&lt;span class="eop-countdown is-expired"&gt;انتهت صلاحية الكوبون&lt;/span&gt;';
+                            if (card) {
+                                card.classList.remove('is-active', 'is-warning');
+                                card.classList.add('is-expired');
+                                var stripe = card.querySelector('.eop-coupon-stripe');
+                                var badge = card.querySelector('.eop-badge');
+                                if (badge) {
+                                    badge.className = 'eop-badge eop-badge-expired';
+                                    badge.textContent = 'منتهي';
+                                }
+                                var copyBtns = card.querySelectorAll('.eop-copy-btn');
+                                copyBtns.forEach(function (copyBtn) { copyBtn.disabled = true; });
+                            }
+                            clearInterval(interval);
+                            return;
+                        }
+
+                        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                        var timerClass = 'eop-countdown-timer';
+                        if (days &lt;= 1) timerClass += ' is-warning';
+                        if (card &amp;&amp; days &lt;= 1) {
+                            card.classList.remove('is-active');
+                            card.classList.add('is-warning');
+                        }
+
+                        el.innerHTML =
+                            '&lt;div class="' + timerClass + '"&gt;' +
+                                '&lt;div class="eop-countdown-part"&gt;' +
+                                    '&lt;span class="eop-countdown-value"&gt;' + days + '&lt;/span&gt;' +
+                                    '&lt;span class="eop-countdown-label"&gt;يوم&lt;/span&gt;' +
+                                '&lt;/div&gt;' +
+                                '&lt;div class="eop-countdown-part"&gt;' +
+                                    '&lt;span class="eop-countdown-value"&gt;' + hours + '&lt;/span&gt;' +
+                                    '&lt;span class="eop-countdown-label"&gt;ساعة&lt;/span&gt;' +
+                                '&lt;/div&gt;' +
+                                '&lt;div class="eop-countdown-part"&gt;' +
+                                    '&lt;span class="eop-countdown-value"&gt;' + minutes + '&lt;/span&gt;' +
+                                    '&lt;span class="eop-countdown-label"&gt;دقيقة&lt;/span&gt;' +
+                                '&lt;/div&gt;' +
+                                '&lt;div class="eop-countdown-part"&gt;' +
+                                    '&lt;span class="eop-countdown-value"&gt;' + seconds + '&lt;/span&gt;' +
+                                    '&lt;span class="eop-countdown-label"&gt;ثانية&lt;/span&gt;' +
+                                '&lt;/div&gt;' +
+                            '&lt;/div&gt;';
+                    };
+
+                    updateCountdown();
+                    var interval = setInterval(updateCountdown, 1000);
+                });
+            });
+        </script>
+
+    </t>
+</t>

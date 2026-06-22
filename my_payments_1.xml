@@ -1,0 +1,727 @@
+<t name="Partner Payments Page" t-name="partner_website_registration.portal_partner_payments_page">
+    <t t-call="portal.portal_layout">
+
+        <t t-set="head">
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+            <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+            <style>
+                .eop, .eop *, .eop *::before, .eop *::after {
+                    box-sizing: border-box;
+                    font-family: "Cairo", sans-serif;
+                }
+
+                .o_portal_wrap.eop {
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    max-width: none !important;
+                    background: #f7f5f0 !important;
+                    direction: rtl;
+                }
+
+                .eop h1, .eop h2, .eop h3, .eop p {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .eop a { text-decoration: none; color: inherit; }
+
+                .eop {
+                    --gold: #C9982A;
+                    --gold-dark: #A87B1E;
+                    --gold-light: rgba(201, 152, 42, 0.14);
+                    --navy: #0D1B2E;
+                    --bg: #F7F5F0;
+                    --card: #FFFFFF;
+                    --border: #E8E2D9;
+                    --text: #1A1A2E;
+                    --muted: #8A8578;
+                    --green: #16a34a;
+                    --green-bg: #f0fdf4;
+                    --blue: #2563eb;
+                    --blue-bg: #eff6ff;
+                    --amber: #b45309;
+                    --amber-bg: #fffbeb;
+                }
+
+                .eop-shell {
+                    max-width: 1040px;
+                    margin: 0 auto;
+                    padding: 24px 20px 56px;
+                }
+
+                .eop-back {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    font-size: 13px;
+                    font-weight: 600;
+                    color: var(--muted);
+                    margin-bottom: 20px;
+                    padding: 6px 0;
+                    transition: color 0.15s;
+                }
+
+                .eop-back:hover { color: var(--gold-dark); }
+
+                .eop-hero {
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: 14px;
+                    padding: 24px 28px 26px;
+                    margin-bottom: 20px;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .eop-hero::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 4px;
+                    height: 100%;
+                    background: linear-gradient(180deg, #FDE021, var(--gold));
+                }
+
+                .eop-hero-top {
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                    gap: 16px;
+                }
+
+                .eop-hero h1 {
+                    font-size: 20px;
+                    font-weight: 800;
+                    color: var(--navy);
+                    line-height: 1.3;
+                }
+
+                .eop-hero p {
+                    font-size: 13px;
+                    color: var(--muted);
+                    margin-top: 8px !important;
+                    line-height: 1.7;
+                }
+
+                .eop-count {
+                    flex-shrink: 0;
+                    background: var(--gold-light);
+                    color: var(--gold-dark);
+                    font-size: 12px;
+                    font-weight: 700;
+                    padding: 8px 16px;
+                    border-radius: 30px;
+                    border: 1px solid rgba(201, 152, 42, 0.25);
+                    white-space: nowrap;
+                }
+
+                .eop-stats {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    margin-bottom: 20px;
+                }
+
+                .eop-stat {
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: 12px;
+                    padding: 16px 18px;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    transition: box-shadow 0.15s, border-color 0.15s;
+                }
+
+                .eop-stat:hover {
+                    box-shadow: 0 4px 14px rgba(13, 27, 46, 0.06);
+                }
+
+                .eop-stat-icon {
+                    width: 38px;
+                    height: 38px;
+                    border-radius: 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                }
+
+                .eop-stat-label {
+                    font-size: 11px;
+                    font-weight: 700;
+                    color: var(--muted);
+                    line-height: 1.3;
+                }
+
+                .eop-stat-value {
+                    font-size: 20px;
+                    font-weight: 800;
+                    color: var(--navy);
+                    line-height: 1.2;
+                    margin-top: 2px;
+                }
+
+                .eop-stat.is-total .eop-stat-icon { background: rgba(201, 152, 42, 0.12); }
+                .eop-stat.is-total .eop-stat-value { color: var(--gold-dark); }
+                .eop-stat.is-posted .eop-stat-icon { background: var(--green-bg); }
+                .eop-stat.is-posted .eop-stat-value { color: var(--green); }
+                .eop-stat.is-review .eop-stat-icon { background: var(--blue-bg); }
+                .eop-stat.is-review .eop-stat-value { color: var(--blue); }
+                .eop-stat.is-waiting .eop-stat-icon { background: var(--amber-bg); }
+                .eop-stat.is-waiting .eop-stat-value { color: var(--amber); }
+
+                .eop-results {
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: 14px;
+                    overflow: hidden;
+                }
+
+                .eop-results-head {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 12px;
+                    padding: 16px 22px;
+                    border-bottom: 1px solid var(--border);
+                    background: var(--bg);
+                }
+
+                .eop-results-head span {
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: var(--muted);
+                }
+
+                .eop-table-wrap {
+                    overflow-x: auto;
+                    -webkit-overflow-scrolling: touch;
+                }
+
+                .eop-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    min-width: 620px;
+                }
+
+                .eop-table thead th {
+                    padding: 14px 18px;
+                    font-size: 12px;
+                    font-weight: 700;
+                    color: var(--muted);
+                    text-align: right;
+                    background: var(--bg);
+                    border-bottom: 1px solid var(--border);
+                    white-space: nowrap;
+                }
+
+                .eop-table thead th.num { text-align: left; }
+                .eop-table thead th.center { text-align: center; }
+
+                .eop-table tbody tr {
+                    border-bottom: 1px solid var(--border);
+                    transition: background 0.12s;
+                }
+
+                .eop-table tbody tr:last-child { border-bottom: none; }
+                .eop-table tbody tr:hover { background: rgba(201, 152, 42, 0.04); }
+                .eop-table tbody tr.row-posted { background: rgba(22, 163, 74, 0.03); }
+                .eop-table tbody tr.row-review { background: rgba(37, 99, 235, 0.03); }
+                .eop-table tbody tr.row-waiting { background: rgba(180, 83, 9, 0.04); }
+
+                .eop-table tbody td {
+                    padding: 15px 18px;
+                    font-size: 13px;
+                    color: var(--text);
+                    vertical-align: middle;
+                    line-height: 1.5;
+                }
+
+                .eop-table .col-date {
+                    font-weight: 600;
+                    color: var(--navy);
+                    white-space: nowrap;
+                }
+
+                .eop-table .col-amount {
+                    text-align: left;
+                    font-weight: 800;
+                    font-size: 14px;
+                    color: var(--navy);
+                    font-variant-numeric: tabular-nums;
+                    white-space: nowrap;
+                }
+
+                .eop-method {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    font-weight: 600;
+                    color: var(--text);
+                }
+
+                .eop-method-icon {
+                    width: 28px;
+                    height: 28px;
+                    border-radius: 8px;
+                    background: var(--gold-light);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                }
+
+                .eop-badge {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    font-size: 11px;
+                    font-weight: 700;
+                    padding: 5px 12px;
+                    border-radius: 20px;
+                    white-space: nowrap;
+                }
+
+                .eop-badge-dot {
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    flex-shrink: 0;
+                }
+
+                .eop-badge-posted { background: var(--green-bg); color: var(--green); }
+                .eop-badge-posted .eop-badge-dot { background: var(--green); }
+                .eop-badge-review { background: var(--blue-bg); color: var(--blue); }
+                .eop-badge-review .eop-badge-dot { background: var(--blue); }
+                .eop-badge-waiting { background: var(--amber-bg); color: var(--amber); }
+                .eop-badge-waiting .eop-badge-dot { background: var(--amber); }
+
+                .eop-btn-upload {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 8px 14px;
+                    border-radius: 8px;
+                    background: var(--amber-bg);
+                    border: 1px solid rgba(180, 83, 9, 0.25);
+                    color: var(--amber);
+                    font-size: 12px;
+                    font-weight: 700;
+                    transition: all 0.15s;
+                    white-space: nowrap;
+                }
+
+                .eop-btn-upload:hover {
+                    background: var(--amber);
+                    color: #fff;
+                    border-color: var(--amber);
+                }
+
+                .eop-empty {
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: 14px;
+                    padding: 56px 32px;
+                    text-align: center;
+                }
+
+                .eop-empty-icon {
+                    width: 56px;
+                    height: 56px;
+                    margin: 0 auto 20px;
+                    background: var(--gold-light);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .eop-empty h3 {
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: var(--navy);
+                    margin-bottom: 10px !important;
+                }
+
+                .eop-empty p {
+                    font-size: 13px;
+                    color: var(--muted);
+                    line-height: 1.8;
+                    max-width: 420px;
+                    margin: 0 auto !important;
+                }
+
+                /* Mobile cards */
+                .eop-mobile-list {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    padding: 14px;
+                }
+
+                .eop-pay-card {
+                    background: var(--bg);
+                    border: 1px solid var(--border);
+                    border-radius: 12px;
+                    padding: 14px 16px;
+                    transition: border-color 0.15s, box-shadow 0.15s;
+                }
+
+                .eop-pay-card:hover {
+                    border-color: rgba(201, 152, 42, 0.35);
+                    box-shadow: 0 2px 10px rgba(13, 27, 46, 0.05);
+                }
+
+                .eop-pay-card.is-waiting {
+                    border-color: rgba(180, 83, 9, 0.25);
+                    background: rgba(255, 251, 235, 0.5);
+                }
+
+                .eop-pay-card-top {
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                    gap: 10px;
+                    margin-bottom: 12px;
+                }
+
+                .eop-pay-card-amount {
+                    font-size: 18px;
+                    font-weight: 800;
+                    color: var(--navy);
+                    font-variant-numeric: tabular-nums;
+                }
+
+                .eop-pay-card-meta {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    gap: 12px;
+                    font-size: 12px;
+                    color: var(--muted);
+                    font-weight: 600;
+                }
+
+                .eop-pay-card-meta span {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 5px;
+                }
+
+                .eop-pay-card-action {
+                    margin-top: 12px;
+                    padding-top: 12px;
+                    border-top: 1px dashed var(--border);
+                }
+
+                .eop-pay-card-action .eop-btn-upload {
+                    width: 100%;
+                    justify-content: center;
+                }
+
+                .eop-desktop-only { display: none; }
+                .eop-mobile-only { display: block; }
+
+                @media (min-width: 640px) {
+                    .eop-stats {
+                        grid-template-columns: repeat(4, 1fr);
+                        gap: 14px;
+                    }
+                }
+
+                @media (min-width: 768px) {
+                    .eop-shell { padding: 32px 32px 64px; }
+                    .eop-hero {
+                        padding: 28px 32px 30px;
+                        margin-bottom: 24px;
+                    }
+                    .eop-hero h1 { font-size: 24px; }
+                    .eop-stats { margin-bottom: 24px; }
+                    .eop-stat { padding: 18px 20px; }
+                    .eop-results-head { padding: 18px 26px; }
+                    .eop-table thead th { padding: 16px 22px; }
+                    .eop-table tbody td { padding: 16px 22px; }
+                    .eop-desktop-only { display: block; }
+                    .eop-mobile-only { display: none; }
+                }
+            </style>
+        </t>
+
+        <!-- Compute summary counts -->
+        <t t-set="total_payments" t-value="len(payments) if payments else 0"/>
+        <t t-set="posted_count" t-value="0"/>
+        <t t-set="review_count" t-value="0"/>
+        <t t-set="waiting_count" t-value="0"/>
+        <t t-foreach="payments or []" t-as="p_stat">
+            <t t-if="p_stat.get('state_key') == 'posted'" t-set="posted_count" t-value="posted_count + 1"/>
+            <t t-elif="p_stat.get('state_key') == 'review'" t-set="review_count" t-value="review_count + 1"/>
+            <t t-elif="p_stat.get('state_key') == 'waiting_attachment'" t-set="waiting_count" t-value="waiting_count + 1"/>
+        </t>
+
+        <div class="o_portal_wrap eop">
+            <div class="eop-shell">
+
+                <a href="/my" class="eop-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m9 18 6-6-6-6"/>
+                    </svg>
+                    العودة إلى حسابي
+                </a>
+
+                <!-- Hero -->
+                <div class="eop-hero">
+                    <div class="eop-hero-top">
+                        <div>
+                            <h1>سندات القبض الخاصة بي</h1>
+                            <p>تابع حالة سندات القبض وطرق السداد، وارفع المستندات المطلوبة عند الحاجة</p>
+                        </div>
+                        <t t-if="payments">
+                            <span class="eop-count">
+                                <t t-esc="total_payments"/>
+                                سند
+                            </span>
+                        </t>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <t t-if="not payments or len(payments) == 0">
+                    <div class="eop-empty">
+                        <div class="eop-empty-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9982A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="20" height="14" x="2" y="5" rx="2"/>
+                                <line x1="2" x2="22" y1="10" y2="10"/>
+                            </svg>
+                        </div>
+                        <h3>لا توجد سندات حتى الآن</h3>
+                        <p>لم يتم تسجيل أي سندات قبض لحسابك. ستظهر سنداتك هنا فور إنشائها ومعالجتها.</p>
+                    </div>
+                </t>
+
+                <t t-if="payments and len(payments) > 0">
+
+                    <!-- Summary stats -->
+                    <div class="eop-stats">
+                        <div class="eop-stat is-total">
+                            <div class="eop-stat-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A87B1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect width="20" height="14" x="2" y="5" rx="2"/>
+                                    <line x1="2" x2="22" y1="10" y2="10"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="eop-stat-label">إجمالي السندات</div>
+                                <div class="eop-stat-value"><t t-esc="total_payments"/></div>
+                            </div>
+                        </div>
+                        <div class="eop-stat is-posted">
+                            <div class="eop-stat-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="eop-stat-label">مؤكدة</div>
+                                <div class="eop-stat-value"><t t-esc="posted_count"/></div>
+                            </div>
+                        </div>
+                        <div class="eop-stat is-review">
+                            <div class="eop-stat-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="eop-stat-label">قيد المراجعة</div>
+                                <div class="eop-stat-value"><t t-esc="review_count"/></div>
+                            </div>
+                        </div>
+                        <div class="eop-stat is-waiting">
+                            <div class="eop-stat-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="17 8 12 3 7 8"/>
+                                    <line x1="12" x2="12" y1="3" y2="15"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="eop-stat-label">بانتظار المستند</div>
+                                <div class="eop-stat-value"><t t-esc="waiting_count"/></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="eop-results">
+
+                        <div class="eop-results-head">
+                            <span>سجل سندات القبض</span>
+                            <t t-if="waiting_count > 0">
+                                <span style="color: var(--amber);">
+                                    <strong><t t-esc="waiting_count"/></strong>
+                                    سند يحتاج رفع مستند
+                                </span>
+                            </t>
+                        </div>
+
+                        <!-- Desktop table -->
+                        <div class="eop-desktop-only eop-table-wrap">
+                            <table class="eop-table" id="paymentsTable">
+                                <thead>
+                                    <tr>
+                                        <th>التاريخ</th>
+                                        <th>طريقة السداد</th>
+                                        <th class="num">المبلغ</th>
+                                        <th class="center">الحالة</th>
+                                        <th class="center">إجراء</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="payments" t-as="p">
+                                        <tr t-att-class="
+                                            'row-posted' if p.get('state_key') == 'posted' else
+                                            'row-review' if p.get('state_key') == 'review' else
+                                            'row-waiting' if p.get('state_key') == 'waiting_attachment' else ''
+                                        ">
+                                            <td class="col-date">
+                                                <t t-esc="p['date']"/>
+                                            </td>
+                                            <td>
+                                                <span class="eop-method">
+                                                    <span class="eop-method-icon">
+                                                        <t t-if="p.get('journal_type') == 'cash'">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A87B1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                <rect width="20" height="12" x="2" y="6" rx="2"/>
+                                                                <circle cx="12" cy="12" r="2"/>
+                                                                <path d="M6 12h.01M18 12h.01"/>
+                                                            </svg>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A87B1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                <rect width="20" height="14" x="2" y="5" rx="2"/>
+                                                                <line x1="2" x2="22" y1="10" y2="10"/>
+                                                            </svg>
+                                                        </t>
+                                                    </span>
+                                                    <t t-if="p.get('journal_type') == 'cash'">نقدي</t>
+                                                    <t t-else=""><t t-esc="p.get('journal_name')"/></t>
+                                                </span>
+                                            </td>
+                                            <td class="col-amount">
+                                                <t t-esc="p['amount']"/>
+                                            </td>
+                                            <td class="text-center" style="text-align: center;">
+                                                <t t-if="p.get('state_key') == 'posted'">
+                                                    <span class="eop-badge eop-badge-posted">
+                                                        <span class="eop-badge-dot"/>
+                                                        مؤكد
+                                                    </span>
+                                                </t>
+                                                <t t-elif="p.get('state_key') == 'review'">
+                                                    <span class="eop-badge eop-badge-review">
+                                                        <span class="eop-badge-dot"/>
+                                                        قيد المراجعة
+                                                    </span>
+                                                </t>
+                                                <t t-elif="p.get('state_key') == 'waiting_attachment'">
+                                                    <span class="eop-badge eop-badge-waiting">
+                                                        <span class="eop-badge-dot"/>
+                                                        في انتظار رفع المستند
+                                                    </span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span style="color: var(--muted);">—</span>
+                                                </t>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <t t-if="p.get('show_upload')">
+                                                    <a t-att-href="'/my/upload_payment_attachment/%s' % p['id']" class="eop-btn-upload">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                                            <polyline points="17 8 12 3 7 8"/>
+                                                            <line x1="12" x2="12" y1="3" y2="15"/>
+                                                        </svg>
+                                                        رفع المستند
+                                                    </a>
+                                                </t>
+                                                <t t-else="">
+                                                    <span style="color: #ccc; font-size: 12px;">—</span>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Mobile cards -->
+                        <div class="eop-mobile-only eop-mobile-list">
+                            <t t-foreach="payments" t-as="p">
+                                <div t-att-class="'eop-pay-card' + (' is-waiting' if p.get('state_key') == 'waiting_attachment' else '')">
+                                    <div class="eop-pay-card-top">
+                                        <div class="eop-pay-card-amount">
+                                            <t t-esc="p['amount']"/>
+                                        </div>
+                                        <t t-if="p.get('state_key') == 'posted'">
+                                            <span class="eop-badge eop-badge-posted">
+                                                <span class="eop-badge-dot"/>
+                                                مؤكد
+                                            </span>
+                                        </t>
+                                        <t t-elif="p.get('state_key') == 'review'">
+                                            <span class="eop-badge eop-badge-review">
+                                                <span class="eop-badge-dot"/>
+                                                قيد المراجعة
+                                            </span>
+                                        </t>
+                                        <t t-elif="p.get('state_key') == 'waiting_attachment'">
+                                            <span class="eop-badge eop-badge-waiting">
+                                                <span class="eop-badge-dot"/>
+                                                بانتظار المستند
+                                            </span>
+                                        </t>
+                                    </div>
+                                    <div class="eop-pay-card-meta">
+                                        <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect width="18" height="18" x="3" y="4" rx="2"/>
+                                                <line x1="16" x2="16" y1="2" y2="6"/>
+                                                <line x1="8" x2="8" y1="2" y2="6"/>
+                                                <line x1="3" x2="21" y1="10" y2="10"/>
+                                            </svg>
+                                            <t t-esc="p['date']"/>
+                                        </span>
+                                        <span>
+                                            <t t-if="p.get('journal_type') == 'cash'">نقدي</t>
+                                            <t t-else=""><t t-esc="p.get('journal_name')"/></t>
+                                        </span>
+                                    </div>
+                                    <t t-if="p.get('show_upload')">
+                                        <div class="eop-pay-card-action">
+                                            <a t-att-href="'/my/upload_payment_attachment/%s' % p['id']" class="eop-btn-upload">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                                    <polyline points="17 8 12 3 7 8"/>
+                                                    <line x1="12" x2="12" y1="3" y2="15"/>
+                                                </svg>
+                                                رفع المستند
+                                            </a>
+                                        </div>
+                                    </t>
+                                </div>
+                            </t>
+                        </div>
+
+                    </div>
+                </t>
+
+            </div>
+        </div>
+
+    </t>
+</t>

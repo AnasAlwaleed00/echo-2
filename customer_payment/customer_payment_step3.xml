@@ -1,0 +1,111 @@
+<t name="طريقة الدفع - الخطوة 3" t-name="website_payment_mod.customer_payment_step3">
+    <t t-call="website.layout">
+      <div class="container mt-5 mb-5" style="direction: rtl; text-align: right;">
+        <t t-call="website_payment_mod.payment_portal_header"/>
+        <h2 class="text-center mb-4">اختيار طريقة الدفع</h2>
+
+        <div style="max-width:720px; margin:auto; background: #f8f9fa; padding: 30px; border-radius: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e3e6f0;">
+          <t t-if="error_msg">
+            <div class="alert alert-danger"><t t-esc="error_msg"/></div>
+          </t>
+
+          <form id="step3_form" action="/customer/payment/step3" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+            <input type="hidden" name="action" id="action_hidden" value=""/>
+
+            <div class="form-group mb-4">
+              <label style="font-size:16px; font-weight: bold; color: #212529;">
+        <!-- تم تبسيط المسمى هنا بناءً على طلبك ليكون نظيفاً ومباشراً للعميل -->
+        <t t-esc="payment_type != 'partial' and 'المبلغ المستحق الدفع' or 'ادخل المبلغ المطلوب سداده'"/>
+    </label>
+                <div class="input-group">
+                    <input type="number" step="0.01" class="form-control font-weight-bold bg-white text-dark" name="amount" t-att-value="'%.2f' % float(amount or 0.0)" t-att-readonly="'readonly' if payment_type != 'partial' else None" required="required" style="border-radius: 8px; font-size: 18px;"/>
+                    <div class="input-group-append"><span class="input-group-text" style="border-radius: 0 8px 8px 0;">ريال</span></div>
+                </div>
+            </div>
+
+            <div class="form-group mb-4">
+              <label style="font-size:16px; font-weight: bold;">طريقة الدفع</label>
+              <select name="payment_method" id="payment_method" class="form-control" required="required" style="border-radius: 8px;">
+                <option value="selected">اختر طريقة الدفع المناسبة للعملية</option>
+                <option value="cash">نقداً</option>
+                <option value="bank">حوالة بنكية</option>
+              </select>
+            </div>
+            
+            <div class="form-group mb-4" id="bank_journal_container" style="display:none;">
+                <label style="font-size:16px; font-weight: bold; color: #4e73df;">اختيار البنك المستهدف للتحويل</label>
+                <select name="journal_id" class="form-control" style="border-radius: 8px; border-color: #4e73df;">
+                    <option value="">---- اختر البنك المسؤول من القائمة -----</option>
+                    <t t-foreach="journals" t-as="j">
+                        <option t-att-value="j.id"><t t-esc="j.name"/></option>
+                    </t>
+                </select>
+            </div>
+
+            <div class="d-flex justify-content-between mt-5" style="border-top: 1px solid #e3e6f0; padding-top: 20px;">
+                <a class="btn btn-secondary px-5" href="/customer/payment/details" style="border-radius: 8px; font-weight: bold;">رجوع</a>
+                <button type="button" class="btn px-5 font-weight-bold" id="confirm_payment_btn" style="border-radius: 8px; background: linear-gradient(135deg, #28a745, #218838); color: white; border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    تأكيد الدفع وإنشاء السند
+                </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+     <script type="text/javascript">
+     document.addEventListener('DOMContentLoaded', function () {
+         const methodSelect = document.getElementById('payment_method');
+         const bankContainer = document.getElementById('bank_journal_container');
+         const confirmBtn = document.getElementById('confirm_payment_btn');
+         const form = document.getElementById('step3_form');
+         
+         let actionHidden = document.getElementById('action_hidden');
+         if (form &amp;&amp; !actionHidden) {
+             actionHidden = document.createElement('input');
+             actionHidden.type = 'hidden';
+             actionHidden.name = 'action';
+             actionHidden.id = 'action_hidden';
+             form.appendChild(actionHidden);
+         }
+
+         const amountInput = document.querySelector('input[name="amount"]');
+         const journalSelect = document.querySelector('select[name="journal_id"]');
+
+         if (methodSelect) {
+             methodSelect.addEventListener('change', function() {
+                 if (bankContainer) {
+                     bankContainer.style.display = (methodSelect.value === 'bank') ? 'block' : 'none';
+                 }
+             });
+         }
+
+         if (confirmBtn) {
+             confirmBtn.addEventListener('click', function (event) {
+                 event.preventDefault();
+
+                 if (amountInput &amp;&amp; !amountInput.readOnly &amp;&amp; (!amountInput.value || parseFloat(amountInput.value) &lt;= 0)) {
+                     alert("يرجى إدخال مبلغ صحيح.");
+                     return;
+                 }
+                 if (methodSelect &amp;&amp; methodSelect.value === 'selected') {
+                     alert("يرجى اختيار طريقة الدفع.");
+                     return;
+                 }
+                 if (methodSelect &amp;&amp; methodSelect.value === 'bank' &amp;&amp; (!journalSelect || !journalSelect.value)) {
+                     alert("يرجى اختيار البنك.");
+                     return;
+                 }
+
+                 if (confirm("عزيزي العميل، عند تأكيد الدفع سيتم إنشاء سند دفع مبدئي. هل ترغب بالمتابعة؟")) {
+                     confirmBtn.disabled = true;
+                     confirmBtn.innerText = 'جاري المعالجة والترحيل المالي...';
+                     if (actionHidden) { actionHidden.value = 'confirm'; }
+                     if (form) { form.submit(); }
+                 }
+             });
+         }
+     });
+     </script>
+    </t>
+  </t>

@@ -1,0 +1,159 @@
+
+<t name="Custom Portal Login" t-name="custom_portal_login.custom_login_template">
+    <t t-call="website.layout">
+        <div id="wrap" class="oe_structure">
+            <!-- استدعاء خط كايرو من جوجل -->
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+            <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+
+            <style>
+                /* تطبيق خط كايرو على كل العناصر */
+                body, .echo-title, .form-control, .btn, label, select {
+                    font-family: 'Cairo', sans-serif !important;
+                }
+
+                :root {
+                    --echo-gold-main: #F8B500;
+                    --echo-black: #1A1A1B;
+                }
+
+                .custom-login-card {
+                    border-radius: 15px;
+                    border: 1px solid #f0f0f0;
+                    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                    background: #ffffff;
+                }
+
+                /* زر الدخول الذهبي */
+                .btn-echo-gold {
+                    background: linear-gradient(to right, #FDE021 0%, #F8B500 100%);
+                    color: var(--echo-black) !important;
+                    border: none !important;
+                    font-weight: 700 !important;
+                    transition: all 0.3s ease;
+                }
+
+                .btn-echo-gold:hover {
+                    filter: brightness(1.1);
+                    transform: translateY(-2px);
+                }
+
+                /* أزرار الأسود والأبيض */
+                .btn-echo-black {
+                    background-color: var(--echo-black) !important;
+                    color: #ffffff !important;
+                    border: none !important;
+                    font-weight: 600 !important;
+                    transition: all 0.3s ease;
+                }
+
+                .btn-echo-black:hover {
+                    background-color: #333 !important;
+                    transform: translateY(-2px);
+                }
+
+                .echo-title {
+                    color: var(--echo-black);
+                    font-size: 1.8rem;
+                }
+
+                .echo-line {
+                    width: 80px;
+                    height: 4px;
+                    background: linear-gradient(to right, #FDE021, #F8B500);
+                    margin: 10px auto 30px;
+                    border-radius: 2px;
+                }
+
+                .form-control-lg {
+                    border-radius: 10px !important;
+                    border: 1px solid #ddd;
+                }
+
+                .form-control-lg:focus {
+                    border-color: var(--echo-gold-main);
+                    box-shadow: 0 0 0 0.2rem rgba(248, 181, 0, 0.15);
+                }
+            </style>
+            
+            
+
+            <section style="background-color: #f8f9fa; min-height: 100vh; padding: 70px 0;">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-8 col-lg-5">
+                            <div class="card custom-login-card">
+                                <div class="card-body p-4 p-md-5">
+                                    <!-- العنوان الرئيسي المحدث -->
+                                    <div class="text-center mb-2">
+                                        <h2 class="echo-title font-weight-bold">تسجيل دخول العملاء</h2>
+                                        <div class="echo-line"/>
+                                    </div>
+                                    
+                                    <form id="custom_login_form">
+                                        <div class="form-group mb-4 text-start">
+                                            <label class="font-weight-bold mb-2">الفرع</label>
+                                            <select id="company_id" class="form-select form-select-lg w-100" required="required">
+                                                <option value="" disabled="disabled" selected="selected">اختر الفرع التابع لك</option>
+                                                <t t-foreach="branches" t-as="branch_name">
+                                                    <option t-att-value="branches[branch_name]['id']">
+                                                        <t t-esc="branch_name"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+
+                                       <div class="form-group mb-4 text-start">
+                                            <!-- التسمية مع الـ ID المطلوب لتغيير النص ديناميكياً -->
+                                            <label class="font-weight-bold mb-2" id="ref_label" style="display: block; min-height: 25px;">
+                                                الرقم المرجعي
+                                            </label>
+                                            
+                                            <!-- حقل الإدخال مع ID مطابق للكود البرمجي وتنسيقات Cairo -->
+                                            <input type="text" id="ref_suffix" name="ref_suffix" class="form-control form-control-lg shadow-sm" maxlength="4" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="0000" required="required" style="border: 1px solid #ddd; border-radius: 10px !important; transition: all 0.3s ease;"/>
+                                                   
+                                            <!-- نص توضيحي إضافي (اختياري) يظهر دائماً أسفل الحقل -->
+                                            <small class="text-muted mt-1 d-block" style="font-size: 0.8rem; opacity: 0.8;">
+                                                * يرجى إدخال آخر 4 أرقام من الرقم المرجعي الخاص و الموجود في فواتير مبيعاتك.
+                                            </small>
+                                        </div>
+
+                                        <div class="form-group mb-4 text-start">
+                                            <label class="font-weight-bold mb-2">كلمة المرور</label>
+                                            <input type="password" id="password" class="form-control form-control-lg" required="required"/>
+                                        </div>
+
+                                        <!-- زر الدخول المحدث -->
+                                        <button class="btn btn-echo-gold btn-lg w-100 mb-4 py-3 font-weight-bold" type="submit">
+                                            دخول
+                                        </button>
+                                        
+                                        <div id="login_error" class="alert alert-danger d-none"/>
+                                    </form>
+
+                                    <!-- الأزرار السفلية (أسود وأبيض) -->
+                                    <div class="row g-2 pt-3 border-top">
+                                        <div class="col-6">
+                                            <a href="/account/request" class="btn btn-echo-black w-100 py-3">
+                                                فتح ملف جديد
+                                            </a>
+                                        </div>
+                                        <div class="col-6">
+                                            <a href="/reset-password" class="btn btn-echo-black w-100 py-3">
+                                                تعيين كلمة المرور
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4 text-muted">
+                                <small>© 2026 شركة صدى الإعمار التجارية</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </t>
+</t>

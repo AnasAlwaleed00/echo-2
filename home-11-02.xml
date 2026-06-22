@@ -1,0 +1,1858 @@
+<t name="Homepage" t-name="website.homepage">
+    <script src="https://cdn.tailwindcss.com"/>
+    <t t-call="website.layout">
+        <t t-set="pageName" t-value="'homepage'"/>
+
+
+  <style>
+    :root {
+      --clr-primary:        #1d6fa4;
+      --clr-primary-light:  #3b9dd4;
+      --clr-primary-dim:    #7dbfe0;
+      --clr-primary-glow:   rgba(29, 111, 164, 0.22);
+      --clr-accent:         #e05c2a;
+    }
+
+    /* ── Slider wrapper ── */
+    .novix-hero-slider {
+      position: relative;
+      font-family: 'Tajawal', sans-serif;
+      direction: rtl;
+    }
+
+    /* ── Slide image ── */
+    .novix-slide { position: relative; overflow: hidden; }
+    .novix-slide-img {
+      width: 100%;
+      height: 90vh;
+      max-height: 750px;
+      min-height: 480px;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.04);
+      transition: transform 6s ease;
+    }
+    .carousel-item.active .novix-slide-img { transform: scale(1); }
+
+    /* ── Overlay: dark gradient from right ── */
+    .novix-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to left, rgba(5, 18, 32, 0.80) 0%, rgba(5, 18, 32, 0.40) 55%, rgba(5, 18, 32, 0.05) 100%),
+        linear-gradient(to top,  rgba(5, 18, 32, 0.55) 0%, transparent 45%);
+      z-index: 1;
+    }
+
+    /* ══════════════════════════════
+       CAPTION
+       ══════════════════════════════ */
+    .novix-caption {
+      position: absolute;
+      top: 50%;
+      right: 7%;
+      transform: translateY(-50%);
+      z-index: 2;
+      max-width: 580px;
+      text-align: right;
+
+      /* Glass card — matches the dark sections (Goals, Footer) */
+      background: rgba(10, 28, 48, 0.72);
+      border: 1px solid rgba(125, 191, 224, 0.22);
+      border-radius: 1.5rem;
+      padding: 2.5rem 2.25rem;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(125, 191, 224, 0.10),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    /* Top accent line inside caption */
+    .novix-caption::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 2rem; left: 2rem;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--clr-primary-dim), var(--clr-primary-light), var(--clr-primary-dim), transparent);
+      border-radius: 999px;
+    }
+
+    /* Eyebrow label */
+    .novix-caption-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(29, 111, 164, 0.25);
+      border: 1px solid rgba(125, 191, 224, 0.3);
+      color: var(--clr-primary-dim);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 0.28rem 0.85rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+
+    /* Heading */
+    .novix-caption h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 0.75rem;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+    }
+    .novix-caption h1 span {
+      background: linear-gradient(135deg, var(--clr-primary-light), var(--clr-primary-dim));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Subtitle */
+    .novix-caption p {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    /* CTA buttons row */
+    .novix-caption-btns {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    /* Primary CTA — gradient fill */
+    .novix-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-light));
+      color: #fff !important;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 800;
+      font-size: 0.88rem;
+      padding: 0.7rem 1.6rem;
+      border-radius: 999px;
+      text-decoration: none !important;
+      transition: box-shadow 0.25s, transform 0.25s;
+      box-shadow: 0 6px 20px var(--clr-primary-glow);
+      white-space: nowrap;
+    }
+    .novix-btn:hover {
+      box-shadow: 0 10px 30px rgba(29,111,164,0.45);
+      transform: translateY(-2px);
+    }
+
+    /* Secondary CTA — ghost */
+    .novix-btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.28);
+      color: #fff !important;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.7rem 1.4rem;
+      border-radius: 999px;
+      text-decoration: none !important;
+      transition: background 0.25s, border-color 0.25s, transform 0.25s;
+      backdrop-filter: blur(6px);
+      white-space: nowrap;
+    }
+    .novix-btn-ghost:hover {
+      background: rgba(255,255,255,0.16);
+      border-color: rgba(255,255,255,0.5);
+      transform: translateY(-2px);
+    }
+
+    /* ── Caption entrance animation ── */
+    @keyframes novixCaptionIn {
+      from { opacity: 0; transform: translateY(calc(-50% + 24px)); }
+      to   { opacity: 1; transform: translateY(-50%); }
+    }
+    .carousel-item.active .novix-caption {
+      animation: novixCaptionIn 0.65s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+    }
+
+    /* ── Carousel indicators — custom dots ── */
+    .novix-hero-slider .carousel-indicators {
+      bottom: 1.5rem;
+      gap: 0.4rem;
+      margin: 0;
+      justify-content: center;
+    }
+    .novix-hero-slider .carousel-indicators button {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.35);
+      border: none;
+      padding: 0;
+      transition: width 0.3s ease, background 0.3s ease;
+      opacity: 1;
+    }
+    .novix-hero-slider .carousel-indicators button.active {
+      width: 1.75rem;
+      background: linear-gradient(90deg, var(--clr-primary), var(--clr-primary-light));
+    }
+
+    /* ── Nav arrows ── */
+    .novix-hero-slider .carousel-control-prev,
+    .novix-hero-slider .carousel-control-next {
+      width: 3rem;
+      opacity: 1;
+      top: 50%;
+      transform: translateY(-50%);
+      height: auto;
+    }
+    .novix-nav-arrow {
+      width: 2.8rem;
+      height: 2.8rem;
+      background: rgba(255,255,255,0.10);
+      border: 1.5px solid rgba(255,255,255,0.22);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .novix-nav-arrow:hover {
+      background: var(--clr-primary);
+      border-color: var(--clr-primary);
+      transform: scale(1.1);
+    }
+    .novix-nav-arrow svg { width: 1rem; height: 1rem; stroke: #fff; stroke-width: 2.5; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .novix-slide-img { height: 70vh; min-height: 380px; }
+
+      .novix-caption {
+        top: auto;
+        bottom: 4.5rem;
+        right: 1rem;
+        left: 1rem;
+        transform: none;
+        max-width: 100%;
+        text-align: center;
+        padding: 1.5rem 1.25rem;
+        border-radius: 1.1rem;
+      }
+      .novix-caption::before { right: 1.5rem; left: 1.5rem; }
+
+      @keyframes novixCaptionIn {
+        from { opacity: 0; transform: translateY(16px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      .carousel-item.active .novix-caption {
+        animation: novixCaptionIn 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+      }
+
+      .novix-caption-eyebrow { font-size: 0.65rem; }
+      .novix-caption p { font-size: 0.82rem; margin-bottom: 1.1rem; }
+      .novix-caption-btns { justify-content: center; }
+      .novix-btn, .novix-btn-ghost { font-size: 0.82rem; padding: 0.6rem 1.2rem; }
+    }
+    
+    
+    
+    
+    
+    /* ── Stats Section ── */
+    .stats-section {
+      background:
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(29,111,164,0.15) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 60% at 10% 30%, rgba(59,157,212,0.10) 0%, transparent 60%),
+        linear-gradient(160deg, #0d2b42 0%, #081a2c 55%, #040f1a 100%);
+      padding: 5rem 1.5rem;
+      position: relative;
+    }
+
+    /* Decorative grid pattern overlay */
+    .stats-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(125,191,224,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(125,191,224,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    /* Diagonal accent line at top */
+    .stats-top-line {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--clr-primary-dim) 25%, var(--clr-primary-light) 50%, var(--clr-primary-dim) 75%, transparent);
+    }
+
+    .stats-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Header ── */
+    .stats-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .stats-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--clr-primary-dim);
+      margin-bottom: 0.6rem;
+    }
+    .stats-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.15;
+      margin: 0;
+    }
+    .stats-title span {
+      background: linear-gradient(135deg, var(--clr-primary-light), var(--clr-primary-dim));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Stats grid ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+
+    /* ── Stat card ── */
+    .stat-item {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(125,191,224,0.14);
+      border-radius: 1.25rem;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s, box-shadow 0.35s;
+      backdrop-filter: blur(6px);
+    }
+    .stat-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 20%; right: 20%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(125,191,224,0.4), transparent);
+      transition: opacity 0.3s;
+    }
+    .stat-item:hover {
+      transform: translateY(-6px);
+      border-color: rgba(125,191,224,0.35);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 0 24px rgba(29,111,164,0.15) inset;
+    }
+
+    /* Icon circle */
+    .stat-icon {
+      width: 3rem; height: 3rem;
+      background: linear-gradient(135deg, rgba(29,111,164,0.3), rgba(59,157,212,0.2));
+      border: 1px solid rgba(125,191,224,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      margin: 0 auto 1rem;
+    }
+
+    /* Animated number */
+    .stat-number {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+      background: linear-gradient(135deg, #fff 30%, var(--clr-primary-dim) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-suffix {
+      font-size: 1.4rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--clr-primary-light), var(--clr-primary-dim));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 0.3rem;
+    }
+    .stat-sublabel {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.5;
+    }
+
+    /* ── Counter animation ── */
+    @keyframes statFadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .stat-item { animation: statFadeUp 0.5s ease both; }
+    .stat-item:nth-child(1) { animation-delay: 0.05s; }
+    .stat-item:nth-child(2) { animation-delay: 0.13s; }
+    .stat-item:nth-child(3) { animation-delay: 0.21s; }
+    .stat-item:nth-child(4) { animation-delay: 0.29s; }
+    
+    
+    /* ── Why Cjoose Us Section ── */
+    .why-section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .why-section-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    /* ── Left: image stack ── */
+    .why-img-stack {
+      position: relative;
+    }
+    .why-img-main {
+      width: 100%;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(15,30,46,0.18);
+      aspect-ratio: 4/3;
+      position: relative;
+    }
+    .why-img-main img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .why-img-main:hover img { transform: scale(1.04); }
+
+    /* Floating accent card */
+    .why-img-badge {
+      position: absolute;
+      bottom: -1.5rem;
+      left: -1.5rem;
+      background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-light));
+      border-radius: 1rem;
+      padding: 1.1rem 1.4rem;
+      box-shadow: 0 12px 32px var(--clr-primary-glow);
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      z-index: 2;
+    }
+    .why-img-badge-icon { font-size: 1.8rem; line-height: 1; }
+    .why-img-badge-num {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+    }
+    .why-img-badge-txt {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.8);
+      font-weight: 600;
+    }
+
+    /* Decorative dot grid behind image */
+    .why-img-dots {
+      position: absolute;
+      top: -1.5rem;
+      right: -1.5rem;
+      width: 6rem; height: 6rem;
+      background-image: radial-gradient(circle, var(--clr-primary-dim) 1.5px, transparent 1.5px);
+      background-size: 12px 12px;
+      opacity: 0.35;
+      z-index: 0;
+    }
+
+    /* ── Right: text + features ── */
+    .why-content {}
+
+    .why-primary-divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--clr-primary-dim) 30%, var(--clr-primary-light) 50%, var(--clr-primary-dim) 70%, transparent);
+      border-radius: 999px;
+      margin: 1.25rem 0 2rem;
+    }
+
+    .why-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--clr-primary);
+      margin-bottom: 0.5rem;
+    }
+    .why-heading {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 900;
+      color: var(--clr-text-primary);
+      line-height: 1.2;
+      margin: 0;
+    }
+    .why-heading span {
+      background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .why-desc {
+      color: var(--clr-text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    /* ── Feature items ── */
+    .why-features {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .why-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: 1rem;
+      padding: 1.1rem 1.25rem;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s, border-color 0.3s;
+    }
+    .why-feature:hover {
+      transform: translateX(-6px);
+      border-color: var(--clr-primary-dim);
+      box-shadow: 0 8px 28px var(--clr-primary-glow);
+    }
+    .why-feature-icon {
+      width: 2.8rem; height: 2.8rem;
+      background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-light));
+      border-radius: 0.75rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px var(--clr-primary-glow);
+      transition: transform 0.3s;
+    }
+    .why-feature:hover .why-feature-icon { transform: scale(1.1) rotate(-4deg); }
+
+    .why-feature-title {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--clr-text-primary);
+      margin-bottom: 0.2rem;
+    }
+    .why-feature-desc {
+      font-size: 0.8rem;
+      color: var(--clr-text-secondary);
+      line-height: 1.6;
+    }
+
+    /* CTA button */
+    .why-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-light));
+      color: #fff !important;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 0.75rem 1.8rem;
+      border-radius: 999px;
+      text-decoration: none !important;
+      margin-top: 1.75rem;
+      transition: box-shadow 0.25s, transform 0.25s;
+      box-shadow: 0 6px 20px var(--clr-primary-glow);
+      display: inline-flex;
+    }
+    .why-cta:hover {
+      box-shadow: 0 10px 30px rgba(29,111,164,0.4);
+      transform: translateY(-2px);
+    }
+
+    /* ── Stagger animation ── */
+    @keyframes whyFadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .why-feature:nth-child(1) { animation: whyFadeUp 0.45s ease 0.05s both; }
+    .why-feature:nth-child(2) { animation: whyFadeUp 0.45s ease 0.13s both; }
+    .why-feature:nth-child(3) { animation: whyFadeUp 0.45s ease 0.21s both; }
+    .why-feature:nth-child(4) { animation: whyFadeUp 0.45s ease 0.29s both; }
+    
+    
+  </style>
+  
+        <div id="wrap" class="oe_structure">
+
+            <section class="novix-hero-slider">
+
+                <div id="novixHeroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+            
+                    <!-- Indicators -->
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#novixHeroCarousel" data-bs-slide-to="0" class="active"/>
+                        <button type="button" data-bs-target="#novixHeroCarousel" data-bs-slide-to="1"/>
+                        <button type="button" data-bs-target="#novixHeroCarousel" data-bs-slide-to="2"/>
+                        <button type="button" data-bs-target="#novixHeroCarousel" data-bs-slide-to="3"/>
+            
+                    </div>
+            
+                    <!-- Slides -->
+                    <div class="carousel-inner">
+            
+                        <!-- Slide 1 -->
+                        <div class="carousel-item active novix-slide">
+                            <img src="https://echoemaar.com/web/image/58519-7a30886f/slider1.jpg" class="d-block w-100 novix-slide-img" loading="lazy"/>
+            
+                            <div class="novix-overlay"/>
+            
+                            <div class="novix-caption">
+                                <h1>كل ما يحتاجه مشروعك في مكان واحد</h1>
+                                <a href="#" class="novix-btn">اطلب عرض سعر</a>
+                            </div>
+                        </div>
+            
+                        <!-- Slide 2 -->
+                        <div class="carousel-item novix-slide">
+                            <img src="https://echoemaar.com/web/image/58520-e6215b5a/slider2.jpg" class="d-block w-100 novix-slide-img" loading="lazy"/>
+            
+                            <div class="novix-overlay"/>
+            
+                            <div class="novix-caption">
+                                <h1>كل ما يحتاجه مشروعك في مكان واحد</h1>
+                                <a href="#" class="novix-btn">اكتشف خدماتنا</a>
+                            </div>
+                        </div>
+            
+                        <!-- Slide 3 -->
+                        <div class="carousel-item novix-slide">
+                            <img src="https://echoemaar.com/web/image/58521-f373a029/slider3.jpg" class="d-block w-100 novix-slide-img" loading="lazy"/>
+            
+                            <div class="novix-overlay"/>
+            
+                            <div class="novix-caption">
+                                <h1>كل ما يحتاجه مشروعك في مكان واحد</h1>
+                                <a href="#" class="novix-btn">تواصل معنا</a>
+                            </div>
+                        </div>
+            
+                    </div>
+                    <div class="carousel-item novix-slide">
+                                    <img src="https://echoemaar.com/web/image/58522-aae984c5/slider4.jpg" class="d-block w-100 novix-slide-img" loading="lazy"/>
+                    
+                        <div class="novix-overlay"/>
+                    
+                        <div class="novix-caption">
+                            <h1>كل ما يحتاجه مشروعك في مكان واحد</h1>
+                            <a href="#" class="novix-btn">تعرف أكثر</a>
+                        </div>
+                    </div>
+            
+                    <!-- Controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#novixHeroCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"/>
+                    </button>
+            
+                    <button class="carousel-control-next" type="button" data-bs-target="#novixHeroCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"/>
+                    </button>
+            
+                </div>
+            </section>
+
+        </div>
+        
+        
+        <section class="novix-category-carousel oe_structure" style="background-color: var(--clr-bg, #f7f5f2);               background-image: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(184,137,58,0.07) 0%, transparent 70%);               padding: 4rem 1rem;               font-family: 'Tajawal', sans-serif;               direction: rtl;             ">
+            
+         <div class="max-w-7xl mx-auto">
+
+            <!-- ── Header ── -->
+            <div class="mb-10" style="text-align:center;">
+              <p style="color:var(--clr-gold);font-size:0.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:0.5rem;">🗂️ التصنيفات</p>
+              <h2 class="cat-section-heading">تسوق حسب <span>التصنيف</span></h2>
+              <p style="color:var(--clr-text-secondary);font-size:0.92rem;margin-top:0.5rem;margin-bottom:1.5rem;">اختر ما يناسبك من تشكيلتنا الواسعة</p>
+              <div class="cat-gold-divider" style="max-width:30rem;margin-left:auto;margin-right:auto;"/>
+            </div>
+        
+            <!-- ── Carousel ── -->
+            <t t-set="categories" t-value="request.env['product.public.category'].sudo().search([         ('parent_id','=',False),         '|',         ('website_id','=',False),         ('website_id','=',request.website.id)    ], order='sequence asc')"/>
+            <t t-set="chunk_size" t-value="6"/>
+        
+            <div class="cat-carousel-wrap" id="novixCatCarousel">
+        
+              <!-- Track -->
+              <div class="cat-track-outer">
+                <div class="cat-track" id="novixCatTrack">
+        
+                  <t t-foreach="range(0, len(categories), chunk_size)" t-as="slide_i">
+                    <div class="cat-slide">
+                      <div class="cat-slide-inner">
+        
+                        <t t-foreach="categories[slide_i:slide_i+chunk_size]" t-as="category">
+                          <a t-att-href="'/shop/category/%s' % slug(category)" class="novix-cat-card">
+                        
+                            <div class="novix-cat-img-wrap">
+                              <img t-att-src="'/web/image/product.public.category/%s/image_1920' % category.id" t-att-alt="category.name"/>
+                              <div class="novix-cat-img-overlay"/>
+                            </div>
+                        
+                            <div class="novix-cat-title">
+                              <h6 t-esc="category.name"/>
+                            </div>
+                        
+                          </a>
+                        </t>
+        
+                      </div>
+                    </div>
+                  </t>
+        
+                </div>
+              </div>
+              <!-- /track -->
+        
+              <!-- Arrows -->
+              <button class="cat-arrow cat-arrow-prev" id="novixCatPrev" type="button" aria-label="السابق">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M15 18l-6-6 6-6" stroke="var(--clr-gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+        
+              <button class="cat-arrow cat-arrow-next" id="novixCatNext" type="button" aria-label="التالي">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M9 6l6 6-6 6" stroke="var(--clr-gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+        
+            </div>
+            <!-- /carousel wrap -->
+        
+            <!-- Dots -->
+            <div class="cat-dots" id="novixCatDots"/>
+        
+          </div>
+        </section>
+
+
+
+        <!-- ================= Best Sellers Section ================= -->
+        
+        
+        <t t-set="products" t-value="request.env['product.template'].search([('website_published','=',True)], limit=4)"/>
+
+        <section class="best-sellers-section oe_structure" style="               background-color: var(--clr-bg, #f4f7fb);               background-image: radial-gradient(ellipse 70% 50% at 50% 0%, var(--clr-primary-glow, rgba(29,111,164,0.12)) 0%, transparent 70%);               padding: 4rem 1rem;               font-family: 'Tajawal', sans-serif;               direction: rtl;             ">
+                    
+              <div class="max-w-7xl mx-auto">
+
+                <!-- Header -->
+                <div class="mb-10">
+                  <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-4">
+                    <div>
+                      <p style="color:var(--clr-primary);font-size:0.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:0.4rem;">🔥 الأعلى مبيعاً</p>
+                      <h2 class="bs-heading">المنتجات <span>الأكثر مبيعاً</span></h2>
+                      <p style="color:var(--clr-text-secondary);font-size:0.92rem;margin-top:0.5rem;">اختارها عملاؤنا بثقة — الأفضل جودةً وسعراً</p>
+                    </div>
+                    <a href="/shop" class="btn-view-all hidden sm:flex">
+                      عرض الكل
+                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                  </div>
+                  <div class="bs-divider"/>
+                </div>
+            
+                <!-- Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-5">
+            
+                  <t t-foreach="products" t-as="product">
+                    <div class="product-card">
+            
+                      <div class="img-wrapper">
+                        <a t-att-href="product.website_url">
+                          <img class="product-img" t-att-src="'/web/image/product.template/%s/image_1920' % product.id" t-att-alt="product.name"/>
+                        </a>
+                        <div class="img-overlay"/>
+                        <div class="rank-number">#<t t-esc="product_index + 1"/></div>
+                      
+                      </div>
+            
+                      <div class="p-3">
+                      
+            
+                        <h3 class="product-title">
+                          <a t-att-href="product.website_url" dir="rtl" style="color:inherit;text-decoration:none;">
+                            <t t-esc="product.web_pro_name"/>
+                          </a>
+                        </h3>
+            
+                        <p style="color:var(--clr-text-secondary);font-size:0.75rem;margin-bottom:0.5rem;text-align:center;">
+                          <!--<t t-esc="product.categ_id.name"/>-->
+                        </p>
+            
+                        
+            
+                        <div class="flex items-center justify-between mb-2.5">
+                          <span class="price-current text-base flex items-center gap-1"><t t-esc="'%.2f' % product.list_price"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 1124.14 1256.39" width="18" height="18">
+                              <defs>
+                                <style>
+                                  .cls-1 {
+                                    fill: #1d6fa4;
+                                  }
+                                </style>
+                              </defs>
+                              <path class="cls-1" d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"/>
+                              <path class="cls-1" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"/>
+                              <script xmlns=""/>
+                            </svg>
+                            
+                          </span>
+                          <t t-if="product.compare_list_price and product.compare_list_price &gt; product.list_price">
+                            <span class="price-old"><t t-esc="'%.2f' % product.compare_list_price"/> 
+                                <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 1124.14 1256.39" width="18" height="18">
+                                  <defs>
+                                    <style>
+                                      .cls-1 {
+                                        fill: #1d6fa4;
+                                      }
+                                    </style>
+                                  </defs>
+                                  <path class="cls-1" d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"/>
+                                  <path class="cls-1" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"/>
+                                  <script xmlns=""/>
+                                </svg>
+                            </span>
+                          </t>
+                          
+                         
+                        </div>
+            
+                        <div class="o_wsale_product_btn" t-if="product._is_add_to_cart_possible()">
+                            <a role="button" class="btn-cart novix-add-to-cart flex items-center justify-center gap-1" t-att-data-product-id="product.product_variant_id.id" t-att-data-template-id="product.id" href="#">
+                               أضف للسلة
+                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                            </a>
+                        </div>
+                      </div>
+            
+                    </div>
+                  </t>
+            
+                </div>
+            
+                <!-- Mobile View All -->
+                <div class="flex justify-center mt-8 sm:hidden">
+                  <a href="/shop" class="btn-view-all">
+                    عرض جميع المنتجات
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </a>
+                </div>
+            
+              </div>
+        </section>
+        
+        <t t-set="new_arrivals" t-value="request.env['product.template'].search([('website_published','=',True)], limit=4, order='create_date desc')"/>
+
+        <section class="new-arrivals-section oe_structure" style="           background-color: var(--clr-bg, #f4f7fb);           background-image: radial-gradient(ellipse 70% 50% at 80% 0%, var(--clr-primary-glow, rgba(29,111,164,0.10)) 0%, transparent 70%);           padding: 4rem 1rem;           font-family: 'Tajawal', sans-serif;           direction: rtl;         ">
+            
+            
+          
+          <div class="max-w-7xl mx-auto">
+        
+            <!-- ── Header ── -->
+            <div class="mb-10">
+              <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-4">
+                <div>
+                  <p style="color:var(--clr-primary);font-size:0.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:0.4rem;">✨ جديد</p>
+                  <h2 class="na-heading">وصل <span>حديثاً</span></h2>
+                  <p style="color:var(--clr-text-secondary);font-size:0.92rem;margin-top:0.5rem;">أحدث المنتجات — كن أول من يقتنيها</p>
+                </div>
+                <a href="/shop?order=create_date+desc" class="na-btn-view-all hidden sm:flex">
+                  عرض الكل
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+              <div class="na-divider"/>
+            </div>
+        
+            <!-- ── Grid ── -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-5">
+        
+              <t t-foreach="new_arrivals" t-as="product">
+                <div class="na-card">
+        
+                  <div class="na-img-wrap">
+                    <a t-att-href="product.website_url">
+                      <img class="na-img" t-att-src="'/web/image/product.template/%s/image_1920' % product.id" t-att-alt="product.name"/>
+                    </a>
+                    <div class="na-img-overlay"/>
+        
+                    <!-- NEW ribbon instead of rank -->
+                    <div class="na-ribbon">✦ جديد</div>
+        
+                  </div>
+        
+                  <div class="p-3">
+                   
+        
+                    <h3 class="product-title">
+                      <a t-att-href="product.website_url" dir="rtl" style="color:inherit;text-decoration:none;">
+                        <t t-esc="product.web_pro_name"/>
+                      </a>
+                    </h3>
+        
+                    <p style="color:var(--clr-text-secondary);font-size:0.75rem;margin-bottom:0.5rem;text-align:center;">
+                      <!--<t t-esc="product.categ_id.name"/>-->
+                    </p>
+        
+                  
+        
+                    <div class="flex items-center justify-between mb-2.5">
+                      <span class="na-price-current text-base flex items-center gap-1"><t t-esc="'%.2f' % product.list_price"/> 
+                          <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 1124.14 1256.39" width="18" height="18">
+                              <defs>
+                                <style>
+                                  .cls-1 {
+                                    fill: #1d6fa4;
+                                  }
+                                </style>
+                              </defs>
+                              <path class="cls-1" d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"/>
+                              <path class="cls-1" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"/>
+                              <script xmlns=""/>
+                            </svg>
+                      </span>
+                      <t t-if="product.compare_list_price and product.compare_list_price &gt; product.list_price">
+                        <span class="na-price-old"><t t-esc="'%.2f' % product.compare_list_price"/> 
+                            <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 1124.14 1256.39" width="18" height="18">
+                              <defs>
+                                <style>
+                                  .cls-1 {
+                                    fill: #1d6fa4;
+                                  }
+                                </style>
+                              </defs>
+                              <path class="cls-1" d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"/>
+                              <path class="cls-1" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"/>
+                              <script xmlns=""/>
+                            </svg>
+                        </span>
+                      </t>
+                    </div>
+        
+                    <div class="o_wsale_product_btn" t-if="product._is_add_to_cart_possible()">
+                        <a role="button" class="btn-cart novix-add-to-cart flex items-center justify-center gap-1" t-att-data-product-id="product.product_variant_id.id" t-att-data-template-id="product.id" href="#">
+                          أضف للسلة
+                          
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                        </a>
+                    </div>
+                      
+                  </div>
+        
+                </div>
+              </t>
+        
+            </div>
+        
+            <!-- Mobile View All -->
+            <div class="flex justify-center mt-8 sm:hidden">
+              <a href="/shop?order=create_date+desc" class="na-btn-view-all">
+                عرض جميع المنتجات
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+        
+          </div>
+        </section>
+        
+        <section class="stats-section oe_structure" style="   font-family: 'Tajawal', sans-serif;   direction: rtl;   position: relative;   overflow: hidden; ">
+          
+        
+          <div class="stats-top-line"/>
+        
+          <div class="stats-inner">
+        
+            <div class="stats-header">
+              <p class="stats-eyebrow">📊 إنجازاتنا</p>
+              <h2 class="stats-title">أرقامنا <span>تتحدث</span></h2>
+            </div>
+        
+            <div class="stats-grid">
+        
+              <div class="stat-item">
+                <div class="stat-icon">📦</div>
+                <div class="stat-number">
+                  <span class="stat-count" data-target="5000">٠</span>
+                  <span class="stat-suffix">+</span>
+                </div>
+                <div class="stat-label">منتج متاح</div>
+                <div class="stat-sublabel">تشكيلة متكاملة من الأدوات الصحية</div>
+              </div>
+        
+              <div class="stat-item">
+                <div class="stat-icon">😊</div>
+                <div class="stat-number">
+                  <span class="stat-count" data-target="12000">٠</span>
+                  <span class="stat-suffix">+</span>
+                </div>
+                <div class="stat-label">عميل راضٍ</div>
+                <div class="stat-sublabel">ثقة موروثة عبر السنوات</div>
+              </div>
+        
+              <div class="stat-item">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-number">
+                  <span class="stat-count" data-target="10">٠</span>
+                  <span class="stat-suffix">+</span>
+                </div>
+                <div class="stat-label">سنوات خبرة</div>
+                <div class="stat-sublabel">في مجال الأدوات الصحية</div>
+              </div>
+        
+              <div class="stat-item">
+                <div class="stat-icon">🚚</div>
+                <div class="stat-number">
+                  <span class="stat-count" data-target="98">٠</span>
+                  <span class="stat-suffix">%</span>
+                </div>
+                <div class="stat-label">نسبة رضا التوصيل</div>
+                <div class="stat-sublabel">توصيل في الموعد وبحالة ممتازة</div>
+              </div>
+        
+            </div>
+          </div>
+        
+          <script>
+          (function () {
+            /* Arabic-Indic digits map */
+            var ar = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+            function toArabic(n) {
+              return String(n).replace(/\d/g, function(d){ return ar[d]; });
+            }
+        
+            function animateCounter(el) {
+              var target  = parseInt(el.getAttribute('data-target'), 10);
+              var duration = 1800;
+              var start   = null;
+        
+              function step(ts) {
+                if (!start) start = ts;
+                var progress = Math.min((ts - start) / duration, 1);
+                /* ease-out cubic */
+                var eased = 1 - Math.pow(1 - progress, 3);
+                var current = Math.floor(eased * target);
+                el.textContent = toArabic(current);
+                if (progress &lt; 1) requestAnimationFrame(step);
+                else el.textContent = toArabic(target);
+              }
+              requestAnimationFrame(step);
+            }
+        
+            /* Trigger on IntersectionObserver */
+            var counters = document.querySelectorAll('.stat-count');
+            if ('IntersectionObserver' in window) {
+              var obs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                  if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    obs.unobserve(entry.target);
+                  }
+                });
+              }, { threshold: 0.4 });
+              counters.forEach(function(c) { obs.observe(c); });
+            } else {
+              counters.forEach(animateCounter);
+            }
+          })();
+          </script>
+        
+        </section>
+        
+        
+        
+        
+            
+        
+        <t t-set="our_picks" t-value="request.env['product.template'].search([('website_published','=',True)], limit=4, order='rating_avg desc')"/>
+
+        <section class="our-picks-section oe_structure" style="           background-color: var(--clr-bg, #f4f7fb);           background-image: radial-gradient(ellipse 70% 50% at 20% 50%, var(--clr-primary-glow, rgba(29,111,164,0.08)) 0%, transparent 70%);           padding: 4rem 1rem;           font-family: 'Tajawal', sans-serif;           direction: rtl;         ">
+            
+        
+          <div class="max-w-7xl mx-auto">
+        
+            <!-- ── Header ── -->
+            <div class="mb-10">
+              <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-4">
+                <div>
+                  <p style="color:var(--clr-primary);font-size:0.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:0.4rem;">⭐ اختيارات المحررين</p>
+                  <h2 class="op-heading">اخترنا <span>لكم</span></h2>
+                  <p style="color:var(--clr-text-secondary);font-size:0.92rem;margin-top:0.5rem;">منتقاة بعناية من فريقنا — الأفضل في كل فئة</p>
+                </div>
+                <a href="/shop?order=rating_avg+desc" class="op-btn-view-all hidden sm:flex">
+                  عرض الكل
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+              <div class="op-divider"/>
+            </div>
+        
+            <!-- ── Grid ── -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-5">
+        
+              <t t-foreach="our_picks" t-as="product">
+                <div class="op-card">
+        
+                  <div class="op-img-wrap">
+                    <a t-att-href="product.website_url">
+                      <img class="op-img" t-att-src="'/web/image/product.template/%s/image_1920' % product.id" t-att-alt="product.name"/>
+                    </a>
+                    <div class="op-img-overlay"/>
+        
+                    <!-- Star stamp -->
+                    <div class="op-stamp">⭐</div>
+        
+                  </div>
+        
+                  <div class="p-3">
+                  
+        
+                    <h3 class="product-title">
+                      <a t-att-href="product.website_url" dir="rtl" style="color:inherit;text-decoration:none;">
+                        <t t-esc="product.web_pro_name"/>
+                      </a>
+                    </h3>
+        
+                    <p style="color:var(--clr-text-secondary);font-size:0.75rem;margin-bottom:0.5rem;text-align:center;">
+                      <!--<t t-esc="product.categ_id.name"/>-->
+                    </p>
+        
+                    <div class="flex items-center justify-between mb-2.5">
+                      <span class="op-price-current text-base flex items-center gap-1"><t t-esc="'%.2f' % product.list_price"/>
+                           <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 1124.14 1256.39" width="18" height="18">
+                              <defs>
+                                <style>
+                                  .cls-1 {
+                                    fill: #1d6fa4;
+                                  }
+                                </style>
+                              </defs>
+                              <path class="cls-1" d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"/>
+                              <path class="cls-1" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"/>
+                              <script xmlns=""/>
+                            </svg>
+                      </span>
+                      <t t-if="product.compare_list_price and product.compare_list_price &gt; product.list_price">
+                        <span class="op-price-old"><t t-esc="'%.2f' % product.compare_list_price"/>
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 1124.14 1256.39" width="18" height="18">
+                              <defs>
+                                <style>
+                                  .cls-1 {
+                                    fill: #1d6fa4;
+                                  }
+                                </style>
+                              </defs>
+                              <path class="cls-1" d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"/>
+                              <path class="cls-1" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"/>
+                              <script xmlns=""/>
+                            </svg>
+                        </span>
+                      </t>
+                    </div>
+        
+                    <!--<div class="ajax_cart_modal_tools o_wsale_product_btn">-->
+                    <!--  <a class="op-cart a-submit" t-att-data-product-product-id="product.product_variant_id.id" t-att-data-product-template-id="product.id">-->
+                    <!--    🛒 أضف إلى السلة-->
+                    <!--  </a>-->
+                    <!--</div>-->
+                    
+                    <div class="o_wsale_product_btn" t-if="product._is_add_to_cart_possible()">
+                        <a role="button" class="btn-cart novix-add-to-cart flex items-center justify-center gap-1" t-att-data-product-id="product.product_variant_id.id" t-att-data-template-id="product.id" href="#">
+                            
+                            
+                            
+                          أضف للسلة
+                          
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                        </a>
+                  </div>
+              
+                  </div>
+        
+                </div>
+              </t>
+        
+            </div>
+        
+            <!-- Mobile View All -->
+            <div class="flex justify-center mt-8 sm:hidden">
+              <a href="/shop?order=rating_avg+desc" class="op-btn-view-all">
+                عرض جميع المنتجات
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+        
+          </div>
+        </section>
+
+        
+        
+        
+        <!-- ============================================================
+             SECTION 2: لماذا نحن — WHY CHOOSE US
+             Light background, asymmetric layout with image + features
+             ============================================================ -->
+        
+        <section class="why-section oe_structure" style="   background-color: var(--clr-bg, #f4f7fb);   background-image: radial-gradient(ellipse 55% 50% at 15% 60%, rgba(29,111,164,0.07) 0%, transparent 65%);   padding: 5rem 1.5rem;   font-family: 'Tajawal', sans-serif;   direction: rtl; ">
+        
+          <div class="why-section-inner">
+        
+            <!-- Image side -->
+            <div class="why-img-stack">
+              <div class="why-img-dots"/>
+              <div class="why-img-main">
+                <img src="https://images.unsplash.com/photo-1607400201515-c2c41c07d307?w=800&amp;h=600&amp;fit=crop&amp;auto=format" alt="متجر الأدوات الصحية"/>
+              </div>
+              <!-- Floating badge -->
+              <div class="why-img-badge">
+                <div class="why-img-badge-icon">🏆</div>
+                <div>
+                  <div class="why-img-badge-num">+١٠</div>
+                  <div class="why-img-badge-txt">سنوات خبرة</div>
+                </div>
+              </div>
+            </div>
+        
+            <!-- Content side -->
+            <div class="why-content">
+              <p class="why-eyebrow">✦ تميّزنا</p>
+              <h2 class="why-heading">لماذا تختار <span>متجرنا؟</span></h2>
+              <div class="why-primary-divider"/>
+              <p class="why-desc">
+                نحن لسنا مجرد متجر — نحن شريكك الموثوق في كل مشروع سباكة أو تجديد حمام. خبرتنا الميدانية وتشكيلتنا الواسعة تجعلنا الخيار الأول للأفراد والمقاولين على حد سواء.
+              </p>
+        
+              <div class="why-features">
+        
+                <div class="why-feature">
+                  <div class="why-feature-icon">🏅</div>
+                  <div>
+                    <div class="why-feature-title">جودة مضمونة بالكامل</div>
+                    <div class="why-feature-desc">جميع منتجاتنا مختارة بعناية من موردين معتمدين مع ضمان الاستبدال عند وجود أي عيب مصنعي.</div>
+                  </div>
+                </div>
+        
+                <div class="why-feature">
+                  <div class="why-feature-icon">💰</div>
+                  <div>
+                    <div class="why-feature-title">أسعار تنافسية لا تُضاهى</div>
+                    <div class="why-feature-desc">نعمل مباشرة مع الموردين لنوفّر أفضل الأسعار دون المساس بالجودة — جودة عالية بتكلفة معقولة.</div>
+                  </div>
+                </div>
+        
+                <div class="why-feature">
+                  <div class="why-feature-icon">🛠️</div>
+                  <div>
+                    <div class="why-feature-title">دعم فني متخصص</div>
+                    <div class="why-feature-desc">فريقنا من المتخصصين في الأدوات الصحية يساعدك في اختيار المنتج الصحيح لاحتياجك قبل وبعد الشراء.</div>
+                  </div>
+                </div>
+        
+                <div class="why-feature">
+                  <div class="why-feature-icon">🚚</div>
+                  <div>
+                    <div class="why-feature-title">توصيل سريع وآمن</div>
+                    <div class="why-feature-desc">شبكة توصيل تغطي جميع المناطق مع تغليف محكم يضمن وصول منتجاتك بحالة ممتازة.</div>
+                  </div>
+                </div>
+        
+              </div>
+        
+              <a href="/shop" class="why-cta">
+                تسوق الآن
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+        
+          </div>
+        </section>
+
+        
+
+
+        <style>
+        /* ===== القسم ===== */
+        .novix-category-carousel {
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        /* ===== البطاقة ===== */
+        .novix-category-card {
+            position: relative;
+            display: block;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+        }
+        
+        .novix-category-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        /* ===== شريط ORISA ===== */
+        .novix-brand-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: linear-gradient(45deg, #c9a227, #f2d57e);
+            color: #000;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            z-index: 10;
+            letter-spacing: 1px;
+        }
+        
+        /* ===== الصورة ===== */
+        .novix-category-image {
+            height: 100px;
+            padding: 10px;
+        }
+        
+        .novix-category-image img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: 0.4s ease;
+        }
+        
+        .novix-category-card:hover img {
+            transform: scale(1.08);
+        }
+        
+        /* ===== العنوان الذهبي ===== */
+        .novix-category-title {
+            background: linear-gradient(45deg, #c9a227, #f2d57e);
+            padding: 6px 5px;
+        }
+        
+        .novix-category-title h6 {
+            margin: 0;
+            font-size: 12px;
+            font-weight: 700;
+            color: #000;
+        }
+        
+        /* ===== الأسهم ===== */
+        /* خلفية الزر */
+        .novix-arrow {
+            position: absolute;
+            top: 45%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.9;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .novix-arrow:hover {
+            background: #111;
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+        }
+        
+        /* سهم SVG داخلي */
+        .novix-arrow svg path {
+            stroke: #d4af37; /* ذهبي واضح */
+        }
+        
+        /* توجيه الزر السابق لليسار */
+        .novix-arrow[data-bs-slide="prev"] {
+            left: -25px;
+        }
+        
+        /* توجيه الزر التالي لليمين */
+        .novix-arrow[data-bs-slide="next"] {
+            right: -25px;
+        }
+        
+        /* إخفاء أيقونات Bootstrap الافتراضية */
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            display: none;
+        }
+        
+        /* ===== استجابة الموبايل ===== */
+        @media (max-width: 768px) {
+        
+            /* ===== عرض الصفوف بشكل أفقي مع سحب ===== */
+            .row.justify-content-center {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scroll-behavior: smooth;
+                margin-left: -5px;  /* لتقليل الهوامش الخارجية */
+            }
+        
+            /* كل بطاقة بعرض 50% تقريبًا لعرض بطاقتين في الصف */
+            .col-lg-2, .col-md-2, .col-4 {
+                flex: 0 0 auto;
+                width: 48%;
+                margin-right: 4%;
+            }
+        
+            /* الصور داخل البطاقة */
+            .novix-category-image {
+                height: 70px;
+                padding: 5px;
+            }
+        
+            .novix-category-image img {
+                width: 60px;
+                height: 60px;
+                object-fit: cover;
+            }
+        
+            /* عنوان البطاقة */
+            .novix-category-title h6 {
+                font-size: 10px;
+                font-weight: 600;
+                margin: 4px 0;
+            }
+        
+            /* الشارة ORISA */
+            .novix-brand-badge {
+                font-size: 8px;
+                padding: 2px 6px;
+                top: 4px;
+                left: 4px;
+            }
+        
+            /* الأسهم */
+            .novix-arrow {
+                width: 35px;
+                height: 35px;
+                top: 40%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 0.9;
+            }
+        
+            .novix-arrow svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+        
+        </style>
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var myCarousel = document.querySelector('#novixCategoryCarousel');
+            if (myCarousel) {
+                new bootstrap.Carousel(myCarousel, {
+                    interval: 3000,
+                    ride: 'carousel',
+                    pause: false,
+                    wrap: true
+                });
+            }
+        });
+        </script>
+        
+        <!-- تفعيل الحركة بالقوة -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var myCarousel = document.querySelector('#novixCategoryCarousel');
+            if (myCarousel) {
+                new bootstrap.Carousel(myCarousel, {
+                    interval: 3000,
+                    ride: 'carousel',
+                    pause: false,
+                    wrap: true
+                });
+            }
+        });
+        </script>
+        
+        <script>
+           (function () {
+            var track  = document.getElementById('novixCatTrack');
+            var prev   = document.getElementById('novixCatPrev');
+            var next   = document.getElementById('novixCatNext');
+            var dotsEl = document.getElementById('novixCatDots');
+            if (!track) return;
+            var slides  = track.querySelectorAll('.cat-slide');
+            var total   = slides.length;
+            var current = 0;
+            for (var d = 0; d &lt; total; d++) {
+              var dot = document.createElement('button');
+              dot.className = 'cat-dot' + (d === 0 ? ' active' : '');
+              dot.setAttribute('aria-label', 'slide ' + (d + 1));
+              (function(idx){ dot.addEventListener('click', function(){ goTo(idx); }); })(d);
+              dotsEl.appendChild(dot);
+            }
+            function goTo(idx) {
+              current = (idx + total) % total;
+              track.style.transform = 'translateX(' + (current * 100) + '%)';
+              dotsEl.querySelectorAll('.cat-dot').forEach(function(dot, i) {
+                dot.classList.toggle('active', i === current);
+              });
+            }
+            prev.addEventListener('click', function () { goTo(current + 1); });
+            next.addEventListener('click', function () { goTo(current - 1); });
+            if (total &lt;= 1) {
+              prev.style.display = 'none';
+              next.style.display = 'none';
+              dotsEl.style.display = 'none';
+            }
+          })();
+          </script>
+
+
+
+          <!-- Countdown JS -->
+          <script>
+               (function () {
+                var endDate = new Date();
+                endDate.setDate(endDate.getDate() + 3);
+                endDate.setHours(endDate.getHours() + 14);
+                endDate.setMinutes(endDate.getMinutes() + 27);
+            
+                function pad(n) { return n &lt; 10 ? '0' + n : '' + n; }
+            
+                function tick() {
+                  var now  = new Date();
+                  var diff = Math.max(0, endDate - now);
+                  var d = Math.floor(diff / 86400000);
+                  var h = Math.floor((diff % 86400000) / 3600000);
+                  var m = Math.floor((diff % 3600000)  / 60000);
+                  var s = Math.floor((diff % 60000)    / 1000);
+                  var dEl = document.getElementById('pbDays');
+                  var hEl = document.getElementById('pbHours');
+                  var mEl = document.getElementById('pbMins');
+                  var sEl = document.getElementById('pbSecs');
+                  if (dEl) dEl.textContent = pad(d);
+                  if (hEl) hEl.textContent = pad(h);
+                  if (mEl) mEl.textContent = pad(m);
+                  if (sEl) sEl.textContent = pad(s);
+                }
+            
+                tick();
+                setInterval(tick, 1000);
+              })();
+          </script>
+          
+          <script>
+  /* ─────────────────────────────────────────────────────────
+     NOVIX ADD TO CART — mirrors Odoo's JSON-RPC cart flow:
+     1. show_advanced_configurator  (check for variants)
+     2. cart/update_json            (add item)
+     3. get_combination_info        (refresh price)
+     Shows Odoo's native notification toast, no page redirect
+     ───────────────────────────────────────────────────────── */
+  (function () {
+
+    /* ── Inject toast styles once ── */
+    var styleTag = document.createElement('style');
+    styleTag.textContent = [
+      '#novix-toast {',
+      '  position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%) translateY(0);',
+      '  z-index:99999; direction:rtl; font-family:Tajawal,sans-serif;',
+      '  background:rgba(10,28,48,0.96); border:1px solid rgba(125,191,224,0.25);',
+      '  border-radius:1rem; overflow:hidden;',
+      '  box-shadow:0 16px 48px rgba(0,0,0,0.35), 0 0 0 1px rgba(125,191,224,0.1);',
+      '  backdrop-filter:blur(14px); min-width:300px; max-width:360px;',
+      '  animation:novixToastIn 0.4s cubic-bezier(0.34,1.3,0.64,1) both;',
+      '}',
+      '#novix-toast.novix-toast-out { animation:novixToastOut 0.3s ease forwards; }',
+      '@keyframes novixToastIn  { from{opacity:0;transform:translateX(-50%) translateY(20px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }',
+      '@keyframes novixToastOut { from{opacity:1;transform:translateX(-50%) translateY(0)} to{opacity:0;transform:translateX(-50%) translateY(16px)} }',
+      '#novix-toast .nt-top-bar {',
+      '  height:3px;',
+      '  background:linear-gradient(90deg,transparent,#7dbfe0 30%,#3b9dd4 50%,#7dbfe0 70%,transparent);',
+      '}',
+      '#novix-toast .nt-body { display:flex; align-items:center; gap:0.85rem; padding:0.9rem 1rem; }',
+      '#novix-toast .nt-img {',
+      '  width:3.5rem; height:3.5rem; border-radius:0.6rem; object-fit:cover; flex-shrink:0;',
+      '  border:1px solid rgba(125,191,224,0.2); background:#1a3a56;',
+      '}',
+      '#novix-toast .nt-img-placeholder {',
+      '  width:3.5rem; height:3.5rem; border-radius:0.6rem; flex-shrink:0; font-size:1.6rem;',
+      '  background:linear-gradient(135deg,#1a3a56,#0d2340); border:1px solid rgba(125,191,224,0.2);',
+      '  display:flex; align-items:center; justify-content:center;',
+      '}',
+      '#novix-toast .nt-info { flex:1; min-width:0; }',
+      '#novix-toast .nt-label {',
+      '  font-size:0.68rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase;',
+      '  color:#7dbfe0; margin-bottom:0.2rem;',
+      '}',
+      '#novix-toast .nt-name {',
+      '  font-size:0.88rem; font-weight:700; color:#fff;',
+      '  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:0.25rem;',
+      '}',
+      '#novix-toast .nt-price { font-size:0.8rem; font-weight:800; color:#3b9dd4; }',
+      '#novix-toast .nt-actions { display:flex; gap:0.5rem; padding:0 1rem 0.85rem; }',
+      '#novix-toast .nt-btn-cart {',
+      '  flex:1; background:linear-gradient(135deg,#1d6fa4,#3b9dd4); color:#fff;',
+      '  font-family:Tajawal,sans-serif; font-weight:800; font-size:0.78rem;',
+      '  padding:0.45rem 0.75rem; border-radius:0.6rem; border:none; cursor:pointer;',
+      '  text-decoration:none; text-align:center; transition:box-shadow 0.2s;',
+      '}',
+      '#novix-toast .nt-btn-cart:hover { box-shadow:0 4px 14px rgba(29,111,164,0.4); }',
+      '#novix-toast .nt-btn-close {',
+      '  width:2rem; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);',
+      '  border-radius:0.6rem; color:rgba(255,255,255,0.5); font-size:1rem; cursor:pointer;',
+      '  display:flex; align-items:center; justify-content:center;',
+      '  transition:background 0.2s, color 0.2s;',
+      '}',
+      '#novix-toast .nt-btn-close:hover { background:rgba(255,255,255,0.12); color:#fff; }',
+      '#novix-toast.nt-error { border-color:rgba(224,92,42,0.4); }',
+      '#novix-toast.nt-error .nt-top-bar { background:linear-gradient(90deg,transparent,#e05c2a,transparent); }',
+      '#novix-toast.nt-error .nt-label { color:#e05c2a; }'
+    ].join('\n');
+    document.head.appendChild(styleTag);
+
+    /* ── Helpers ── */
+    function jsonRpc(url, params) {
+      return fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ jsonrpc: '2.0', method: 'call', id: Date.now(), params: params })
+      }).then(function (r) { return r.json(); });
+    }
+
+    function getCookie(name) {
+      var m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return m ? decodeURIComponent(m[2]) : null;
+    }
+
+    var toastTimer = null;
+
+    function dismissToast() {
+      var t = document.getElementById('novix-toast');
+      if (!t) return;
+      t.classList.add('novix-toast-out');
+      setTimeout(function () { if (t.parentNode) t.remove(); }, 320);
+    }
+
+    function showProductToast(info) {
+      /* info: { name, imgSrc, price, productUrl, isError, errorMsg } */
+      clearTimeout(toastTimer);
+      dismissToast();
+
+      setTimeout(function () {
+        var toast = document.createElement('div');
+        toast.id = 'novix-toast';
+        if (info.isError) toast.classList.add('nt-error');
+
+        var imgHtml = info.imgSrc
+          ? '<img class="nt-img" src="' + info.imgSrc + '" alt="' + (info.name || '') + '"/>'
+          : '<div class="nt-img-placeholder">🛒</div>';
+
+        toast.innerHTML = [
+          '<div class="nt-top-bar"/>',
+          '<div class="nt-body">',
+            imgHtml,
+            '<div class="nt-info">',
+              '<div class="nt-label">' + (info.isError ? '⚠️ خطأ' : '✅ تمت الإضافة') + '</div>',
+              '<div class="nt-name">' + (info.isError ? (info.errorMsg || 'حدث خطأ') : (info.name || 'المنتج')) + '</div>',
+              (!info.isError &amp;&amp; info.price ? '<div class="nt-price">' + info.price + ' ر.س</div>' : ''),
+            '</div>',
+          '</div>',
+          (!info.isError ? [
+            '<div class="nt-actions">',
+              '<a href="/shop/cart" class="nt-btn-cart">🛒 عرض السلة</a>',
+              '<button class="nt-btn-close" id="novix-toast-close">✕</button>',
+            '</div>'
+          ].join('') : ''),
+        ].join('');
+
+        document.body.appendChild(toast);
+
+        var closeBtn = document.getElementById('novix-toast-close');
+        if (closeBtn) closeBtn.addEventListener('click', dismissToast);
+
+        toastTimer = setTimeout(dismissToast, info.isError ? 4000 : 5000);
+      }, 60);
+    }
+
+    function updateCartCount(qty) {
+      var badges = document.querySelectorAll(
+        '.o_wsale_my_cart_quantity, #cart_total, .my_cart_quantity'
+      );
+      badges.forEach(function (el) {
+        var current = parseInt(el.textContent, 10) || 0;
+        el.textContent = current + qty;
+      });
+    }
+
+    /* ── Extract product info from the card DOM ── */
+    function getProductInfoFromCard(btn) {
+      var card = btn.closest('[class*="-card"], .product-card, .na-card, .op-card, .bs-card');
+      if (!card) return {};
+      /* Image */
+      var img    = card.querySelector('img');
+      var imgSrc = img ? img.getAttribute('src') : null;
+      /* Name */
+      var nameEl = card.querySelector('h3, h4, h5, h6, [class*="-title"] h6');
+      var name   = nameEl ? nameEl.textContent.trim() : null;
+      /* Price */
+      var priceEl = card.querySelector('[class*="price-current"], [class*="-price-current"]');
+      var price   = priceEl ? priceEl.textContent.trim().replace('ر.س','').trim() : null;
+      /* Product URL */
+      var linkEl  = card.querySelector('a[href*="/shop/"]');
+      var url     = linkEl ? linkEl.getAttribute('href') : null;
+      return { imgSrc: imgSrc, name: name, price: price, productUrl: url };
+    }
+
+    /* ── Main click handler ── */
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.novix-add-to-cart');
+      if (!btn) return;
+      e.preventDefault();
+
+      var productId  = parseInt(btn.getAttribute('data-product-id'), 10);
+      var templateId = parseInt(btn.getAttribute('data-template-id'), 10);
+      if (!productId || !templateId) return;
+
+      var cardInfo     = getProductInfoFromCard(btn);
+      var originalHtml = btn.innerHTML;
+      btn.innerHTML    = '⏳ جارٍ الإضافة...';
+      btn.style.pointerEvents = 'none';
+
+      /* Step 1: configurator check */
+      jsonRpc('/sale_product_configurator/show_advanced_configurator', {
+        product_id: productId,
+        variant_values: [],
+        product_custom_attribute_values: [],
+        pricelist_id: false,
+        add_qty: 1,
+        force_dialog: false,
+        no_attribute: [],
+        custom_attribute: [],
+        context: { quantity: 1, website_id: parseInt(getCookie('website_id') || '1', 10) }
+      }).then(function (res) {
+        if (res &amp;&amp; res.result &amp;&amp; res.result.mode === 'advanced') {
+          window.location.href = cardInfo.productUrl || '/shop';
+          return;
+        }
+        /* Step 2: add to cart */
+        return jsonRpc('/shop/cart/update_json', {
+          product_id: productId,
+          product_custom_attribute_values: '[]',
+          variant_values: [],
+          no_variant_attribute_values: '[]',
+          add_qty: 1,
+          display: false,
+          force_create: true
+        });
+      }).then(function (res) {
+        if (!res) return;
+
+        btn.innerHTML = '✅ تمت الإضافة!';
+        updateCartCount(1);
+
+        showProductToast({
+          name:       cardInfo.name,
+          imgSrc:     cardInfo.imgSrc,
+          price:      cardInfo.price,
+          productUrl: cardInfo.productUrl
+        });
+
+        document.dispatchEvent(new CustomEvent('cart_update', {
+          detail: { cart_quantity: res.result &amp;&amp; res.result.cart_quantity }
+        }));
+
+        setTimeout(function () {
+          btn.innerHTML = originalHtml;
+          btn.style.pointerEvents = '';
+        }, 2000);
+
+      }).catch(function () {
+        btn.innerHTML = originalHtml;
+        btn.style.pointerEvents = '';
+        showProductToast({ isError: true, errorMsg: 'حدث خطأ، يرجى المحاولة مجدداً' });
+      });
+    });
+
+  })();
+  </script>
+              
+
+
+        <!-- Custom CSS -->
+        <style>
+            .custom-hero-slider {
+                width: 100%;
+                overflow: hidden;
+            }
+
+            .slider-img {
+                height: 650px;
+                object-fit: cover;
+            }
+
+            @media (max-width: 992px) {
+                .slider-img {
+                    height: 450px;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .slider-img {
+                    height: 300px;
+                }
+            }
+        </style>
+
+    </t>
+</t>

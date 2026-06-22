@@ -1,0 +1,287 @@
+<t name="Account Request" t-name="customer_account_request.account_request_template_1">
+    <t t-call="website.layout">
+
+        <style>
+            *, *::before, *::after { box-sizing: border-box; }
+
+            :root {
+              --gold: #C9982A; --gold-dark: #A87B1E;
+              --navy: #0D1B2E; --white: #FFFFFF;
+              --text-muted: #8A8A8A; --border: #E2DDD4; --input-bg: #FAFAF8;
+              --danger: #842029; --danger-bg: #fde8ea; --danger-border: #f5c2c7;
+            }
+
+            body { font-family: "Cairo", sans-serif; background: #F4F4F2; color: #1a1a1a; }
+
+            /* ── PAGE HEADER ── */
+            .req-header {
+              background: var(--navy);
+              padding: 28px 40px;
+              text-align: center;
+              position: relative;
+              overflow: hidden;
+            }
+            .req-header::after {
+              content: "";
+              position: absolute;
+              inset: 0;
+              background: linear-gradient(135deg, rgba(201,152,42,0.12) 0%, transparent 60%);
+              pointer-events: none;
+            }
+            .req-header-logo { height: 46px; width: auto; margin-bottom: 16px; display: block; margin-left: auto; margin-right: auto; }
+            .req-header h1 { font-size: 26px; font-weight: 800; color: var(--white); margin: 0 0 6px; }
+            .req-header p { font-size: 13px; color: rgba(255,255,255,0.55); margin: 0; }
+
+            /* ── WRAPPER ── */
+            .req-body { max-width: 780px; margin: 0 auto; padding: 36px 20px 60px; direction: rtl; }
+
+            /* ── ERROR ── */
+            .req-error { padding: 12px 16px; border-radius: 10px; border: 1px solid var(--danger-border); background: var(--danger-bg); color: var(--danger); font-size: 13px; text-align: center; margin-bottom: 24px; font-weight: 600; }
+
+            /* ── SECTION CARD ── */
+            .req-card { background: var(--white); border-radius: 16px; padding: 24px 28px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+            .req-card-title { font-size: 14px; font-weight: 800; color: var(--navy); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--gold); display: flex; align-items: center; gap: 10px; }
+            .req-card-title svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+            /* ── FIELDS ── */
+            .req-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+            .req-row.single { grid-template-columns: 1fr; }
+            .req-row.quad { grid-template-columns: 1fr 1fr; }
+            .field-group { display: flex; flex-direction: column; gap: 6px; }
+            .field-group label { font-size: 12.5px; font-weight: 700; color: #333; }
+            .field-group .req-mark { color: var(--gold-dark); }
+            .req-input, .req-select { width: 100%; height: 46px; border: 1.5px solid var(--border); border-radius: 10px; padding: 0 14px; font-family: "Cairo", sans-serif; font-size: 16px; color: #333; background: var(--input-bg); direction: rtl; text-align: right; outline: none; appearance: none; transition: border-color 0.2s, box-shadow 0.2s; }
+            .req-input:focus, .req-select:focus { border-color: var(--gold); background: #fff; box-shadow: 0 0 0 3px rgba(201,152,42,0.12); }
+            .req-input::placeholder { color: #c5bfb5; }
+            .req-input[readonly] { background: #f0ede8; color: var(--text-muted); cursor: default; }
+            .req-input[type="file"] { height: auto; padding: 10px 14px; font-size: 16px; }
+            .req-input[type="number"] { text-align: right; }
+            .req-select optgroup { font-weight: 700; color: var(--navy); }
+
+            .req-body input:not([type="checkbox"]), .req-body select, .req-body textarea { font-size: 16px; }
+
+            /* ── TERMS ── */
+            .terms-row { display: flex; align-items: center; gap: 10px; padding: 16px 20px; background: var(--input-bg); border-radius: 10px; border: 1.5px solid var(--border); cursor: pointer; }
+            .terms-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0; }
+            .terms-row label { font-size: 13px; color: #333; font-weight: 600; cursor: pointer; }
+            .terms-row a { color: var(--gold-dark); text-decoration: underline; }
+
+            /* ── SUBMIT ── */
+            .req-submit-wrap { text-align: center; margin-top: 8px; }
+            .req-submit { height: 52px; padding: 0 60px; background: var(--gold); border: none; border-radius: 12px; font-family: "Cairo", sans-serif; font-size: 17px; font-weight: 800; color: var(--white); cursor: pointer; transition: background 0.2s, transform 0.1s; letter-spacing: 0.5px; }
+            .req-submit:hover { background: var(--gold-dark); }
+            .req-submit:active { transform: scale(0.98); }
+
+            /* ── BACK LINK ── */
+            .req-back { display: block; text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted); text-decoration: none; }
+            .req-back:hover { color: var(--gold-dark); }
+
+            /* ── MOBILE ── */
+            @media (max-width: 600px) {
+              .req-header { padding: 20px 18px; }
+              .req-header h1 { font-size: 20px; }
+              .req-body { padding: 20px 12px 48px; }
+              .req-card { padding: 18px 16px; }
+              .req-row, .req-row.quad { grid-template-columns: 1fr; gap: 12px; }
+              .req-submit { width: 100%; padding: 0; }
+            }
+        </style>
+
+        <!-- Header -->
+        <div class="req-header">
+            <img class="req-header-logo" src="https://echoemaar.com/web/image/414659-f352b2fe/orisa-png.webp" alt="ORISA Logo"/>
+            <h1>طلب فتح حساب جديد</h1>
+            <p>هذه المعلومات مبدئية لفتح الملف وليست نهائية وسيتم مراجعتها وإكمال الملف من قبل الشركة</p>
+        </div>
+
+        <div class="req-body">
+
+            <t t-if="error_msg">
+                <div class="req-error" role="alert"><t t-esc="error_msg"/></div>
+            </t>
+
+            <form action="/account/request/submit" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                <!-- المعلومات الأساسية -->
+                <div class="req-card">
+                    <div class="req-card-title">
+                        <svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 3H8a2 2 0 00-2 2v2h12V5a2 2 0 00-2-2z"/></svg>
+                        المعلومات الأساسية
+                    </div>
+                    <div class="req-row single" style="margin-bottom:16px;">
+                        <div class="field-group">
+                            <label>التاريخ</label>
+                            <input type="text" name="today" class="req-input" t-att-value="today" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="req-row">
+                        <div class="field-group">
+                            <label>اسم الشركة <span class="req-mark">*</span></label>
+                            <input type="text" name="name" class="req-input" placeholder="اسم الشركة" required="required"/>
+                        </div>
+                        <div class="field-group">
+                            <label>شعار الشركة <span class="req-mark">*</span></label>
+                            <input type="file" name="image" class="req-input" required="required"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بيانات الشركة -->
+                <div class="req-card">
+                    <div class="req-card-title">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+                        بيانات الشركة
+                    </div>
+                    <div class="req-row">
+                        <div class="field-group">
+                            <label>رقم السجل التجاري <span class="req-mark">*</span></label>
+                            <input type="text" name="company_registry" class="req-input" pattern="^[0-9]{1,10}$" maxlength="10" placeholder="مثال: 1010xxxxxx" title="يجب أن لا يتجاوز 10 أرقام" required="required"/>
+                        </div>
+                        <div class="field-group">
+                            <label>الرقم الضريبي <span class="req-mark">*</span></label>
+                            <input type="text" name="vat" class="req-input" pattern="^[0-9]{1,15}$" maxlength="15" placeholder="مثال: 300xxxxxxxxx" title="يجب أن لا يتجاوز 15 رقم" required="required"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- العنوان الوطني -->
+                <div class="req-card">
+                    <div class="req-card-title">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                        العنوان الوطني
+                    </div>
+                    <div class="req-row single" style="margin-bottom:16px;">
+                        <div class="field-group">
+                            <label>المدينة <span class="req-mark">*</span></label>
+                            <select name="city" class="req-select" required="required">
+                                <option value="">اختر المدينة</option>
+                                <optgroup label="المنطقة الوسطى">
+                                    <option value="الرياض">الرياض</option>
+                                    <option value="الخرج">الخرج</option>
+                                    <option value="الدوادمي">الدوادمي</option>
+                                    <option value="المجمعة">المجمعة</option>
+                                    <option value="الزلفي">الزلفي</option>
+                                    <option value="وادي الدواسر">وادي الدواسر</option>
+                                    <option value="الأفلاج">الأفلاج</option>
+                                    <option value="شقراء">شقراء</option>
+                                </optgroup>
+                                <optgroup label="المنطقة الغربية">
+                                    <option value="جدة">جدة</option>
+                                    <option value="مكة المكرمة">مكة المكرمة</option>
+                                    <option value="المدينة المنورة">المدينة المنورة</option>
+                                    <option value="الطائف">الطائف</option>
+                                    <option value="ينبع">ينبع</option>
+                                    <option value="رابغ">رابغ</option>
+                                    <option value="القنفذة">القنفذة</option>
+                                    <option value="الليث">الليث</option>
+                                </optgroup>
+                                <optgroup label="المنطقة الشرقية">
+                                    <option value="الدمام">الدمام</option>
+                                    <option value="الخبر">الخبر</option>
+                                    <option value="الظهران">الظهران</option>
+                                    <option value="الجبيل">الجبيل</option>
+                                    <option value="الأحساء">الأحساء</option>
+                                    <option value="القطيف">القطيف</option>
+                                    <option value="رأس تنورة">رأس تنورة</option>
+                                    <option value="بقيق">بقيق</option>
+                                    <option value="حفر الباطن">حفر الباطن</option>
+                                </optgroup>
+                                <optgroup label="المنطقة الجنوبية">
+                                    <option value="أبها">أبها</option>
+                                    <option value="خميس مشيط">خميس مشيط</option>
+                                    <option value="جازان">جازان</option>
+                                    <option value="نجران">نجران</option>
+                                    <option value="الباحة">الباحة</option>
+                                </optgroup>
+                                <optgroup label="المنطقة الشمالية">
+                                    <option value="تبوك">تبوك</option>
+                                    <option value="عرعر">عرعر</option>
+                                    <option value="سكاكا">سكاكا</option>
+                                    <option value="القريات">القريات</option>
+                                </optgroup>
+                                <optgroup label="القصيم">
+                                    <option value="بريدة">بريدة</option>
+                                    <option value="عنيزة">عنيزة</option>
+                                    <option value="الرس">الرس</option>
+                                </optgroup>
+                                <optgroup label="حائل">
+                                    <option value="حائل">حائل</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="req-row quad">
+                        <div class="field-group">
+                            <label>الشارع <span class="req-mark">*</span></label>
+                            <input type="text" name="street" class="req-input" placeholder="اسم الشارع" required="required"/>
+                        </div>
+                        <div class="field-group">
+                            <label>الحي <span class="req-mark">*</span></label>
+                            <input type="text" name="district" class="req-input" placeholder="اسم الحي" required="required"/>
+                        </div>
+                        <div class="field-group">
+                            <label>رقم المبنى <span class="req-mark">*</span></label>
+                            <input type="text" name="building_number" class="req-input" placeholder="رقم المبنى" required="required"/>
+                        </div>
+                        <div class="field-group">
+                            <label>الرمز البريدي <span class="req-mark">*</span></label>
+                            <input type="text" name="zip" class="req-input" placeholder="مثال: 12345" required="required"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- معلومات التواصل -->
+                <div class="req-card">
+                    <div class="req-card-title">
+                        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                        معلومات التواصل
+                    </div>
+                    <div class="req-row">
+                        <div class="field-group">
+                            <label>رقم الجوال <span class="req-mark">*</span></label>
+                            <input type="text" name="mobile" class="req-input" placeholder="966512345678" required="required"/>
+                        </div>
+                        <div class="field-group">
+                            <label>البريد الإلكتروني <span class="req-mark">*</span></label>
+                            <input type="email" name="email" class="req-input" placeholder="example@company.com" required="required"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بيانات مالية وممثل الشركة -->
+                <div class="req-card">
+                    <div class="req-card-title">
+                        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                        البيانات المالية
+                    </div>
+                    <div class="req-row">
+                        <div class="field-group">
+                            <label>الحد المتوقع للمشتريات (ريال) <span class="req-mark">*</span></label>
+                            <input type="number" name="new_credit" class="req-input" placeholder="0.00" required="required"/>
+                        </div>
+                        <div class="field-group">
+                            <label>اسم ممثل الشركة <span class="req-mark">*</span></label>
+                            <input type="text" name="commercial_owner" class="req-input" placeholder="الاسم الكامل" required="required"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الشروط والتقديم -->
+                <div class="req-card">
+                    <label class="terms-row">
+                        <input type="checkbox" name="terms" required="required"/>
+                        <span>أوافق على <a href="/new-account-policy">سياسة طلب فتح حساب جديد</a> الخاصة بفتح الحساب</span>
+                    </label>
+                </div>
+
+                <div class="req-submit-wrap">
+                    <button type="submit" class="req-submit">تأكيد الطلب</button>
+                    <a href="/custom/login" class="req-back">العودة لتسجيل الدخول</a>
+                </div>
+
+            </form>
+        </div>
+
+    </t>
+</t>

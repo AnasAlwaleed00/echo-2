@@ -1,0 +1,228 @@
+<t t-name="theme_emart_plant.add_address">
+    <t t-set="no_footer">1</t>
+    <t t-call="website.layout">
+
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+        <style>
+            #wrap.eoa, #wrap.eoa *, #wrap.eoa *::before, #wrap.eoa *::after { box-sizing: border-box; font-family: "Cairo", sans-serif; }
+            #wrap.eoa .fa, #wrap.eoa .fa::before, #wrap.eoa i.fa, #wrap.eoa i[class*="fa-"]::before { font-family: FontAwesome !important; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; }
+
+            #wrap.eoa {
+                --gold: #C9982A; --gold-dark: #A87B1E; --gold-light: rgba(201, 152, 42, 0.12);
+                --navy: #0D1B2E; --bg: #F7F5F0; --card: #FFFFFF; --border: #E8E2D9;
+                --text: #1A1A2E; --muted: #8A8578; --red: #dc2626; --red-bg: #fef2f2;
+                background: var(--bg); direction: rtl; text-align: right;
+            }
+
+            #wrap.eoa h1, #wrap.eoa p { margin: 0; padding: 0; }
+            #wrap.eoa a { text-decoration: none; color: inherit; }
+            #wrap.eoa a.eoa-btn-submit, #wrap.eoa a.eoa-btn-submit:hover,
+            #wrap.eoa button.eoa-btn-submit, #wrap.eoa button.eoa-btn-submit:hover { color: #fff !important; }
+
+            .eoa-shell { max-width: 720px; margin: 0 auto; padding: 28px 20px 56px; }
+
+            .eoa-back {
+                display: inline-flex; align-items: center; gap: 8px;
+                font-size: 13px; font-weight: 600; color: var(--muted);
+                margin-bottom: 16px; transition: color 0.15s;
+            }
+            .eoa-back:hover { color: var(--gold-dark); }
+
+            .eoa-hero {
+                background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+                padding: 22px 24px; margin-bottom: 20px; position: relative; overflow: hidden;
+            }
+            .eoa-hero::before {
+                content: ""; position: absolute; top: 0; right: 0; width: 4px; height: 100%;
+                background: linear-gradient(180deg, #FDE021, var(--gold));
+            }
+            .eoa-hero h1 { font-size: 20px; font-weight: 800; color: var(--navy); margin-bottom: 6px !important; }
+            .eoa-hero p { font-size: 13px; color: var(--muted); font-weight: 600; line-height: 1.7; }
+
+            .eoa-panel {
+                background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+                padding: 24px 22px; margin-bottom: 16px;
+            }
+
+            .eoa-form-section { margin-bottom: 22px; }
+            .eoa-form-section:last-child { margin-bottom: 0; }
+            .eoa-form-section-title {
+                font-size: 14px; font-weight: 700; color: var(--navy);
+                margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
+                display: flex; align-items: center; gap: 8px;
+            }
+            .eoa-form-section-title i { color: var(--gold-dark); font-size: 15px; }
+
+            .eoa-form-grid { display: grid; gap: 14px; }
+            .eoa-form-grid.is-2 { grid-template-columns: 1fr 1fr; }
+            .eoa-form-grid.is-zip-city { grid-template-columns: 1fr 2fr; }
+
+            .eoa-field { display: flex; flex-direction: column; gap: 6px; }
+            .eoa-field label {
+                font-size: 12px; font-weight: 700; color: var(--navy);
+            }
+            .eoa-field label.is-optional { color: var(--muted); }
+            .eoa-field label.is-optional::after { content: " (اختياري)"; font-weight: 600; font-size: 11px; }
+
+            .eoa-field input,
+            .eoa-field select,
+            #wrap.eoa .eoa-field .form-control {
+                width: 100%; border: 1px solid var(--border); border-radius: 10px;
+                padding: 11px 14px; font-size: 14px; font-weight: 600; color: var(--text);
+                background: var(--card); font-family: inherit; outline: none;
+                transition: border-color 0.15s, box-shadow 0.15s;
+            }
+            .eoa-field input:focus,
+            .eoa-field select:focus,
+            #wrap.eoa .eoa-field .form-control:focus {
+                border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-light);
+            }
+            .eoa-field input.is-invalid,
+            .eoa-field select.is-invalid,
+            #wrap.eoa .eoa-field .form-control.is-invalid {
+                border-color: var(--red); box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+            }
+
+            .eoa-alert {
+                display: flex; align-items: flex-start; gap: 10px;
+                padding: 12px 14px; border-radius: 10px; font-size: 13px; font-weight: 600;
+                line-height: 1.6; margin-bottom: 18px;
+                background: var(--red-bg); border: 1px solid rgba(220, 38, 38, 0.2); color: var(--red);
+            }
+
+            .eoa-actions {
+                display: flex; align-items: center; justify-content: space-between;
+                gap: 12px; padding-top: 8px;
+            }
+            .eoa-btn {
+                display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+                padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 700;
+                font-family: inherit; cursor: pointer; border: none; transition: all 0.15s;
+                white-space: nowrap;
+            }
+            .eoa-btn-ghost {
+                background: transparent; border: 1px solid var(--border); color: var(--muted);
+            }
+            .eoa-btn-ghost:hover { border-color: var(--gold); color: var(--gold-dark); background: var(--gold-light); }
+            .eoa-btn-submit {
+                background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+                color: #fff !important; box-shadow: 0 4px 14px rgba(201, 152, 42, 0.3);
+            }
+            .eoa-btn-submit:hover { box-shadow: 0 6px 18px rgba(201, 152, 42, 0.4); transform: translateY(-1px); }
+
+            @media (max-width: 640px) {
+                .eoa-shell { padding: 20px 16px 48px; }
+                .eoa-form-grid.is-2, .eoa-form-grid.is-zip-city { grid-template-columns: 1fr; }
+                .eoa-actions { flex-direction: column-reverse; }
+                .eoa-actions .eoa-btn { width: 100%; }
+            }
+        </style>
+
+        <div id="wrap" class="eoa">
+            <div class="eoa-shell oe_portal_address">
+
+                <a role="button" href="/my-address" class="eoa-back">
+                    <i class="fa fa-arrow-right"/> العودة إلى العناوين
+                </a>
+
+                <div class="eoa-hero">
+                    <h1 t-if="mode == 'edit'">تحرير العنوان</h1>
+                    <h1 t-else="">إضافة عنوان جديد</h1>
+                    <p>أدخل بيانات العنوان بدقة لضمان التوصيل الصحيح</p>
+                </div>
+
+                <div class="eoa-panel">
+                    <form action="/add-address" method="post" class="checkout_autoformat">
+
+                        <div t-if="error_message" class="eoa-alert" role="alert">
+                            <i class="fa fa-exclamation-circle"/>
+                            <span><t t-out="error_message"/></span>
+                        </div>
+
+                        <div class="eoa-form-section">
+                            <div class="eoa-form-section-title">
+                                <i class="fa fa-user"/> بيانات التواصل
+                            </div>
+                            <div class="eoa-form-grid">
+                                <div t-attf-class="eoa-field div_name">
+                                    <label for="name">الاسم</label>
+                                    <input type="text" name="name" id="name" t-attf-class="form-control o_website_form_input #{'name' in required_fields and 'is-invalid' or ''}" t-att-value="predefine_data and 'name' in predefine_data and predefine_data['name'] or partner_id and 'name' in partner_id and partner_id['name']"/>
+                                </div>
+                                <div t-attf-class="eoa-field email">
+                                    <label for="email">البريد الإلكتروني</label>
+                                    <input type="text" name="email" id="email" t-attf-class="form-control" t-att-value="predefine_data and 'email' in predefine_data and predefine_data['email'] or partner_id and 'email' in partner_id and partner_id['email']"/>
+                                </div>
+                                <div t-attf-class="eoa-field phone">
+                                    <label for="phone">الهاتف</label>
+                                    <input type="text" name="phone" id="phone" t-attf-class="form-control o_website_form_input #{'phone' in required_fields and 'is-invalid' or ''}" t-att-value="predefine_data and 'phone' in predefine_data and predefine_data['phone'] or partner_id and 'phone' in partner_id and partner_id['phone']"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="eoa-form-section">
+                            <div class="eoa-form-section-title">
+                                <i class="fa fa-map-marker"/> تفاصيل العنوان
+                            </div>
+                            <div class="eoa-form-grid">
+                                <div t-attf-class="eoa-field street">
+                                    <label for="street">الشارع <span class="d-none d-md-inline">والرقم</span></label>
+                                    <input type="text" name="street" id="street" t-attf-class="form-control o_website_form_input #{'street' in required_fields and 'is-invalid' or ''}" t-att-value="predefine_data and 'street' in predefine_data and predefine_data['street'] or partner_id and 'street' in partner_id and partner_id['street']"/>
+                                </div>
+                                <div t-attf-class="eoa-field div_street2">
+                                    <label class="is-optional" for="street2">الشارع 2</label>
+                                    <input type="text" name="street2" id="street2" t-attf-class="form-control" t-att-value="predefine_data and 'street2' in predefine_data and predefine_data['street2'] or partner_id and 'street2' in partner_id and partner_id['street2']"/>
+                                </div>
+                                <div class="eoa-form-grid is-zip-city">
+                                    <div t-attf-class="eoa-field div_zip">
+                                        <label class="is-optional" for="zip">الرمز البريدي</label>
+                                        <input type="text" name="zip" id="zip" t-attf-class="form-control" t-att-value="predefine_data and 'zip' in predefine_data and predefine_data['zip'] or partner_id and 'zip' in partner_id and partner_id['zip']"/>
+                                    </div>
+                                    <div t-attf-class="eoa-field div_city">
+                                        <label for="city">المدينة</label>
+                                        <input type="text" name="city" id="city" t-attf-class="form-control o_website_form_input #{'city' in required_fields and 'is-invalid' or ''}" t-att-value="predefine_data and 'city' in predefine_data and predefine_data['city'] or partner_id and 'city' in partner_id and partner_id['city']"/>
+                                    </div>
+                                </div>
+                                <div class="eoa-form-grid is-2">
+                                    <div t-attf-class="eoa-field div_country">
+                                        <label for="country_id">الدولة</label>
+                                        <select id="country_id" name="country_id" t-attf-class="form-control">
+                                            <option value="">اختر الدولة...</option>
+                                            <t t-foreach="countries" t-as="c">
+                                                <option t-att-value="c.id" t-att-selected="predefine_data and 'country_id' in predefine_data and predefine_data['country_id'] and int(predefine_data['country_id']) == c.id or partner_id and 'country_id' in partner_id and int(partner_id['country_id']) == c.id">
+                                                    <t t-out="c.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div t-attf-class="eoa-field" id="div_state">
+                                        <label for="state_id">المنطقة / المحافظة</label>
+                                        <select name="state_id" id="state_id" t-attf-class="form-control #{'state_id' in required_fields and 'is-invalid' or ''}">
+                                            <option value="">اختر المنطقة...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="submitted" value="1"/>
+                        <input type="hidden" name="partner_id" t-att-value="partner_id or predefine_data and 'partner_id' in predefine_data and predefine_data['partner_id']"/>
+                        <input type="hidden" name="mode" t-att-value="mode or predefine_data and 'mode' in predefine_data and predefine_data['mode']"/>
+
+                        <div class="eoa-actions mt16">
+                            <a role="button" href="/my-address" class="eoa-btn eoa-btn-ghost">
+                                <i class="fa fa-arrow-right"/> رجوع
+                            </a>
+                            <button type="submit" id="form_submit" class="eoa-btn eoa-btn-submit o_job_post_submit">
+                                <i class="fa fa-check"/> تأكيد
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </t>
+</t>

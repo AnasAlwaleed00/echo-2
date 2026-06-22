@@ -1,0 +1,775 @@
+<t t-name="portal_customer_statement_range.customer_statement_portal_template">
+    <t t-call="portal.portal_layout">
+
+        <t t-set="head">
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+            <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+            <style>
+                .eop, .eop *, .eop *::before, .eop *::after {
+                    box-sizing: border-box;
+                    font-family: "Cairo", sans-serif;
+                }
+
+                .o_portal_wrap.eop {
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    max-width: none !important;
+                    background: #f7f5f0 !important;
+                    direction: rtl;
+                }
+
+                /* Typography reset only — do not target div/span (breaks layout padding) */
+                .eop h1, .eop h2, .eop h3, .eop p, .eop label {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .eop a { text-decoration: none; color: inherit; }
+
+                .eop {
+                    --gold: #C9982A;
+                    --gold-dark: #A87B1E;
+                    --gold-light: rgba(201, 152, 42, 0.14);
+                    --navy: #0D1B2E;
+                    --bg: #F7F5F0;
+                    --card: #FFFFFF;
+                    --border: #E8E2D9;
+                    --text: #1A1A2E;
+                    --muted: #8A8578;
+                    --green: #16a34a;
+                    --green-bg: #f0fdf4;
+                    --red: #dc2626;
+                    --red-bg: #fef2f2;
+                    --amber: #b45309;
+                    --amber-bg: #fffbeb;
+                }
+
+                .eop-shell {
+                    max-width: 1040px;
+                    margin: 0 auto;
+                    padding: 24px 20px 56px;
+                }
+
+                .eop-back {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    font-size: 13px;
+                    font-weight: 600;
+                    color: var(--muted);
+                    margin-bottom: 20px;
+                    padding: 6px 0;
+                    transition: color 0.15s;
+                }
+
+                .eop-back:hover { color: var(--gold-dark); }
+
+                .eop-hero {
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: 14px;
+                    padding: 24px 28px 26px;
+                    margin-bottom: 20px;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .eop-hero::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 4px;
+                    height: 100%;
+                    background: linear-gradient(180deg, #FDE021, var(--gold));
+                }
+
+                .eop-hero-top {
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                    gap: 16px;
+                }
+
+                .eop-hero h1 {
+                    font-size: 20px;
+                    font-weight: 800;
+                    color: var(--navy);
+                    line-height: 1.3;
+                }
+
+                .eop-hero p {
+                    font-size: 13px;
+                    color: var(--muted);
+                    margin-top: 8px !important;
+                    line-height: 1.7;
+                }
+
+                .eop-company {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-top: 14px !important;
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: var(--navy);
+                    background: var(--gold-light);
+                    padding: 8px 16px;
+                    border-radius: 20px;
+                    border: 1px solid rgba(201, 152, 42, 0.2);
+                }
+
+                .eop-count {
+                    flex-shrink: 0;
+                    background: var(--gold-light);
+                    color: var(--gold-dark);
+                    font-size: 12px;
+                    font-weight: 700;
+                    padding: 8px 16px;
+                    border-radius: 30px;
+                    border: 1px solid rgba(201, 152, 42, 0.25);
+                    white-space: nowrap;
+                }
+
+                /* Filter card */
+                .eop-filter {
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: 14px;
+                    padding: 22px 24px 26px;
+                    margin-bottom: 20px;
+                }
+
+                .eop-filter-title {
+                    font-size: 14px;
+                    font-weight: 700;
+                    color: var(--navy);
+                    margin-bottom: 18px !important;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+
+                .eop-filter-grid {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 16px;
+                }
+
+                .eop-field label {
+                    display: block;
+                    font-size: 12px;
+                    font-weight: 700;
+                    color: var(--navy);
+                    margin-bottom: 8px !important;
+                }
+
+                .eop-field input[type="date"] {
+                    width: 100%;
+                    padding: 12px 16px;
+                    min-height: 46px;
+                    border: 1px solid var(--border);
+                    border-radius: 10px;
+                    font-size: 14px;
+                    color: var(--text);
+                    background: var(--bg);
+                    transition: border-color 0.15s, box-shadow 0.15s;
+                }
+
+                .eop-field input[type="date"]:focus {
+                    outline: none;
+                    border-color: var(--gold);
+                    box-shadow: 0 0 0 3px var(--gold-light);
+                }
+
+                .eop-presets {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    margin-top: 22px !important;
+                    padding-top: 20px;
+                    border-top: 1px solid var(--border);
+                }
+
+                .eop-preset {
+                    border: 1px solid var(--border);
+                    background: var(--bg);
+                    color: var(--muted);
+                    font-size: 12px;
+                    font-weight: 700;
+                    padding: 8px 16px;
+                    border-radius: 20px;
+                    cursor: pointer;
+                    transition: all 0.15s;
+                    font-family: "Cairo", sans-serif;
+                }
+
+                .eop-preset:hover,
+                .eop-preset.is-active {
+                    border-color: rgba(201, 152, 42, 0.45);
+                    background: var(--gold-light);
+                    color: var(--gold-dark);
+                }
+
+                .eop-submit-wrap {
+                    display: flex;
+                    align-items: flex-end;
+                    height: 100%;
+                }
+
+                .eop-submit {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    width: 100%;
+                    padding: 14px 24px;
+                    min-height: 46px;
+                    border: none;
+                    border-radius: 10px;
+                    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+                    color: #fff;
+                    font-size: 14px;
+                    font-weight: 700;
+                    cursor: pointer;
+                    transition: transform 0.15s, box-shadow 0.15s;
+                    font-family: "Cairo", sans-serif;
+                }
+
+                .eop-submit:hover {
+                    transform: translateY(-1px);
+                    box-shadow: 0 4px 14px rgba(201, 152, 42, 0.35);
+                }
+
+                /* Summary stats */
+                .eop-stats {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 14px;
+                    margin-bottom: 24px;
+                }
+
+                .eop-stat {
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: 12px;
+                    padding: 20px 22px;
+                }
+
+                .eop-stat-label {
+                    font-size: 12px;
+                    font-weight: 700;
+                    color: var(--muted);
+                    margin-bottom: 10px !important;
+                    line-height: 1.4;
+                }
+
+                .eop-stat-value {
+                    font-size: 20px;
+                    font-weight: 800;
+                    color: var(--navy);
+                    font-variant-numeric: tabular-nums;
+                    line-height: 1.3;
+                }
+
+                .eop-stat.is-debit .eop-stat-value { color: var(--red); }
+                .eop-stat.is-credit .eop-stat-value { color: var(--green); }
+                .eop-stat.is-balance {
+                    background: linear-gradient(135deg, var(--navy), #1a3050);
+                    border-color: var(--navy);
+                }
+
+                .eop-stat.is-balance .eop-stat-label { color: rgba(255,255,255,0.65); }
+                .eop-stat.is-balance .eop-stat-value { color: #FDE021; }
+
+                /* Results card */
+                .eop-results {
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: 14px;
+                    overflow: hidden;
+                }
+
+                .eop-results-head {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 12px;
+                    padding: 16px 22px;
+                    border-bottom: 1px solid var(--border);
+                    background: var(--bg);
+                }
+
+                .eop-results-head span {
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: var(--muted);
+                }
+
+                .eop-results-head strong {
+                    color: var(--navy);
+                    font-weight: 700;
+                }
+
+                .eop-table-wrap {
+                    overflow-x: auto;
+                    -webkit-overflow-scrolling: touch;
+                }
+
+                .eop-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    min-width: 640px;
+                }
+
+                .eop-table thead th {
+                    padding: 14px 18px;
+                    font-size: 12px;
+                    font-weight: 700;
+                    color: var(--muted);
+                    text-align: right;
+                    background: var(--bg);
+                    border-bottom: 1px solid var(--border);
+                    white-space: nowrap;
+                }
+
+                .eop-table thead th.num { text-align: left; }
+
+                .eop-table tbody tr {
+                    border-bottom: 1px solid var(--border);
+                    transition: background 0.12s;
+                }
+
+                .eop-table tbody tr:hover { background: rgba(201, 152, 42, 0.04); }
+                .eop-table tbody tr:last-child { border-bottom: none; }
+
+                .eop-table tbody td {
+                    padding: 15px 18px;
+                    font-size: 13px;
+                    color: var(--text);
+                    vertical-align: middle;
+                    line-height: 1.5;
+                }
+
+                .eop-table .col-date {
+                    font-weight: 600;
+                    color: var(--navy);
+                    white-space: nowrap;
+                }
+
+                .eop-table .col-desc {
+                    max-width: 280px;
+                    line-height: 1.5;
+                    word-break: break-word;
+                }
+
+                .eop-table .num {
+                    text-align: left;
+                    font-variant-numeric: tabular-nums;
+                    font-weight: 600;
+                    white-space: nowrap;
+                }
+
+                .eop-table .num-debit { color: var(--red); }
+                .eop-table .num-credit { color: var(--green); }
+                .eop-table .num-balance {
+                    font-weight: 800;
+                    color: var(--navy);
+                    background: var(--gold-light);
+                    padding: 15px 22px !important;
+                }
+
+                .eop-table thead th.num-balance-h {
+                    padding: 14px 22px;
+                    background: rgba(201, 152, 42, 0.08);
+                }
+
+                .eop-table .num-zero { color: #ccc; font-weight: 400; }
+
+                /* Actions */
+                .eop-actions {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 12px;
+                    margin-top: 24px;
+                    padding-top: 4px;
+                }
+
+                .eop-btn-pdf {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 13px 22px;
+                    border-radius: 10px;
+                    background: var(--red-bg);
+                    border: 1px solid rgba(220, 38, 38, 0.2);
+                    color: var(--red);
+                    font-size: 13px;
+                    font-weight: 700;
+                    transition: all 0.15s;
+                }
+
+                .eop-btn-pdf:hover {
+                    background: var(--red);
+                    color: #fff;
+                    border-color: var(--red);
+                }
+
+                /* Empty / welcome */
+                .eop-empty {
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: 14px;
+                    padding: 56px 32px;
+                    text-align: center;
+                }
+
+                .eop-empty-icon {
+                    width: 56px;
+                    height: 56px;
+                    margin: 0 auto 20px;
+                    background: var(--gold-light);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .eop-empty h3 {
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: var(--navy);
+                    margin-bottom: 10px !important;
+                }
+
+                .eop-empty p {
+                    font-size: 13px;
+                    color: var(--muted);
+                    line-height: 1.8;
+                    max-width: 420px;
+                    margin: 0 auto !important;
+                }
+
+                @media (min-width: 600px) {
+                    .eop-filter-grid {
+                        grid-template-columns: 1fr 1fr minmax(180px, auto);
+                        align-items: end;
+                        gap: 18px;
+                    }
+
+                    .eop-stats {
+                        grid-template-columns: repeat(3, 1fr);
+                        gap: 16px;
+                    }
+                }
+
+                @media (min-width: 768px) {
+                    .eop-shell { padding: 32px 32px 64px; }
+                    .eop-hero {
+                        padding: 28px 32px 30px;
+                        margin-bottom: 24px;
+                    }
+                    .eop-hero h1 { font-size: 24px; }
+                    .eop-filter {
+                        padding: 26px 28px 30px;
+                        margin-bottom: 24px;
+                    }
+                    .eop-filter-grid { gap: 20px; }
+                    .eop-stat { padding: 22px 26px; }
+                    .eop-stats { margin-bottom: 28px; }
+                    .eop-results-head { padding: 18px 26px; }
+                    .eop-table thead th { padding: 16px 22px; }
+                    .eop-table tbody td { padding: 16px 22px; }
+                    .eop-table .num-balance { padding: 16px 26px !important; }
+                }
+
+                @media print {
+                    .eop-back, .eop-filter, .eop-actions, .eop-presets { display: none !important; }
+                    .o_portal_wrap.eop { background: #fff !important; }
+                    .eop-results { border: none; }
+                }
+            </style>
+        </t>
+
+        <div class="o_portal_wrap eop">
+            <div class="eop-shell">
+
+                <a href="/my" class="eop-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m9 18 6-6-6-6"/>
+                    </svg>
+                    العودة إلى حسابي
+                </a>
+
+                <!-- Hero -->
+                <div class="eop-hero">
+                    <div class="eop-hero-top">
+                        <div>
+                            <h1>كشف حساب العميل</h1>
+                            <p>راجع حركات حسابك المالية خلال الفترة المحددة</p>
+                            <span class="eop-company">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 22V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/>
+                                </svg>
+                                <t t-esc="company.name"/>
+                            </span>
+                        </div>
+                        <t t-if="lines">
+                            <span class="eop-count">
+                                <t t-esc="len(lines)"/> حركة
+                            </span>
+                        </t>
+                    </div>
+                </div>
+
+                <!-- Date filter -->
+                <div class="eop-filter">
+                    <div class="eop-filter-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9982A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="18" height="18" x="3" y="4" rx="2"/>
+                            <path d="M16 2v4M8 2v4M3 10h18"/>
+                        </svg>
+                        تحديد الفترة
+                    </div>
+
+                    <form method="get" action="/my/customer_statement" id="ecs_statement_form">
+                        <div class="eop-filter-grid">
+                            <div class="eop-field">
+                                <label for="date_from">من تاريخ</label>
+                                <input type="date" id="date_from" name="date_from" t-att-value="date_from or ''" required="required"/>
+                            </div>
+                            <div class="eop-field">
+                                <label for="date_to">إلى تاريخ</label>
+                                <input type="date" id="date_to" name="date_to" t-att-value="date_to or ''" required="required"/>
+                            </div>
+                            <div class="eop-submit-wrap">
+                                <button type="submit" class="eop-submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="11" cy="11" r="8"/>
+                                        <path d="m21 21-4.3-4.3"/>
+                                    </svg>
+                                    عرض كشف الحساب
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="eop-presets">
+                            <button type="button" class="eop-preset" data-preset="this_month">هذا الشهر</button>
+                            <button type="button" class="eop-preset" data-preset="last_month">الشهر الماضي</button>
+                            <button type="button" class="eop-preset" data-preset="last_3_months">آخر 3 أشهر</button>
+                            <button type="button" class="eop-preset" data-preset="this_year">هذا العام</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Welcome (no search yet) -->
+                <t t-if="not date_from and not date_to and not lines">
+                    <div class="eop-empty">
+                        <div class="eop-empty-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9982A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M15 12h-5"/>
+                                <path d="M15 8h-5"/>
+                                <path d="M19 17V5a2 2 0 0 0-2-2H4"/>
+                                <path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/>
+                            </svg>
+                        </div>
+                        <h3>اختر الفترة لعرض كشف الحساب</h3>
+                        <p>حدد تاريخ البداية والنهاية أو استخدم الاختصارات السريعة<br/>لعرض جميع الحركات المالية خلال الفترة المطلوبة.</p>
+                    </div>
+                </t>
+
+                <!-- No results -->
+                <t t-if="date_from and date_to and not lines">
+                    <div class="eop-empty">
+                        <div class="eop-empty-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9982A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"/>
+                                <path d="m21 21-4.3-4.3"/>
+                            </svg>
+                        </div>
+                        <h3>لا توجد حركات في هذه الفترة</h3>
+                        <p>
+                            لم يتم العثور على أي معاملات بين
+                            <strong><t t-esc="date_from"/></strong>
+                            و
+                            <strong><t t-esc="date_to"/></strong>.
+                            <br/>جرّب توسيع نطاق التاريخ أو اختيار فترة أخرى.
+                        </p>
+                    </div>
+                </t>
+
+                <!-- Results -->
+                <t t-if="lines">
+
+                    <t t-set="balance" t-value="0"/>
+                    <t t-set="total_debit" t-value="0"/>
+                    <t t-set="total_credit" t-value="0"/>
+
+                    <t t-foreach="lines" t-as="line">
+                        <t t-set="total_debit" t-value="total_debit + (line.debit or 0.0)"/>
+                        <t t-set="total_credit" t-value="total_credit + (line.credit or 0.0)"/>
+                        <t t-set="balance" t-value="balance + (line.debit - line.credit)"/>
+                    </t>
+
+                    <!-- Summary stats -->
+                    <div class="eop-stats">
+                        <div class="eop-stat is-debit">
+                            <div class="eop-stat-label">إجمالي المدين</div>
+                            <div class="eop-stat-value">
+                                <t t-esc="'{:,.2f}'.format(total_debit)"/>
+                            </div>
+                        </div>
+                        <div class="eop-stat is-credit">
+                            <div class="eop-stat-label">إجمالي الدائن</div>
+                            <div class="eop-stat-value">
+                                <t t-esc="'{:,.2f}'.format(total_credit)"/>
+                            </div>
+                        </div>
+                        <div class="eop-stat is-balance">
+                            <div class="eop-stat-label">الرصيد الختامي</div>
+                            <div class="eop-stat-value">
+                                <t t-esc="'{:,.2f}'.format(balance)"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="eop-results">
+                        <div class="eop-results-head">
+                            <span>
+                                <strong>الفترة:</strong>
+                                <t t-esc="date_from"/> — <t t-esc="date_to"/>
+                            </span>
+                            <span>
+                                <strong>عدد الحركات:</strong>
+                                <t t-esc="len(lines)"/>
+                            </span>
+                        </div>
+
+                        <div class="eop-table-wrap">
+                            <table class="eop-table">
+                                <thead>
+                                    <tr>
+                                        <th>التاريخ</th>
+                                        <th>الوصف</th>
+                                        <th class="num">مدين</th>
+                                        <th class="num">دائن</th>
+                                        <th class="num num-balance-h">الرصيد</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <t t-set="balance" t-value="0"/>
+
+                                    <t t-foreach="lines" t-as="line">
+                                        <tr>
+                                            <td class="col-date">
+                                                <t t-esc="line.date"/>
+                                            </td>
+                                            <td class="col-desc">
+                                                <t t-esc="line.name or line.ref or '—'"/>
+                                            </td>
+                                            <td class="num num-debit">
+                                                <t t-if="line.debit">
+                                                    <t t-esc="'{:,.2f}'.format(line.debit)"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <span class="num-zero">—</span>
+                                                </t>
+                                            </td>
+                                            <td class="num num-credit">
+                                                <t t-if="line.credit">
+                                                    <t t-esc="'{:,.2f}'.format(line.credit)"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <span class="num-zero">—</span>
+                                                </t>
+                                            </td>
+                                            <td class="num num-balance">
+                                                <t t-set="balance" t-value="balance + (line.debit - line.credit)"/>
+                                                <t t-esc="'{:,.2f}'.format(balance)"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <t t-if="date_from and date_to">
+                        <div class="eop-actions">
+                            <a t-attf-href="/my/customer_statement/export_pdf?date_from={{date_from}}&amp;date_to={{date_to}}"
+                               class="eop-btn-pdf" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/>
+                                    <path d="M14 2v5a1 1 0 0 0 1 1h5"/>
+                                    <path d="M12 18v-6"/>
+                                    <path d="m9 15 3 3 3-3"/>
+                                </svg>
+                                تحميل PDF
+                            </a>
+                        </div>
+                    </t>
+
+                </t>
+
+            </div>
+        </div>
+
+        <script>
+            (function () {
+                function fmt(d) {
+                    var y = d.getFullYear();
+                    var m = String(d.getMonth() + 1).padStart(2, '0');
+                    var day = String(d.getDate()).padStart(2, '0');
+                    return y + '-' + m + '-' + day;
+                }
+
+                function setRange(from, to) {
+                    var df = document.getElementById('date_from');
+                    var dt = document.getElementById('date_to');
+                    if (df) df.value = from;
+                    if (dt) dt.value = to;
+                }
+
+                var presets = {
+                    this_month: function () {
+                        var now = new Date();
+                        setRange(fmt(new Date(now.getFullYear(), now.getMonth(), 1)), fmt(now));
+                    },
+                    last_month: function () {
+                        var now = new Date();
+                        setRange(
+                            fmt(new Date(now.getFullYear(), now.getMonth() - 1, 1)),
+                            fmt(new Date(now.getFullYear(), now.getMonth(), 0))
+                        );
+                    },
+                    last_3_months: function () {
+                        var now = new Date();
+                        setRange(fmt(new Date(now.getFullYear(), now.getMonth() - 3, 1)), fmt(now));
+                    },
+                    this_year: function () {
+                        var now = new Date();
+                        setRange(fmt(new Date(now.getFullYear(), 0, 1)), fmt(now));
+                    }
+                };
+
+                document.querySelectorAll('.eop-preset').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        var key = btn.getAttribute('data-preset');
+                        if (presets[key]) {
+                            presets[key]();
+                            document.querySelectorAll('.eop-preset').forEach(function (b) {
+                                b.classList.remove('is-active');
+                            });
+                            btn.classList.add('is-active');
+                        }
+                    });
+                });
+            })();
+        </script>
+
+    </t>
+</t>

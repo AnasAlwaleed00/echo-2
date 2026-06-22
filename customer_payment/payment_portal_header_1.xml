@@ -1,0 +1,50 @@
+<t name="ترويسة بوابة السداد" t-name="website_payment_mod.payment_portal_header">
+    <t t-set="current_hour" t-value="datetime.datetime.now().hour"/>
+    <t t-set="greeting" t-value="'صباح الخير والبركة' if current_hour &lt; 15 else 'مساء الخير والمسرات'"/>
+
+    <div class="ecp-header">
+        <div class="ecp-header-greet">
+            <span class="ecp-header-greet-icon" aria-hidden="true">
+                <i class="fa fa-sun-o" t-if="current_hour &lt; 15"/>
+                <i class="fa fa-moon-o" t-if="current_hour &gt;= 15"/>
+            </span>
+            <div class="ecp-header-greet-text">
+                <span class="ecp-header-greet-msg"><t t-esc="greeting"/>،</span>
+                <strong class="ecp-header-greet-name"><t t-esc="partner.name"/></strong>
+            </div>
+        </div>
+
+        <div class="ecp-header-stats">
+            <div class="ecp-header-stat is-balance">
+                <div class="ecp-header-stat-icon">
+                    <i class="fa fa-money"/>
+                </div>
+                <div class="ecp-header-stat-body">
+                    <span class="ecp-header-stat-label">إجمالي الرصيد المستحق</span>
+                    <span class="ecp-header-stat-value">
+                        <t t-esc="'%.2f' % float(balance or 0.0)"/>
+                        <small>ر.س</small>
+                    </span>
+                </div>
+            </div>
+
+            <div class="ecp-header-stat is-overdue">
+                <div class="ecp-header-stat-icon">
+                    <i class="fa fa-exclamation-triangle"/>
+                </div>
+                <div class="ecp-header-stat-body">
+                    <span class="ecp-header-stat-label">متأخرات (&gt; 90 يوم)</span>
+                    <span class="ecp-header-stat-value">
+                        <t t-esc="'%.2f' % float(aged_90_plus or 0.0)"/>
+                        <small>ر.س</small>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="ecp-header-note">
+            <i class="fa fa-info-circle"/>
+            <span>سداد المستحقات في وقتها يساعد على استمرار خدماتكم دون تأخير</span>
+        </div>
+    </div>
+</t>

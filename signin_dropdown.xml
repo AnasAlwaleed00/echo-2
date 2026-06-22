@@ -1,0 +1,193 @@
+<t name="Theme Plant Sign-in Option" t-name="theme_emart_plant.theme_emart_plant_signin_main_template">
+    <t t-set="isShowSignIn" t-value="is_view_active('portal.user_sign_in')"/>
+    <t t-set="isLoginPopup" t-value="is_view_active('theme_emart_plant.loginsignup_popup_bizt')"/>
+    <t t-set="is_connected" t-value="not user_id._is_public()"/>
+    <t t-nocache="Profile session and user group can change unrelated to parent caches and Each user is different regardless of the page visited" t-nocache-_icon="_icon" t-nocache-_text="_text" t-nocache-_username="_username" t-nocache-_myaccount_class="_myaccount_class" t-nocache-isShowSignIn="isShowSignIn" t-nocache-isLoginPopup="isLoginPopup" t-nocache-_isBottomBar="_isBottomBar" t-nocache-is_connected="is_connected">
+        <div t-attf-class="header-myaccount dropdown dropup #{_myaccount_class}">
+            <!-- أيقونة الحساب الخارجية -->
+            <a t-if="isShowSignIn or is_connected" href="#" class="nav-link dropdown-toggle acc-dropdown" data-bs-toggle="dropdown">
+                <span t-ignore="true" t-if="is_connected and _icon">
+                    <t t-call="theme_emart_plant.portal_frontend_user"/>
+                </span>
+                <span groups="base.group_public" t-if="_icon">
+                    <span class="ri ri-user-line align-middle"/>
+                </span>
+                <span class="account-text" t-if="_text">الحساب</span>
+                <span class="account-text" t-if="_username and is_connected">
+                    <t t-out="user_id.name[:23] + '...' if user_id.name and len(user_id.name) &gt; 25 else user_id.name"/>
+                </span>
+            </a>
+            <!-- القائمة المنسدلة -->
+            <div class="dropdown-menu js_usermenu p-2" role="menu">
+                <!--<div class="main-content text-center" t-ignore="true">-->
+                    
+                <!--   <t t-if="user_id.name != 'Public user'">-->
+                        <!-- الجزء الأول: يظهر فقط للمسجلين -->
+                <!--        <div class="text-center fw-bold" t-if="not _username">-->
+                <!--            <span t-out="user_id.name[:23] + '...' if user_id.name and len(user_id.name) &gt; 25 else user_id.name"/>-->
+                <!--        </div>-->
+                        
+                <!--        <a t-attf-href="/my/home" role="menuitem" class="dropdown-item my-acc text-center">حسابي</a>-->
+                        
+                        <!--<t t-call="theme_emart_plant.my_address_link"/>-->
+                <!--        <a href="/my-address" role="menuitem" class="dropdown-item">العناوين</a>-->
+                        
+                <!--        <a id="o_logout" class="dropdown-item text-center" t-attf-href="/web/session/logout?redirect=/custom/login" role="menuitem">تسجيل خروج</a>-->
+                <!--    </t>-->
+                <!--    <t t-else="">-->
+                        <!-- الجزء الثاني: يظهر فقط للزوار (المستخدم العام) -->
+                <!--        <div class="text-center">-->
+                <!--            <a id="o_login" class="dropdown-item text-center font-weight-bold py-2" t-attf-href="/custom/login" role="menuitem" style="color: #1A1A1B !important; background: linear-gradient(to right, #FDE021, #F8B500); border-radius: 5px; margin-bottom: 5px;">-->
+                <!--                <span>تسجيل دخول</span>-->
+                <!--            </a>-->
+                            
+                <!--            <a class="dropdown-item py-2 text-center" t-attf-href="/account/request" style="color: #1A1A1B !important; border: 1px solid #ddd; border-radius: 5px;">-->
+                <!--                <span>فتح ملف جديد</span>-->
+                <!--            </a>-->
+                <!--        </div>-->
+                <!--    </t>-->
+                <!--</div>-->
+                
+                <div class="main-content" t-ignore="true" style="direction: rtl; text-align: right; padding: 0; min-width: 220px; max-width: 220px;">
+
+                    <t t-if="user_id.name != 'Public user'">
+                
+                        <!-- User header -->
+                        <div t-if="not _username" style="
+                            background: #1a1a2e;
+                            padding: 12px 14px;
+                            display: flex;
+                            flex-direction: row-reverse;
+                            align-items: center;
+                            gap: 10px;
+                        ">
+                            <div style="
+                                width: 36px; height: 36px; border-radius: 50%;
+                                background: linear-gradient(135deg, #f8b500, #e07b00);
+                                display: flex; align-items: center; justify-content: center;
+                                font-size: 13px; font-weight: 700; color: #1a1a2e; flex-shrink: 0;
+                            "><t t-out="(user_id.name or 'أ')[:2]"/></div>
+                            <div style="flex: 1; overflow: hidden; text-align: right;">
+                                <div style="color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    <t t-out="user_id.name[:22] + '...' if user_id.name and len(user_id.name) > 24 else user_id.name"/>
+                                </div>
+                                <div style="color: rgba(255,255,255,0.4); font-size: 11px; margin-top: 1px;">عضو موثق</div>
+                            </div>
+                        </div>
+                
+                        <!-- Menu items -->
+                        <div style="padding: 6px; background: #fff;">
+                
+                            <a t-attf-href="/my/home" role="menuitem" class="dropdown-item" style="
+                                display: flex !important;
+                                align-items: center;
+                                flex-direction: row-reverse;
+                                justify-content: flex-start;
+                                gap: 9px;
+                                padding: 8px 10px !important;
+                                border-radius: 7px !important;
+                                color: #444 !important;
+                                font-size: 13px;
+                                font-weight: 500;
+                                text-decoration: none !important;
+                                margin-bottom: 2px;
+                                transition: background 0.15s;
+                                background: transparent;
+                            " onmouseover="this.style.background='#fdf8ec';this.style.color='#c8860a'" onmouseout="this.style.background='transparent';this.style.color='#444'">
+                                <span style="width: 28px; height: 28px; border-radius: 7px; background: #fff8e1; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <i class="ri ri-user-3-line" style="font-size: 14px; color: #e0a500;" aria-hidden="true"/>
+                                </span>
+                                <span>حسابي</span>
+                            </a>
+                
+                            <a href="/my-address" role="menuitem" class="dropdown-item" style="
+                                display: flex !important;
+                                align-items: center;
+                                flex-direction: row-reverse;
+                                justify-content: flex-start;
+                                gap: 9px;
+                                padding: 8px 10px !important;
+                                border-radius: 7px !important;
+                                color: #444 !important;
+                                font-size: 13px;
+                                font-weight: 500;
+                                text-decoration: none !important;
+                                margin-bottom: 2px;
+                                transition: background 0.15s;
+                                background: transparent;
+                            " onmouseover="this.style.background='#fdf8ec';this.style.color='#c8860a'" onmouseout="this.style.background='transparent';this.style.color='#444'">
+                                <span style="width: 28px; height: 28px; border-radius: 7px; background: #fff8e1; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <i class="ri ri-map-pin-2-line" style="font-size: 14px; color: #e0a500;" aria-hidden="true"/>
+                                </span>
+                                <span>العناوين</span>
+                            </a>
+                
+                            <div style="height: 1px; background: #f2f2f0; margin: 4px 8px;"/>
+                
+                            <a id="o_logout" class="dropdown-item"
+                               t-attf-href="/web/session/logout?redirect=/custom/login"
+                               role="menuitem" style="
+                                display: flex !important;
+                                align-items: center;
+                                flex-direction: row-reverse;
+                                justify-content: flex-start;
+                                gap: 9px;
+                                padding: 8px 10px !important;
+                                border-radius: 7px !important;
+                                color: #e05252 !important;
+                                font-size: 13px;
+                                font-weight: 500;
+                                text-decoration: none !important;
+                                background: transparent;
+                            " onmouseover="this.style.background='#fff0f0'" onmouseout="this.style.background='transparent'">
+                                <span style="width: 28px; height: 28px; border-radius: 7px; background: #fff0f0; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <i class="ri ri-logout-box-r-line" style="font-size: 14px; color: #e05252;" aria-hidden="true"/>
+                                </span>
+                                <span>تسجيل خروج</span>
+                            </a>
+                
+                        </div>
+                    </t>
+                
+                    <t t-else="">
+                        <div style="padding: 16px 14px; background: #fff; direction: rtl; text-align: right; min-width: 220px;">
+                            <div style="font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 3px;">مرحباً بك</div>
+                            <div style="font-size: 11px; color: #aaa; margin-bottom: 14px; line-height: 1.5;">سجّل دخولك للوصول إلى حسابك</div>
+                
+                            <a id="o_login" class="dropdown-item" t-attf-href="/custom/login" role="menuitem" style="
+                                display: block !important;
+                                text-align: center !important;
+                                padding: 9px 14px !important;
+                                background: linear-gradient(135deg, #f8b500, #e07b00) !important;
+                                color: #1a1a2e !important;
+                                font-weight: 700;
+                                font-size: 13px;
+                                border-radius: 7px !important;
+                                text-decoration: none !important;
+                                margin-bottom: 7px;
+                            ">تسجيل دخول</a>
+                
+                            <a class="dropdown-item" t-attf-href="/account/request" role="menuitem" style="
+                                display: block !important;
+                                text-align: center !important;
+                                padding: 8px 14px !important;
+                                background: transparent !important;
+                                color: #666 !important;
+                                font-size: 13px;
+                                border: 1px solid #e8e8e8 !important;
+                                border-radius: 7px !important;
+                                text-decoration: none !important;
+                            ">فتح ملف جديد</a>
+                        </div>
+                    </t>
+                
+                </div>
+
+            </div>
+            <!-- شريط الجوال السفلي -->
+            <div class="text-center" t-if="_isBottomBar">
+                <span class="">الحساب</span>
+            </div>
+        </div>
+    </t>
+</t>

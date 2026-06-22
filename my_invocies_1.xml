@@ -1,0 +1,114 @@
+<t name="My Invoices and Payments" t-name="account.portal_my_invoices">
+    <t t-call="portal.portal_layout">
+        <t t-set="breadcrumbs_searchbar" t-value="True"/>
+        <t t-call="portal.portal_searchbar">
+            <t t-set="title">Invoices</t>
+        </t>
+        
+        
+        <!-- Empty State -->
+        <div t-if="not invoices" class="bg-primary-50 border-r-4 border-primary-500 p-4 rounded-lg mb-6">
+            <div class="flex items-center">
+                <svg class="w-5 h-5 text-primary-500 ml-3" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                </svg>
+                <p class="text-sm text-primary-700">There are currently no invoices and payments for your account.</p>
+            </div>
+        </div>
+        
+        <t t-if="invoices" t-call="portal.portal_table">
+            <t t-set="table_classes" t-value="'o_portal_invoice_table bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden'"/>
+            <thead>
+                <tr class="bg-gray-50 border-b border-gray-200">
+                    <th name="invoice_number" class="px-6 py-3 text-right text-sm font-semibold text-gray-700">
+                        Invoice #
+                    </th>
+                    <th name="invoice_date" class="px-6 py-3 text-right text-sm font-semibold text-gray-700">
+                        Invoice Date
+                    </th>
+                    <th name="due_date" class="px-6 py-3 text-right text-sm font-semibold text-gray-700 d-none d-md-table-cell">
+                        موعد الاستحقاق
+                    </th>
+                    <th name="status" class="px-6 py-3 text-center text-sm font-semibold text-gray-700">
+                        Status
+                    </th>
+                    <th name="amount_due" class="px-6 py-3 text-right text-sm font-semibold text-gray-700">
+                        Amount Due
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 inv-table-body">
+                <t t-foreach="invoices" t-as="invoice">
+                    <tr t-att-class="
+                        'bg-green-50 hover:bg-green-100'  if invoice.state == 'posted' and invoice.payment_state in ('paid', 'in_payment') else
+                        'bg-indigo-50 hover:bg-indigo-100' if invoice.state == 'posted' and invoice.payment_state == 'reversed' else
+                        'bg-amber-50 hover:bg-amber-100'  if invoice.state == 'posted' else
+                        'bg-red-50 hover:bg-red-100'      if invoice.state == 'cancel' else
+                        'bg-gray-50 hover:bg-gray-100'
+                    ">
+                        <td class="px-6 py-4">
+                            <a t-att-href="invoice.get_portal_url()" t-att-title="invoice.name" class="text-primary-600 hover:text-white font-medium hover:underline">
+                                <t t-out="invoice.name" t-if="invoice.name != '/'"/>
+                                <em t-else="" class="text-gray-500">مسودة فاتورة</em>
+                            </a>
+                        </td>
+                        <td class="px-6 py-4 text-gray-700">
+                            <span class="text-sm d-md-none font-semibold" t-field="invoice.invoice_date"/>
+                            <div class="d-none d-md-block">
+                                <span class="text-sm" t-field="invoice.invoice_date"/>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-gray-700 d-none d-md-table-cell">
+                            <span class="text-sm" t-field="invoice.invoice_date_due"/>
+                        </td>
+                        <td name="invoice_status" class="px-6 py-4 text-center">
+                            <t t-if="invoice.state == 'posted'" name="invoice_status_posted">
+                                <span t-if="invoice.payment_state in ('paid', 'in_payment')" class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-700">
+                                    <svg class="w-4 h-4 d-none d-md-inline-block" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <i class="fa fa-fw fa-check" aria-label="مدفوع" title="مدفوع" role="img"/>
+                                    <span class="d-none d-md-inline"> مدفوع</span>
+                                </span>
+                                <span t-elif="invoice.payment_state == 'reversed'" class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-700">
+                                    <svg class="w-4 h-4 d-none d-md-inline-block" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <i class="fa fa-fw fa-check" aria-label="مرتجع مبيعات" title="مرتجع مبيعات" role="img"/>
+                                    <span class="d-none d-md-inline"> مرتجع مبيعات</span>
+                                </span>
+                                <span t-else="" class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-primary-50 text-primary-600 border border-primary-200" name="invoice_status_waiting_for_payment">
+                                    <svg class="w-4 h-4 d-none d-md-inline-block" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <i class="fa fa-fw fa-clock-o" aria-label="في انتظار الدفع" title="في انتظار الدفع" role="img"/>
+                                    <span class="d-none d-md-inline"> في انتظار الدفع</span>
+                                </span>
+                            </t>
+                            <t t-elif="invoice.state == 'cancel'">
+                                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                                    <svg class="w-4 h-4 d-none d-md-inline-block" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="badge rounded-pill text-bg-warning">
+                                    <i class="fa fa-fw fa-remove" aria-label="ملغي" title="ملغي" role="img"/>
+                                    <span class="d-none d-md-inline"> ملغي</span>
+                                </span>
+                                </span>
+                            </t>
+                        </td>
+                        <td class="px-6 py-4 text-gray-900 font-medium text-end">
+                            <div class="d-md-none text-sm">
+                                <div class="text-gray-600 mb-1">المستحق:</div>
+                                <span class="font-semibold" t-out="-invoice.amount_residual if invoice.move_type == 'out_refund' else invoice.amount_residual" t-options="{'widget': 'monetary', 'display_currency': invoice.currency_id}"/>
+                            </div>
+                            <div class="d-none d-md-block">
+                                <span t-out="-invoice.amount_residual if invoice.move_type == 'out_refund' else invoice.amount_residual" t-options="{'widget': 'monetary', 'display_currency': invoice.currency_id}"/>
+                            </div>
+                        </td>
+                    </tr>
+                </t>
+            </tbody>
+        </t>
+    </t>
+</t>

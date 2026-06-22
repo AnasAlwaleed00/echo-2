@@ -1,0 +1,241 @@
+<t t-name="theme_emart_plant.address_list">
+    <t t-call="website.layout">
+        <t t-set="additional_title">تفاصيل العنوان</t>
+
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+        <style>
+            #wrap.eoa, #wrap.eoa *, #wrap.eoa *::before, #wrap.eoa *::after { box-sizing: border-box; font-family: "Cairo", sans-serif; }
+            #wrap.eoa .fa, #wrap.eoa .fa::before, #wrap.eoa i.fa, #wrap.eoa i[class*="fa-"]::before { font-family: FontAwesome !important; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; }
+
+            #wrap.eoa {
+                --gold: #C9982A; --gold-dark: #A87B1E; --gold-light: rgba(201, 152, 42, 0.12);
+                --navy: #0D1B2E; --bg: #F7F5F0; --card: #FFFFFF; --border: #E8E2D9;
+                --text: #1A1A2E; --muted: #8A8578; --green: #16a34a; --green-bg: #f0fdf4;
+                --red: #dc2626; --red-bg: #fef2f2; --blue: #2563eb; --blue-bg: #eff6ff;
+                background: var(--bg); direction: rtl; text-align: right;
+            }
+
+            #wrap.eoa h1, #wrap.eoa h2, #wrap.eoa h3, #wrap.eoa p { margin: 0; padding: 0; }
+            #wrap.eoa a { text-decoration: none; color: inherit; }
+            #wrap.eoa a.eoa-btn-add, #wrap.eoa a.eoa-btn-add:hover, #wrap.eoa a.eoa-btn-add:focus,
+            #wrap.eoa a.eoa-btn-add span, #wrap.eoa a.eoa-btn-add i { color: #fff !important; }
+
+            .eoa-shell { max-width: 1040px; margin: 0 auto; padding: 28px 20px 56px; }
+
+            .eoa-hero {
+                background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+                padding: 24px 26px; margin-bottom: 24px; position: relative; overflow: hidden;
+            }
+            .eoa-hero::before {
+                content: ""; position: absolute; top: 0; right: 0; width: 4px; height: 100%;
+                background: linear-gradient(180deg, #FDE021, var(--gold));
+            }
+            .eoa-hero h1 { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 10px !important; }
+            .eoa-breadcrumb { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; list-style: none; padding: 0; margin: 0; }
+            .eoa-breadcrumb li { font-size: 13px; font-weight: 600; color: var(--muted); }
+            .eoa-breadcrumb li + li::before { content: "/"; margin-left: 8px; color: var(--border); }
+            .eoa-breadcrumb a { color: var(--gold-dark); transition: color 0.15s; }
+            .eoa-breadcrumb a:hover { color: var(--navy); }
+            .eoa-breadcrumb .active { color: var(--navy); }
+
+            .eoa-section { margin-bottom: 32px; }
+            .eoa-section-head {
+                display: flex; align-items: flex-start; justify-content: space-between;
+                gap: 16px; margin-bottom: 16px; flex-wrap: wrap;
+            }
+            .eoa-section-title, #wrap.eoa .eoa-section-title {
+                font-size: 15px; font-weight: 700; color: var(--navy);
+                line-height: 1.5; display: flex; align-items: center; gap: 10px;
+            }
+            .eoa-section-icon {
+                width: 32px; height: 32px; border-radius: 10px; display: flex;
+                align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px;
+            }
+            .eoa-section-icon.is-main { background: var(--gold-light); color: var(--gold-dark); }
+            .eoa-section-icon.is-ship { background: var(--blue-bg); color: var(--blue); }
+            .eoa-section-sub { font-size: 12px; color: var(--muted); font-weight: 600; margin-top: 4px !important; line-height: 1.6; }
+
+            .eoa-grid {
+                display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;
+            }
+
+            .eoa-card {
+                background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+                display: flex; flex-direction: column; overflow: hidden;
+                transition: border-color 0.15s, box-shadow 0.15s;
+            }
+            .eoa-card:hover { border-color: rgba(201, 152, 42, 0.35); box-shadow: 0 4px 16px rgba(13, 27, 46, 0.06); }
+            .eoa-card.is-default { border-color: rgba(22, 163, 74, 0.4); box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.08); }
+
+            .eoa-card-top {
+                display: flex; align-items: center; justify-content: space-between;
+                padding: 14px 16px 0; gap: 8px;
+            }
+            .eoa-badge {
+                display: inline-flex; align-items: center; gap: 5px;
+                font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px;
+            }
+            .eoa-badge.is-default { background: var(--green-bg); color: var(--green); border: 1px solid rgba(22, 163, 74, 0.2); }
+            .eoa-badge.is-main { background: var(--gold-light); color: var(--gold-dark); border: 1px solid rgba(201, 152, 42, 0.25); }
+
+            .eoa-card-body {
+                padding: 14px 16px 16px; flex: 1; min-height: 120px;
+                font-size: 13px; color: var(--text); line-height: 1.75; font-weight: 600;
+            }
+            .eoa-card-body .fa, .eoa-card-body i { display: none; }
+            .eoa-card-body br + br { display: none; }
+
+            .eoa-card-actions {
+                display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+                padding: 12px 16px; border-top: 1px solid var(--border); background: var(--bg);
+            }
+            .eoa-card.is-default .eoa-card-actions { background: rgba(240, 253, 244, 0.6); }
+
+            .eoa-action {
+                display: inline-flex; align-items: center; gap: 6px;
+                padding: 7px 12px; border-radius: 8px; font-size: 12px; font-weight: 700;
+                transition: all 0.15s; cursor: pointer; border: 1px solid transparent;
+            }
+            .eoa-action.is-edit { background: var(--card); border-color: var(--border); color: var(--navy); }
+            .eoa-action.is-edit:hover { border-color: var(--gold); color: var(--gold-dark); background: var(--gold-light); }
+            .eoa-action.is-default-btn { background: var(--blue-bg); border-color: rgba(37, 99, 235, 0.2); color: var(--blue); margin-right: auto; }
+            .eoa-action.is-default-btn:hover { background: var(--blue); color: #fff; }
+            .eoa-action.is-delete { background: var(--red-bg); border-color: rgba(220, 38, 38, 0.2); color: var(--red); }
+            .eoa-action.is-delete:hover { background: var(--red); color: #fff; }
+
+            .eoa-add-card {
+                display: flex; flex-direction: column; align-items: center; justify-content: center;
+                gap: 10px; min-height: 180px; border: 2px dashed var(--border); border-radius: 14px;
+                background: var(--card); color: var(--muted); font-size: 14px; font-weight: 700;
+                transition: all 0.15s; text-align: center; padding: 24px 16px;
+            }
+            .eoa-add-card:hover {
+                border-color: var(--gold); color: var(--gold-dark); background: rgba(201, 152, 42, 0.04);
+                box-shadow: 0 0 0 3px var(--gold-light);
+            }
+            .eoa-add-icon {
+                width: 44px; height: 44px; border-radius: 12px; background: var(--gold-light);
+                color: var(--gold-dark); display: flex; align-items: center; justify-content: center; font-size: 18px;
+            }
+
+            .eoa-btn-add {
+                display: inline-flex; align-items: center; gap: 8px;
+                padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 700;
+                background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #fff !important;
+                box-shadow: 0 4px 14px rgba(201, 152, 42, 0.25); transition: all 0.15s; white-space: nowrap;
+            }
+            .eoa-btn-add:hover, .eoa-btn-add:focus { box-shadow: 0 6px 18px rgba(201, 152, 42, 0.35); transform: translateY(-1px); color: #fff !important; }
+
+            @media (max-width: 640px) {
+                .eoa-shell { padding: 20px 16px 48px; }
+                .eoa-section-head { flex-direction: column; align-items: stretch; }
+                .eoa-btn-add { width: 100%; justify-content: center; }
+                .eoa-card-actions { flex-direction: column; align-items: stretch; }
+                .eoa-action { justify-content: center; }
+                .eoa-action.is-default-btn { margin-right: 0; }
+            }
+        </style>
+
+        <div id="wrap" class="eoa">
+            <div class="eoa-shell">
+
+                <div class="eoa-hero text-center">
+                    <h1>العناوين</h1>
+                    <ol class="eoa-breadcrumb">
+                        <li><a href="/">الرئيسية</a></li>
+                        <li class="active">العناوين</li>
+                    </ol>
+                </div>
+
+                <!-- الموقع الرئيسي -->
+                <section class="eoa-section">
+                    <div class="eoa-section-head">
+                        <div>
+                            <div class="eoa-section-title">
+                                <span class="eoa-section-icon is-main"><i class="fa fa-building"/></span>
+                                الموقع الرئيسي (المعرض - المحل - المكتب)
+                            </div>
+                            <p class="eoa-section-sub">عنوان الفاتورة والموقع الأساسي لحسابك</p>
+                        </div>
+                    </div>
+
+                    <div class="eoa-grid">
+                        <t t-foreach="billing" t-as="bill">
+                            <div class="eoa-card">
+                                <div class="eoa-card-top">
+                                    <span class="eoa-badge is-main"><i class="fa fa-map-marker"/> موقع رئيسي</span>
+                                </div>
+                                <div class="eoa-card-body">
+                                    <t t-out="bill" t-options="dict(widget='contact', fields=['name', 'address'], no_marker=True)"/>
+                                </div>
+                                <div class="eoa-card-actions">
+                                    <a role="button" t-attf-href="/add-address?edit-mode=#{bill.id}" class="eoa-action is-edit edit_address">
+                                        <i class="fa fa-pencil"/> تحرير
+                                    </a>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </section>
+
+                <!-- عناوين التوصيل -->
+                <section class="eoa-section">
+                    <div class="eoa-section-head">
+                        <div>
+                            <div class="eoa-section-title">
+                                <span class="eoa-section-icon is-ship"><i class="fa fa-truck"/></span>
+                                عنوان توصيل المنتجات
+                            </div>
+                            <p class="eoa-section-sub">إدارة عناوين الشحن وتحديد العنوان الافتراضي للطلبات</p>
+                        </div>
+                        <a role="button" href="/add-address?new-address=1" class="eoa-btn-add">
+                            <i class="fa fa-plus"/> اضافة عنوان
+                        </a>
+                    </div>
+
+                    <div class="eoa-grid">
+                        <a role="button" href="/add-address?new-address=1" class="eoa-add-card one_kanban">
+                            <span class="eoa-add-icon"><i class="fa fa-plus"/></span>
+                            <span>اضافة عنوان توصيل جديد</span>
+                        </a>
+
+                        <t t-foreach="shippings" t-as="ship">
+                            <t t-set="is_default" t-value="ship.id == request.env.user.partner_id.default_shipping_id.id"/>
+                            <div t-attf-class="eoa-card #{ 'is-default' if is_default else '' }">
+                                <div class="eoa-card-top">
+                                    <t t-if="is_default">
+                                        <span class="eoa-badge is-default"><i class="fa fa-check-circle"/> افتراضي</span>
+                                    </t>
+                                    <t t-else="">
+                                        <span class="eoa-badge" style="visibility:hidden;">—</span>
+                                    </t>
+                                </div>
+                                <div class="eoa-card-body">
+                                    <t t-out="ship" t-options="dict(widget='contact', fields=['name', 'address'], no_marker=True)"/>
+                                </div>
+                                <div class="eoa-card-actions">
+                                    <a role="button" t-attf-href="/add-address?edit-mode=#{ship.id}" class="eoa-action is-edit edit_address">
+                                        <i class="fa fa-pencil"/> تحرير
+                                    </a>
+                                    <t t-if="not is_default">
+                                        <a role="button" t-attf-href="/update-addres/#{ship.id}" class="eoa-action is-default-btn set_default_address">
+                                            <i class="fa fa-star-o"/> افتراضي
+                                        </a>
+                                    </t>
+                                    <t t-if="shipping_count != 1">
+                                        <a role="button" t-attf-href="/delete-address/#{ship.id}" class="eoa-action is-delete">
+                                            <i class="fa fa-trash-o"/> حذف
+                                        </a>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </t>
+</t>

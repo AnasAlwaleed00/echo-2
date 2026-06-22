@@ -1,0 +1,258 @@
+<section class="section-bg py-16 px-4 sm:px-6 lg:px-10">
+    <div class="max-w-7xl mx-auto">
+  
+      <!-- Header -->
+      <div class="mb-10">
+        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-4">
+          <div>
+            <p style="color:var(--clr-gold);font-size:0.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:0.4rem;">🔥 الأعلى مبيعاً</p>
+            <h2 class="section-heading">المنتجات <span>الأكثر مبيعاً</span></h2>
+            <p style="color:var(--clr-text-secondary);font-size:0.92rem;margin-top:0.5rem;">اختارها عملاؤنا بثقة — الأفضل جودةً وسعراً</p>
+          </div>
+          <button class="btn-view-all hidden sm:flex">
+            عرض الكل
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+        <div class="gold-divider"/>
+      </div>
+  
+      <!-- Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
+  
+        <!-- Card 1 -->
+        <div class="product-card">
+          <div class="img-wrapper">
+            <img class="product-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&amp;h=400&amp;fit=crop" alt="ساعة فاخرة"/>
+            <div class="img-overlay"/>
+            <div class="rank-number">#1</div>
+            <button class="btn-wishlist">
+              <svg width="14" height="14" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
+          <div class="p-3">
+            <div class="flex items-center gap-1 mb-1.5">
+              <span class="badge">الأكثر مبيعاً</span>
+              <span class="badge badge-sale">-25%</span>
+            </div>
+            <h3 style="color:var(--clr-text-primary);font-size:0.88rem;font-weight:600;line-height:1.3;margin-bottom:0.3rem;">ساعة كلاسيكية فاخرة</h3>
+            <p style="color:var(--clr-text-secondary);font-size:0.75rem;margin-bottom:0.5rem;">إصدار محدود — جلد طبيعي</p>
+            <div class="flex items-center gap-1 mb-2">
+              <span class="star text-sm">★★★★</span><span class="star-empty text-sm">★</span>
+              <span style="color:var(--clr-text-muted);font-size:0.72rem;">(٢٤٠)</span>
+            </div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="price-current text-base">٤٩٩ ر.س</span>
+              <span class="price-old">٦٦٥ ر.س</span>
+            </div>
+            <button class="btn-cart">أضف إلى السلة</button>
+          </div>
+        </div>
+  
+        <!-- Card 2 -->
+        <div class="product-card">
+          <div class="img-wrapper">
+            <img class="product-img" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&amp;h=400&amp;fit=crop" alt="سماعات"/>
+            <div class="img-overlay"/>
+            <div class="rank-number">#2</div>
+            <button class="btn-wishlist">
+              <svg width="14" height="14" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
+          <div class="p-3">
+            <div class="flex items-center gap-1 mb-1.5">
+              <span class="badge badge-new">جديد</span>
+            </div>
+            <h3 style="color:var(--clr-text-primary);font-size:0.88rem;font-weight:600;line-height:1.3;margin-bottom:0.3rem;">سماعات لاسلكية Pro</h3>
+            <p style="color:var(--clr-text-secondary);font-size:0.75rem;margin-bottom:0.5rem;">إلغاء الضوضاء الذكي</p>
+            <div class="flex items-center gap-1 mb-2">
+              <span class="star text-sm">★★★★★</span>
+              <span style="color:var(--clr-text-muted);font-size:0.72rem;">(٥٨٢)</span>
+            </div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="price-current text-base">٢٨٩ ر.س</span>
+            </div>
+            <button class="btn-cart">أضف إلى السلة</button>
+          </div>
+        </div>
+  
+        <!-- Card 3 -->
+        <div class="product-card">
+          <div class="img-wrapper">
+            <img class="product-img" src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&amp;h=400&amp;fit=crop" alt="حذاء رياضي"/>
+            <div class="img-overlay"/>
+            <div class="rank-number">#3</div>
+            <button class="btn-wishlist">
+              <svg width="14" height="14" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
+          <div class="p-3">
+            <div class="flex items-center gap-1 mb-1.5">
+              <span class="badge badge-sale">-30%</span>
+            </div>
+            <h3 style="color:var(--clr-text-primary);font-size:0.88rem;font-weight:600;line-height:1.3;margin-bottom:0.3rem;">حذاء رياضي احترافي</h3>
+            <p style="color:var(--clr-text-secondary);font-size:0.75rem;margin-bottom:0.5rem;">مريح ومستدام</p>
+            <div class="flex items-center gap-1 mb-2">
+              <span class="star text-sm">★★★★</span><span class="star-empty text-sm">★</span>
+              <span style="color:var(--clr-text-muted);font-size:0.72rem;">(١٩٠)</span>
+            </div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="price-current text-base">١٩٩ ر.س</span>
+              <span class="price-old">٢٨٥ ر.س</span>
+            </div>
+            <button class="btn-cart">أضف إلى السلة</button>
+          </div>
+        </div>
+  
+        <!-- Card 4 -->
+        <div class="product-card">
+          <div class="img-wrapper">
+            <img class="product-img" src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&amp;h=400&amp;fit=crop" alt="حذاء أبيض"/>
+            <div class="img-overlay"/>
+            <div class="rank-number">#4</div>
+            <button class="btn-wishlist">
+              <svg width="14" height="14" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
+          <div class="p-3">
+            <div class="flex items-center gap-1 mb-1.5">
+              <span class="badge">الأكثر مبيعاً</span>
+            </div>
+            <h3 style="color:var(--clr-text-primary);font-size:0.88rem;font-weight:600;line-height:1.3;margin-bottom:0.3rem;">حذاء كلاسيك أبيض</h3>
+            <p style="color:var(--clr-text-secondary);font-size:0.75rem;margin-bottom:0.5rem;">تصميم عصري وأنيق</p>
+            <div class="flex items-center gap-1 mb-2">
+              <span class="star text-sm">★★★★★</span>
+              <span style="color:var(--clr-text-muted);font-size:0.72rem;">(٣٢١)</span>
+            </div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="price-current text-base">٣٤٩ ر.س</span>
+            </div>
+            <button class="btn-cart">أضف إلى السلة</button>
+          </div>
+        </div>
+  
+        <!-- Card 5 -->
+        <div class="product-card">
+          <div class="img-wrapper">
+            <img class="product-img" src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&amp;h=400&amp;fit=crop" alt="كاميرا فورية"/>
+            <div class="img-overlay"/>
+            <div class="rank-number">#5</div>
+            <button class="btn-wishlist">
+              <svg width="14" height="14" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
+          <div class="p-3">
+            <div class="flex items-center gap-1 mb-1.5">
+              <span class="badge badge-sale">-20%</span>
+              <span class="badge badge-new">ترند</span>
+            </div>
+            <h3 style="color:var(--clr-text-primary);font-size:0.88rem;font-weight:600;line-height:1.3;margin-bottom:0.3rem;">كاميرا فورية ريترو</h3>
+            <p style="color:var(--clr-text-secondary);font-size:0.75rem;margin-bottom:0.5rem;">اطبع لحظاتك فوراً</p>
+            <div class="flex items-center gap-1 mb-2">
+              <span class="star text-sm">★★★★</span><span class="star-empty text-sm">★</span>
+              <span style="color:var(--clr-text-muted);font-size:0.72rem;">(٤١٧)</span>
+            </div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="price-current text-base">٢٢٩ ر.س</span>
+              <span class="price-old">٢٨٦ ر.س</span>
+            </div>
+            <button class="btn-cart">أضف إلى السلة</button>
+          </div>
+        </div>
+  
+        <!-- Card 6 -->
+        <div class="product-card">
+          <div class="img-wrapper">
+            <img class="product-img" src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&amp;h=400&amp;fit=crop" alt="عطر فاخر"/>
+            <div class="img-overlay"/>
+            <div class="rank-number">#6</div>
+            <button class="btn-wishlist">
+              <svg width="14" height="14" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
+          <div class="p-3">
+            <div class="flex items-center gap-1 mb-1.5">
+              <span class="badge">الأكثر مبيعاً</span>
+            </div>
+            <h3 style="color:var(--clr-text-primary);font-size:0.88rem;font-weight:600;line-height:1.3;margin-bottom:0.3rem;">عطر أمواج الشرق</h3>
+            <p style="color:var(--clr-text-secondary);font-size:0.75rem;margin-bottom:0.5rem;">عود وورد — ١٠٠ مل</p>
+            <div class="flex items-center gap-1 mb-2">
+              <span class="star text-sm">★★★★★</span>
+              <span style="color:var(--clr-text-muted);font-size:0.72rem;">(٦٠٤)</span>
+            </div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="price-current text-base">١٨٩ ر.س</span>
+            </div>
+            <button class="btn-cart">أضف إلى السلة</button>
+          </div>
+        </div>
+  
+        <!-- Card 7 -->
+        <div class="product-card">
+          <div class="img-wrapper">
+            <img class="product-img" src="https://images.unsplash.com/photo-1581093458791-9d15c4a5dcbb?w=400&amp;h=400&amp;fit=crop" alt="شاحن لاسلكي"/>
+            <div class="img-overlay"/>
+            <div class="rank-number">#7</div>
+            <button class="btn-wishlist">
+              <svg width="14" height="14" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
+          <div class="p-3">
+            <div class="flex items-center gap-1 mb-1.5">
+              <span class="badge badge-sale">-15%</span>
+            </div>
+            <h3 style="color:var(--clr-text-primary);font-size:0.88rem;font-weight:600;line-height:1.3;margin-bottom:0.3rem;">شاحن لاسلكي سريع</h3>
+            <p style="color:var(--clr-text-secondary);font-size:0.75rem;margin-bottom:0.5rem;">٦٥ واط — متوافق عالمياً</p>
+            <div class="flex items-center gap-1 mb-2">
+              <span class="star text-sm">★★★★</span><span class="star-empty text-sm">★</span>
+              <span style="color:var(--clr-text-muted);font-size:0.72rem;">(٢٨٠)</span>
+            </div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="price-current text-base">١٤٩ ر.س</span>
+              <span class="price-old">١٧٥ ر.س</span>
+            </div>
+            <button class="btn-cart">أضف إلى السلة</button>
+          </div>
+        </div>
+  
+        <!-- Card 8 -->
+        <div class="product-card">
+          <div class="img-wrapper">
+            <img class="product-img" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&amp;h=400&amp;fit=crop" alt="حذاء ركض"/>
+            <div class="img-overlay"/>
+            <div class="rank-number">#8</div>
+            <button class="btn-wishlist">
+              <svg width="14" height="14" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
+          <div class="p-3">
+            <div class="flex items-center gap-1 mb-1.5">
+              <span class="badge badge-new">جديد</span>
+              <span class="badge badge-sale">-10%</span>
+            </div>
+            <h3 style="color:var(--clr-text-primary);font-size:0.88rem;font-weight:600;line-height:1.3;margin-bottom:0.3rem;">حذاء ركض Trail Pro</h3>
+            <p style="color:var(--clr-text-secondary);font-size:0.75rem;margin-bottom:0.5rem;">خفيف ومقاوم للماء</p>
+            <div class="flex items-center gap-1 mb-2">
+              <span class="star text-sm">★★★★★</span>
+              <span style="color:var(--clr-text-muted);font-size:0.72rem;">(١٠٣)</span>
+            </div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="price-current text-base">٢٦٩ ر.س</span>
+              <span class="price-old">٢٩٩ ر.س</span>
+            </div>
+            <button class="btn-cart">أضف إلى السلة</button>
+          </div>
+        </div>
+  
+      </div>
+  
+      <!-- View All Mobile -->
+      <div class="flex justify-center mt-8 sm:hidden">
+        <button class="btn-view-all">
+          عرض جميع المنتجات
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+  
+    </div>
+  </section>

@@ -1,0 +1,152 @@
+<t name="تفاصيل الدفع - الخطوة 2" t-name="website_payment_mod.customer_payment_step2">
+    <t t-call="website.layout">
+      <div class="container mt-5 mb-5" style="direction: rtl; text-align: right;">
+        <t t-call="website_payment_mod.payment_portal_header"/>
+        
+        <div style="max-width:720px; width:100%; margin:auto; background: #f8f9fa; padding: 30px; border-radius: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e3e6f0;">
+          
+          <h3 class="mb-4 font-weight-bold" style="color: #212529; font-size: 22px;">تفاصيل السداد والمبالغ</h3>
+          
+          <div id="portal_payment_static_fields">
+            <t t-if="payment_type == 'full'">
+              <div class="form-group mb-4">
+                <label style="font-size:16px; font-weight: bold; color: #4e73df;">إجمالي الرصيد المستحق</label>
+                <div class="input-group">
+                    <input type="number" step="0.01" class="form-control bg-white font-weight-bold" t-att-value="'%.2f' % float(balance or 0.0)" readonly="readonly" style="border-radius: 8px; border-color: #4e73df; font-size: 18px; color: #4e73df !important;"/>
+                    <div class="input-group-append"><span class="input-group-text text-white bg-primary" style="border-radius: 0 8px 8px 0;">ريال</span></div>
+                </div>
+              </div>
+            </t>
+
+            <t t-if="payment_type == 'overdue'">
+              <div class="form-group mb-4">
+                <label style="font-size:16px; font-weight: bold; color: #dc3545;">إجمالي الرصيد المستحق (المتأخرات أكثر من 90 يوم)</label>
+                <div class="input-group">
+                    <input type="number" step="0.01" class="form-control bg-white font-weight-bold" t-att-value="'%.2f' % float(aged_90_plus or 0.0)" readonly="readonly" style="border-radius: 8px; border-color: #dc3545; font-size: 18px; color: #dc3545 !important;"/>
+                    <div class="input-group-append"><span class="input-group-text text-white bg-danger" style="border-radius: 0 8px 8px 0;">ريال</span></div>
+                </div>
+              </div>
+            </t>
+
+            <t t-if="payment_type == 'partial'">
+              <div class="form-group mb-3">
+                <label style="font-size:16px; font-weight: bold;">إجمالي الرصيد المستحق</label>
+                <div class="input-group mb-3">
+                    <input type="number" step="0.01" class="form-control bg-white" t-att-value="'%.2f' % float(balance or 0.0)" readonly="readonly" style="border-radius: 8px;"/>
+                    <div class="input-group-append"><span class="input-group-text" style="border-radius: 0 8px 8px 0;">ريال</span></div>
+                </div>
+
+                <label style="font-size:16px; font-weight: bold; color:#0056b3;">المبلغ المراد سداده (دفع جزئي)</label>
+                <div class="input-group">
+                    <input type="number" step="0.01" min="1.0" id="partial_amount_input" name="amount" class="form-control" t-att-value="'%.2f' % float(partial_amount or 0.0)" required="required" autofocus="autofocus" style="border-radius: 8px; border-color: #0056b3;"/>
+                    <div class="input-group-append">
+                        <span class="input-group-text text-white bg-primary" style="border-radius: 0 8px 8px 0;">ريال</span>
+                    </div>
+                </div>
+              </div>
+              <div class="alert alert-warning mt-3 mb-4" style="font-size:14px; border-radius: 8px;">
+                <i class="fa fa-info-circle"/> عزيزي العميل.. نفيدكم بأنه بعد سداد المبلغ سيتم إنشاء سند قبض مبدئي وغير معتمد لحين المطابقة.
+              </div>
+            </t>
+          </div>
+
+          <hr class="mt-4 mb-4" style="border-top: 1px solid #e3e6f0;"/>
+
+          <t t-if="payment_type in ['full','overdue']">
+            <div class="form-group mb-4">
+              <label class="mb-2" style="font-size:16px; font-weight: bold; color: #4e73df;">لديك كود قسيمة؟</label>
+              
+              <form action="/customer/payment/check_coupon" method="post" class="d-flex mb-3" id="coupon_check_form">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <input type="text" name="coupon_code" class="form-control" style="border-radius: 8px; margin-left: 10px;" placeholder="أدخل كود القسيمة هنا للاستفادة من الخصم" t-att-value="applied_coupon['code'] if applied_coupon else ''" t-att-readonly="'readonly' if applied_coupon and coupon_success else None"/>
+                
+                <t t-if="not (applied_coupon and coupon_success)">
+                    <button type="submit" class="btn btn-info px-4" style="border-radius: 8px; white-space: nowrap;">تطبيق</button>
+                </t>
+                <t t-if="applied_coupon and coupon_success">
+                    <button type="button" class="btn btn-danger px-4" onclick="cancelCoupon()" style="border-radius: 8px; white-space: nowrap;">إلغاء</button>
+                </t>
+              </form>
+
+              <t t-if="coupon_msg">
+                <div class="mt-2 alert" t-attf-class="alert #{ 'alert-success' if coupon_success else 'alert-danger' }" style="border-radius: 8px; font-size: 15px; font-weight: bold; padding: 12px 20px;">
+                  <span class="d-block"><t t-esc="coupon_msg"/></span>
+                  <t t-if="coupon_expiration and coupon_success">
+                    <div class="mt-2" style="color: #b92c28; font-size: 14px; font-weight: bold; background: rgba(219, 53, 69, 0.05); padding: 6px 12px; border-radius: 6px; display: inline-block;">
+                        <i class="fa fa-calendar-check-o"/> تاريخ صلاحية هذه القسيمة حتى: <span class="badge bg-danger text-white px-2 py-1" style="font-size: 13px;"><t t-esc="coupon_expiration"/></span>
+                    </div>
+                  </t>
+                </div>
+
+                <t t-if="coupon_success">
+                    <div style="background: #ffffff; padding: 20px; border-radius: 10px; border: 2px dashed #28a745;" class="mt-3 mb-4">
+                        <div class="form-group mb-3">
+                            <label style="font-size:16px; font-weight: bold; color:#28a745;">مبلغ الخصم (<t t-esc="int(points)"/>%)</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control bg-white text-success font-weight-bold" t-att-value="'%.2f' % float(deduct_amount or 0.0)" readonly="readonly" style="border-radius: 8px; border-color: #28a745; font-size: 18px"/>
+                                <div class="input-group-append"><span class="input-group-text text-success font-weight-bold" style="border-radius: 0 8px 8px 0; background: rgba(40, 167, 69, 0.1);">ريال</span></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label style="font-size:16px; font-weight: bold; color:#cc9900;">الإجمالي غير شامل الضريبة</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control bg-white font-weight-bold" t-att-value="'%.2f' % float(balance_untaxed if payment_type == 'full' else overdue_untaxed)" readonly="readonly" style="border-radius: 8px; border-color: #cc9900; font-size: 18px; color: #cc9900 !important;"/>
+                                <div class="input-group-append"><span class="input-group-text text-white" style="border-radius: 0 8px 8px 0; background-color: #cc9900;">ريال</span></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-0">
+                            <label style="font-size:16px; font-weight: bold; color:#dc3545;">المبلغ المستحق بعد الخصم</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control bg-white text-danger font-weight-bold" id="final_coupon_amount_field" t-att-value="'%.2f' % float(amount or 0.0)" readonly="readonly" style="border-radius: 8px; border-color: #dc3545; font-size: 20px;"/>
+                                <div class="input-group-append"><span class="input-group-text bg-danger text-white font-weight-bold" style="border-radius: 0 8px 8px 0;">ريال</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+              </t>
+            </div>
+          </t>
+
+          <div class="d-flex justify-content-between mt-5" style="border-top: 1px solid #e3e6f0; padding-top: 20px;">
+            <a class="btn btn-secondary px-5" href="/customer/payment" style="border-radius: 8px; font-weight: bold; padding-top: 10px; padding-bottom: 10px;">رجوع</a>
+            
+            <button type="button" class="btn px-5" onclick="processAndGoToStep3();" style="font-size: 16px; font-weight: bold; border-radius: 8px; background: linear-gradient(135deg, #d4af37, #b8962e); color: #000000; border: 1px solid #b8962e; padding-top: 10px; padding-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                التالي
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    <script type="text/javascript">
+    function processAndGoToStep3() {
+        const partialInput = document.getElementById('partial_amount_input');
+        
+        if (partialInput) {
+            var amtValue = parseFloat(partialInput.value);
+            
+            // الاعتماد على الأكبر من لتفادي أخطاء الـ XML نهائياً
+            if (amtValue &gt; 0) {
+                // إرسال المبلغ كـ URL Parameter لتلتقطه الخطوة 3 بكل أمان
+                window.location.href = '/customer/payment/step3?amount=' + amtValue;
+            } else {
+                alert("يرجى إدخال مبلغ صحيح أكبر من الصفر.");
+            }
+            
+        } else {
+            window.location.href = '/customer/payment/step3';
+        }
+    }
+
+    function cancelCoupon() {
+        fetch('/customer/payment/cancel', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ jsonrpc: "2.0", method: "call", params: {} })
+        }).then(() =&gt; { window.location.reload(); });
+    }
+    </script>
+    </t>
+</t>

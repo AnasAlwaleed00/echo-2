@@ -1,0 +1,219 @@
+<t name="Account Request" t-name="customer_account_request.account_request_template">
+    <t t-call="website.layout">
+
+        <style>
+            .account-form-container {
+                width: 70%;
+                margin: auto;
+            }
+            input.form-control, 
+            select.form-select, 
+            textarea.form-control {
+                border: 2px solid #bbb !important;
+                box-shadow: none !important;
+            }
+
+            .section-title {
+                font-weight: bold;
+                margin-top: 25px;
+                margin-bottom: 15px;
+                border-right: 4px solid #0d6efd;
+                padding-right: 10px;
+            }
+        </style>
+
+        <div class="account-form-container mt-5 mb-5">
+
+            <h2 class="fw-bold text-center mb-3" style="font-size: 34px;">
+    طلب فتح حساب جديد 
+</h2>
+            <p class="text-center text-muted">
+                هذه المعلومات مبدئية لفتح الملف وليست نهائية وسيتم مراجعتها وإكمال الملف من قبل الشركة
+            </p>
+<t t-if="error_msg">
+                <div class="alert alert-danger text-center fw-bold" role="alert">
+                    <t t-esc="error_msg"/>
+                </div>
+            </t>
+            <form action="/account/request/submit" method="post" enctype="multipart/form-data" class="mt-4">
+
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                <!-- ===================== -->
+                <!-- المعلومات الأساسية -->
+                <!-- ===================== -->
+                <h5 class="section-title">المعلومات الأساسية</h5>
+
+                <div class="mb-3">
+                    <label>التاريخ</label>
+                    <input type="text" name="today" class="form-control" t-att-value="today" readonly="readonly" required="required"/>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label>اسم الشركة</label>
+                        <input type="text" name="name" class="form-control" required="required"/>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>شعار الشركة</label>
+                        <input type="file" name="image" class="form-control" required="required"/>
+                    </div>
+                </div>
+
+                <!-- ===================== -->
+                <!-- بيانات الشركة النظامية -->
+                <!-- ===================== -->
+                <h5 class="section-title">بيانات الشركة</h5>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label>رقم السجل التجاري</label>
+                        <input type="text" name="company_registry" class="form-control" pattern="^[0-9]{1,10}$" maxlength="10" title="يجب أن لا يتجاوز 10 أرقام" required="required"/>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>الرقم الضريبي</label>
+                        <input type="text" name="vat" class="form-control" pattern="^[0-9]{1,15}$" maxlength="15" title="يجب أن لا يتجاوز 15 رقم" required="required"/>
+                    </div>
+                </div>
+
+                <!-- ===================== -->
+                <!-- العنوان الوطني -->
+                <!-- ===================== -->
+                <h5 class="section-title">العنوان الوطني</h5>
+
+                <div class="mb-3">
+                    <label>المدينة</label>
+                    <select name="city" class="form-select" required="required">
+                        <option value="">اختر المدينة</option>
+
+                        <optgroup label="المنطقة الوسطى">
+                            <option value="الرياض">الرياض</option>
+                            <option value="الخرج">الخرج</option>
+                            <option value="الدوادمي">الدوادمي</option>
+                            <option value="المجمعة">المجمعة</option>
+                            <option value="الزلفي">الزلفي</option>
+                            <option value="وادي الدواسر">وادي الدواسر</option>
+                            <option value="الأفلاج">الأفلاج</option>
+                            <option value="شقراء">شقراء</option>
+                        </optgroup>
+
+                        <optgroup label="المنطقة الغربية">
+                            <option value="جدة">جدة</option>
+                            <option value="مكة المكرمة">مكة المكرمة</option>
+                            <option value="المدينة المنورة">المدينة المنورة</option>
+                            <option value="الطائف">الطائف</option>
+                            <option value="ينبع">ينبع</option>
+                            <option value="رابغ">رابغ</option>
+                            <option value="القنفذة">القنفذة</option>
+                            <option value="الليث">الليث</option>
+                        </optgroup>
+
+                        <optgroup label="المنطقة الشرقية">
+                            <option value="الدمام">الدمام</option>
+                            <option value="الخبر">الخبر</option>
+                            <option value="الظهران">الظهران</option>
+                            <option value="الجبيل">الجبيل</option>
+                            <option value="الأحساء">الأحساء</option>
+                            <option value="القطيف">القطيف</option>
+                            <option value="رأس تنورة">رأس تنورة</option>
+                            <option value="بقيق">بقيق</option>
+                            <option value="حفر الباطن">حفر الباطن</option>
+                        </optgroup>
+
+                        <optgroup label="المنطقة الجنوبية">
+                            <option value="أبها">أبها</option>
+                            <option value="خميس مشيط">خميس مشيط</option>
+                            <option value="جازان">جازان</option>
+                            <option value="نجران">نجران</option>
+                            <option value="الباحة">الباحة</option>
+                        </optgroup>
+
+                        <optgroup label="المنطقة الشمالية">
+                            <option value="تبوك">تبوك</option>
+                            <option value="عرعر">عرعر</option>
+                            <option value="سكاكا">سكاكا</option>
+                            <option value="القريات">القريات</option>
+                        </optgroup>
+
+                        <optgroup label="القصيم">
+                            <option value="بريدة">بريدة</option>
+                            <option value="عنيزة">عنيزة</option>
+                            <option value="الرس">الرس</option>
+                        </optgroup>
+
+                        <optgroup label="حائل">
+                            <option value="حائل">حائل</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-3">
+                        <input type="text" name="street" class="form-control" placeholder="الشارع" required="required"/>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <input type="text" name="district" class="form-control" placeholder="الحي" required="required"/>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <input type="text" name="building_number" class="form-control" placeholder="رقم المبنى" required="required"/>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <input type="text" name="zip" class="form-control" placeholder="الرمز البريدي" required="required"/>
+                    </div>
+                </div>
+
+                <!-- ===================== -->
+                <!-- معلومات التواصل -->
+                <!-- ===================== -->
+                <h5 class="section-title">معلومات التواصل</h5>
+
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-3">
+                        <input type="text" name="mobile" class="form-control" placeholder="أدخل رقم الجوال بصيغة: 966512345678" required="required"/>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <input type="email" name="email" class="form-control" placeholder="البريد الالكتروني" required="required"/>
+                    </div>
+                </div>
+
+                <!-- ===================== -->
+                <!-- بيانات مالية -->
+                <!-- ===================== -->
+                <h5 class="section-title">بيانات مالية</h5>
+
+                <div class="mb-3">
+                    <label>الحد المتوقع لمشتريات (ريال)</label>
+                    <input type="number" name="new_credit" class="form-control" required="required"/>
+                </div>
+
+                <!-- ===================== -->
+                <!-- ممثل الشركة -->
+                <!-- ===================== -->
+                <div class="mb-3">
+                    <label>اسم ممثل الشركة</label>
+                    <input type="text" name="commercial_owner" class="form-control" placeholder="ممثل العميل" required="required"/>
+                </div>
+
+                <!-- ===================== -->
+                <!-- الشروط -->
+                <!-- ===================== -->
+                <div class="form-check mb-3">
+                    <input type="checkbox" name="terms" class="form-check-input" required="required"/>
+                    <label class="form-check-label">أوافق على الشروط والأحكام</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    تأكيد
+                </button>
+
+            </form>
+        </div>
+
+    </t>
+</t>

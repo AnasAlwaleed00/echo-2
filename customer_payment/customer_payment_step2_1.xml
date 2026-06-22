@@ -1,0 +1,246 @@
+<t name="تفاصيل الدفع - الخطوة 2" t-name="website_payment_mod.customer_payment_step2">
+    <t t-call="website.layout">
+
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <style>
+            .ecp, .ecp *, .ecp *::before, .ecp *::after { box-sizing: border-box; font-family: "Cairo", sans-serif; }
+            .ecp .fa, .ecp .fa::before, .ecp i.fa, .ecp i[class*="fa-"], .ecp i[class*="fa-"]::before { font-family: FontAwesome !important; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; }
+            .ecp {
+                --gold: #C9982A; --gold-dark: #A87B1E; --gold-light: rgba(201, 152, 42, 0.12);
+                --navy: #0D1B2E; --bg: #F7F5F0; --card: #FFFFFF; --border: #E8E2D9;
+                --text: #1A1A2E; --muted: #8A8578; --green: #16a34a; --green-bg: #f0fdf4;
+                --red: #dc2626; --red-bg: #fef2f2; --blue: #2563eb; --blue-bg: #eff6ff;
+                --amber: #b45309; --amber-bg: #fffbeb;
+                direction: rtl; text-align: right; background: var(--bg); min-height: 60vh; padding: 24px 0 56px;
+            }
+            .ecp-shell { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+            .ecp h1, .ecp h2, .ecp h3, .ecp p { margin: 0; padding: 0; }
+            .ecp a { text-decoration: none; color: inherit; }
+            .ecp-header { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; margin-bottom: 20px; position: relative; overflow: hidden; }
+            .ecp-header::before { content: ""; position: absolute; top: 0; right: 0; width: 4px; height: 100%; background: linear-gradient(180deg, #FDE021, var(--gold)); }
+            .ecp-header-greet { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+            .ecp-header-greet-text { display: flex; flex-direction: column; gap: 4px; }
+            .ecp-header-greet-msg { font-size: 14px; color: var(--muted); font-weight: 600; }
+            .ecp-header-greet-name { font-size: 22px; color: var(--navy); font-weight: 800; line-height: 1.3; }
+            .ecp-header-greet-icon { width: 32px; height: 32px; border-radius: 10px; background: var(--gold-light); display: flex; align-items: center; justify-content: center; color: var(--gold-dark); flex-shrink: 0; }
+            .ecp-header-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+            .ecp-header-stat { display: flex; align-items: center; gap: 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+            .ecp-header-stat-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 15px; }
+            .ecp-header-stat.is-balance .ecp-header-stat-icon { background: var(--gold-light); color: var(--gold-dark); }
+            .ecp-header-stat.is-overdue .ecp-header-stat-icon { background: var(--red-bg); color: var(--red); }
+            .ecp-header-stat-label { display: block; font-size: 11px; font-weight: 700; color: var(--muted); line-height: 1.3; }
+            .ecp-header-stat-value { display: block; font-size: 20px; font-weight: 800; color: var(--navy); line-height: 1.2; margin-top: 2px; font-variant-numeric: tabular-nums; }
+            .ecp-header-stat.is-overdue .ecp-header-stat-value { color: var(--red); }
+            .ecp-header-stat-value small { font-size: 11px; font-weight: 700; color: var(--muted); margin-right: 4px; }
+            .ecp-header-note { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; font-weight: 600; color: var(--amber); background: var(--amber-bg); border: 1px solid rgba(180, 83, 9, 0.2); border-radius: 10px; padding: 10px 14px; line-height: 1.6; }
+            .ecp-stepper { display: flex; align-items: center; justify-content: center; margin-bottom: 22px; padding: 0 4px; }
+            .ecp-step { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; max-width: 120px; position: relative; }
+            .ecp-step:not(:last-child)::after { content: ""; position: absolute; top: 16px; left: -50%; width: 100%; height: 2px; background: var(--border); z-index: 0; }
+            .ecp-step.is-done:not(:last-child)::after, .ecp-step.is-active:not(:last-child)::after { background: var(--gold); }
+            .ecp-step-dot { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border); background: var(--card); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--muted); position: relative; z-index: 1; }
+            .ecp-step.is-active .ecp-step-dot { border-color: var(--gold); background: var(--gold); color: #fff; box-shadow: 0 0 0 4px var(--gold-light); }
+            .ecp-step.is-done .ecp-step-dot { border-color: var(--gold); background: var(--gold-light); color: var(--gold-dark); }
+            .ecp-step-label { font-size: 11px; font-weight: 700; color: var(--muted); text-align: center; line-height: 1.3; }
+            .ecp-step.is-active .ecp-step-label { color: var(--navy); }
+            .ecp-step.is-done .ecp-step-label { color: var(--gold-dark); }
+            .ecp-panel { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 22px; margin-bottom: 16px; }
+            .ecp-panel-title { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 6px !important; }
+            .ecp-panel-sub { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 20px !important; }
+            .ecp-field { margin-bottom: 18px; }
+            .ecp-field label { display: block; font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+            .ecp-field-hint { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+            .ecp-input-wrap { display: flex; align-items: stretch; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--card); transition: border-color 0.15s, box-shadow 0.15s; }
+            .ecp-input-wrap:focus-within { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-light); }
+            .ecp-input-wrap input { flex: 1; border: none; outline: none; padding: 12px 14px; font-size: 15px; font-weight: 600; color: var(--text); background: transparent; font-family: inherit; }
+            .ecp-input-wrap input[readonly] { background: var(--bg); color: var(--navy); }
+            .ecp-input-suffix { display: flex; align-items: center; padding: 0 14px; font-size: 13px; font-weight: 700; color: var(--muted); background: var(--bg); border-right: 1px solid var(--border); white-space: nowrap; }
+            .ecp-input-wrap.is-danger { border-color: rgba(220, 38, 38, 0.35); }
+            .ecp-input-wrap.is-danger .ecp-input-suffix { background: var(--red-bg); color: var(--red); }
+            .ecp-input-wrap.is-success { border-color: rgba(22, 163, 74, 0.35); }
+            .ecp-input-wrap.is-success .ecp-input-suffix { background: var(--green-bg); color: var(--green); }
+            .ecp-input-wrap.is-primary .ecp-input-suffix { background: var(--gold-light); color: var(--gold-dark); }
+            .ecp-alert { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; line-height: 1.6; margin-bottom: 16px; }
+            .ecp-alert.is-warning { background: var(--amber-bg); border: 1px solid rgba(180, 83, 9, 0.2); color: var(--amber); }
+            .ecp-alert.is-success { background: var(--green-bg); border: 1px solid rgba(22, 163, 74, 0.2); color: var(--green); }
+            .ecp-alert.is-danger { background: var(--red-bg); border: 1px solid rgba(220, 38, 38, 0.2); color: var(--red); }
+            .ecp-coupon-box { background: var(--bg); border: 1px dashed var(--border); border-radius: 12px; padding: 16px; margin-top: 4px; }
+            .ecp-coupon-form { display: flex; gap: 10px; flex-wrap: wrap; }
+            .ecp-coupon-form input { flex: 1; min-width: 160px; border: 1px solid var(--border); border-radius: 10px; padding: 11px 14px; font-size: 14px; font-family: inherit; outline: none; }
+            .ecp-coupon-form input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-light); }
+            .ecp-discount-summary { background: var(--card); border: 2px dashed rgba(22, 163, 74, 0.35); border-radius: 12px; padding: 16px; margin-top: 14px; }
+            .ecp-discount-summary .ecp-field:last-child { margin-bottom: 0; }
+            .ecp-expiry-badge { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 12px; font-weight: 700; color: var(--red); background: var(--red-bg); padding: 6px 12px; border-radius: 8px; }
+            .ecp-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 20px; margin-top: 8px; border-top: 1px solid var(--border); }
+            .ecp-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 700; font-family: inherit; cursor: pointer; border: none; transition: all 0.15s; white-space: nowrap; }
+            .ecp-btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+            .ecp-btn-ghost:hover { border-color: var(--gold); color: var(--gold-dark); background: var(--gold-light); }
+            .ecp-btn-primary { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #fff; box-shadow: 0 4px 14px rgba(201, 152, 42, 0.3); }
+            .ecp-btn-primary:hover { box-shadow: 0 6px 18px rgba(201, 152, 42, 0.4); transform: translateY(-1px); }
+            .ecp-btn-info { background: var(--blue-bg); border: 1px solid rgba(37, 99, 235, 0.25); color: var(--blue); }
+            .ecp-btn-info:hover { background: var(--blue); color: #fff; }
+            .ecp-btn-danger { background: var(--red-bg); border: 1px solid rgba(220, 38, 38, 0.25); color: var(--red); }
+            .ecp-btn-danger:hover { background: var(--red); color: #fff; }
+            .ecp-divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+            @media (max-width: 520px) { .ecp-header-stats { grid-template-columns: 1fr; } .ecp-actions { flex-direction: column-reverse; } .ecp-actions .ecp-btn { width: 100%; } .ecp-step-label { font-size: 10px; } .ecp-coupon-form { flex-direction: column; } .ecp-coupon-form .ecp-btn { width: 100%; } }
+            @media (min-width: 768px) { .ecp { padding: 32px 0 64px; } .ecp-shell { padding: 0 32px; } .ecp-panel { padding: 28px; } }
+        </style>
+
+        <div class="ecp">
+            <div class="ecp-shell">
+                <t t-call="website_payment_mod.payment_portal_header"/>
+
+                <nav class="ecp-stepper" aria-label="خطوات السداد">
+                    <div class="ecp-step is-done">
+                        <div class="ecp-step-dot"><i class="fa fa-check"/></div>
+                        <span class="ecp-step-label">نوع الدفع</span>
+                    </div>
+                    <div class="ecp-step is-active">
+                        <div class="ecp-step-dot">2</div>
+                        <span class="ecp-step-label">التفاصيل</span>
+                    </div>
+                    <div class="ecp-step">
+                        <div class="ecp-step-dot">3</div>
+                        <span class="ecp-step-label">التأكيد</span>
+                    </div>
+                </nav>
+
+                <div class="ecp-panel">
+                    <h3 class="ecp-panel-title">تفاصيل السداد والمبالغ</h3>
+                    <p class="ecp-panel-sub">راجع المبالغ المستحقة وأدخل كود القسيمة إن وُجد قبل المتابعة.</p>
+
+                    <div id="portal_payment_static_fields">
+                        <t t-if="payment_type == 'full'">
+                            <div class="ecp-field">
+                                <label>إجمالي الرصيد المستحق</label>
+                                <div class="ecp-input-wrap is-primary">
+                                    <input type="number" step="0.01" t-att-value="'%.2f' % float(balance or 0.0)" readonly="readonly"/>
+                                    <span class="ecp-input-suffix">ريال</span>
+                                </div>
+                            </div>
+                        </t>
+
+                        <t t-if="payment_type == 'overdue'">
+                            <div class="ecp-field">
+                                <label>إجمالي الرصيد المستحق (المتأخرات أكثر من 90 يوم)</label>
+                                <div class="ecp-input-wrap is-danger">
+                                    <input type="number" step="0.01" t-att-value="'%.2f' % float(aged_90_plus or 0.0)" readonly="readonly"/>
+                                    <span class="ecp-input-suffix">ريال</span>
+                                </div>
+                            </div>
+                        </t>
+
+                        <t t-if="payment_type == 'partial'">
+                            <div class="ecp-field">
+                                <label>إجمالي الرصيد المستحق</label>
+                                <div class="ecp-input-wrap">
+                                    <input type="number" step="0.01" t-att-value="'%.2f' % float(balance or 0.0)" readonly="readonly"/>
+                                    <span class="ecp-input-suffix">ريال</span>
+                                </div>
+                            </div>
+                            <div class="ecp-field">
+                                <label>المبلغ المراد سداده (دفع جزئي)</label>
+                                <div class="ecp-input-wrap is-primary">
+                                    <input type="number" step="0.01" min="1.0" id="partial_amount_input" name="amount" t-att-value="'%.2f' % float(partial_amount or 0.0)" required="required" autofocus="autofocus"/>
+                                    <span class="ecp-input-suffix">ريال</span>
+                                </div>
+                            </div>
+                            <div class="ecp-alert is-warning">
+                                <i class="fa fa-info-circle"/>
+                                <span>عزيزي العميل.. نفيدكم بأنه بعد سداد المبلغ سيتم إنشاء سند قبض مبدئي وغير معتمد لحين المطابقة.</span>
+                            </div>
+                        </t>
+                    </div>
+
+                    <t t-if="payment_type in ['full','overdue']">
+                        <hr class="ecp-divider"/>
+                        <div class="ecp-field">
+                            <label>لديك كود قسيمة؟</label>
+                            <div class="ecp-coupon-box">
+                                <form action="/customer/payment/check_coupon" method="post" class="ecp-coupon-form" id="coupon_check_form">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="text" name="coupon_code" placeholder="أدخل كود القسيمة هنا للاستفادة من الخصم" t-att-value="applied_coupon['code'] if applied_coupon else ''" t-att-readonly="'readonly' if applied_coupon and coupon_success else None"/>
+                                    <t t-if="not (applied_coupon and coupon_success)">
+                                        <button type="submit" class="ecp-btn ecp-btn-info">تطبيق</button>
+                                    </t>
+                                    <t t-if="applied_coupon and coupon_success">
+                                        <button type="button" class="ecp-btn ecp-btn-danger" onclick="cancelCoupon()">إلغاء</button>
+                                    </t>
+                                </form>
+                            </div>
+
+                            <t t-if="coupon_msg">
+                                <div t-attf-class="ecp-alert #{ 'is-success' if coupon_success else 'is-danger' }" style="margin-top:12px;">
+                                    <i t-attf-class="fa #{ 'fa-check-circle' if coupon_success else 'fa-times-circle' }"/>
+                                    <div>
+                                        <span><t t-esc="coupon_msg"/></span>
+                                        <t t-if="coupon_expiration and coupon_success">
+                                            <div class="ecp-expiry-badge">
+                                                <i class="fa fa-calendar-check-o"/>
+                                                تاريخ صلاحية هذه القسيمة حتى: <t t-esc="coupon_expiration"/>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+
+                                <t t-if="coupon_success">
+                                    <div class="ecp-discount-summary">
+                                        <div class="ecp-field">
+                                            <label>مبلغ الخصم (<t t-esc="int(points)"/>%)</label>
+                                            <div class="ecp-input-wrap is-success">
+                                                <input type="number" t-att-value="'%.2f' % float(deduct_amount or 0.0)" readonly="readonly"/>
+                                                <span class="ecp-input-suffix">ريال</span>
+                                            </div>
+                                        </div>
+                                        <div class="ecp-field">
+                                            <label>الإجمالي غير شامل الضريبة</label>
+                                            <div class="ecp-input-wrap">
+                                                <input type="number" t-att-value="'%.2f' % float(balance_untaxed if payment_type == 'full' else overdue_untaxed)" readonly="readonly"/>
+                                                <span class="ecp-input-suffix">ريال</span>
+                                            </div>
+                                        </div>
+                                        <div class="ecp-field">
+                                            <label>المبلغ المستحق بعد الخصم</label>
+                                            <div class="ecp-input-wrap is-danger">
+                                                <input type="number" id="final_coupon_amount_field" t-att-value="'%.2f' % float(amount or 0.0)" readonly="readonly"/>
+                                                <span class="ecp-input-suffix">ريال</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </t>
+                        </div>
+                    </t>
+
+                    <div class="ecp-actions">
+                        <a class="ecp-btn ecp-btn-ghost" href="/customer/payment"><i class="fa fa-arrow-right"/> رجوع</a>
+                        <button type="button" class="ecp-btn ecp-btn-primary" onclick="processAndGoToStep3();">التالي <i class="fa fa-arrow-left"/></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+        function processAndGoToStep3() {
+            var partialInput = document.getElementById('partial_amount_input');
+            if (partialInput) {
+                var amtValue = parseFloat(partialInput.value);
+                if (amtValue &gt; 0) {
+                    window.location.href = '/customer/payment/step3?amount=' + amtValue;
+                } else {
+                    alert("يرجى إدخال مبلغ صحيح أكبر من الصفر.");
+                }
+            } else {
+                window.location.href = '/customer/payment/step3';
+            }
+        }
+        function cancelCoupon() {
+            fetch('/customer/payment/cancel', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ jsonrpc: "2.0", method: "call", params: {} })
+            }).then(function () { window.location.reload(); });
+        }
+        </script>
+    </t>
+</t>

@@ -1,0 +1,361 @@
+<t name="Sales Order Portal Content" t-name="sale.sale_order_portal_content">
+    <!-- Intro -->
+    <div id="introduction" t-attf-class="#{'border-bottom-0 pt-0 pb-3 bg-white' if report_type == 'html' else ''}">
+        <div class="row" id="intro_row">
+            <h2 class="my-0 col-12 col-lg flex-grow-1 mb-1 mb-lg-0">
+                <t t-out="sale_order.type_name"/> -
+                <em t-out="sale_order.name"/>
+            </h2>
+        </div>
+    </div>
+    <div id="content">
+        <div id="informations" class="row">
+            <span id="transaction_info">
+                <div t-if="sale_order.get_portal_last_transaction() and not invoices and sale_order.state in ('sent', 'sale') and portal_confirmation == 'pay' and not success and not error" t-att-data-order-id="sale_order.id">
+                    <t t-if="sale_order.transaction_ids">
+                        <t t-call="payment.transaction_status">
+                        <t t-set="tx" t-value="sale_order.get_portal_last_transaction()"/>
+                    </t>
+                </t>
+                </div>
+            </span>
+            <!-- Information -->
+            <div id="sale_info" class="col-12 col-lg-6 mb-4">
+                <span id="sale_info_title">
+                    <h4 style="font-weight:bold;font-family:Cairo;" class="mb-1">معلومات الطلب</h4>
+                    <hr class="mt-1 mb-2"/>
+                </span>
+                <table class="table table-borderless table-sm">
+                    <tbody style="white-space:nowrap" id="sale_info_table">
+                        <tr>
+                            <th t-if="sale_order.state in ['sale', 'cancel']" class="ps-0 pb-0">العميل:</th>
+                            <th t-else="" class="ps-0 pb-0">العميل:</th>
+                            <td class="w-100 pb-0 text-wrap"><span t-field="sale_order.partner_id"/></td>
+                        </tr>
+                        <tr>
+                            <th t-if="sale_order.state in ['sale', 'cancel']" class="ps-0 pb-0">Order Date:</th>
+                            <th t-else="" class="ps-0 pb-0">Date:</th>
+                            <td class="w-100 pb-0 text-wrap"><span t-field="sale_order.date_order" t-options="{&quot;widget&quot;: &quot;date&quot;}"/></td>
+                        </tr>
+                        <tr>
+                            <th t-if="sale_order.state in ['sale', 'cancel']" class="ps-0 pb-0">المندوب:</th>
+                            <th t-else="" class="ps-0 pb-0">مندوب المبيعات:</th>
+                            <td class="w-100 pb-0 text-wrap"><span t-field="sale_order.user_id"/></td>
+                        </tr>
+                         <tr>
+                            <th t-if="sale_order.state in ['sale', 'cancel']" class="ps-0 pb-0">حالة الطلب:</th>
+                            <th t-else="" class="ps-0 pb-0">حالة الطلب:</th>
+                            <td class="w-100 pb-0 text-wrap"><span t-field="sale_order.state"/></td>
+                        </tr>
+                        <tr>
+                            <th t-if="sale_order.state in ['sale', 'cancel']" class="ps-0 pb-0">حالة التسعير:</th>
+                            <th t-else="" class="ps-0 pb-0">حالة التسعير:</th>
+                            <td class="w-100 pb-0 text-wrap"><span t-field="sale_order.price_state"/></td>
+                        </tr>
+                        <tr t-if="sale_order.validity_date and sale_order.state in ['draft', 'sent']">
+                            <th class="ps-0 pb-0">Expiration Date:</th>
+                            <td class="w-100 pb-0 text-wrap"><span t-field="sale_order.validity_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/></td>
+                        </tr>
+                        <tr t-if="sale_order.client_order_ref">
+                            <th class="ps-0 pb-0">Your Reference:</th>
+                            <td class="w-100 pb-0 text-wrap"><span t-field="sale_order.client_order_ref"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ======  Customer Information  ====== -->
+            <div id="customer_info" class="col-12 col-lg-6 mb-4">
+<h4 style="font-weight:bold;font-family:Cairo;" class="mb-1">
+    Shipping Address
+</h4>
+<hr class="mt-1 mb-2"/>
+<div t-field="sale_order.partner_shipping_id" t-options="{ 'widget': 'contact', 'fields': ['name','address'] }"/>
+</div>
+
+            <t t-set="invoices" t-value="sale_order.invoice_ids.filtered(lambda i: i.state not in ['draft', 'cancel']).sorted('date', reverse=True)[:3]"/>
+            <div id="sale_invoices" t-if="invoices and sale_order.state in ['sale', 'cancel']" class="col-12 col-lg-6 mb-4">
+                <h4 style="font-weight:bold;font-family:Cairo;" class="mb-1">Last Invoices</h4>
+                <hr class="mt-1 mb-2"/>
+                <t t-foreach="invoices" t-as="i">
+                    <t t-set="report_url" t-value="i.get_portal_url()"/>
+                    <t t-set="authorized_tx_ids" t-value="i.authorized_transaction_ids"/>
+                    <div class="d-flex flex-column">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <a t-att-href="report_url">
+                                <span t-out="i.name"/>
+                            </a>
+                            <div t-if="i.payment_state in ('paid', 'in_payment')" class="small badge text-bg-success orders_label_text_align">
+                                <i class="fa fa-fw fa-check"/> Paid
+                            </div>
+                            <div t-elif="i.payment_state == 'reversed'" class="small badge text-bg-success orders_label_text_align">
+                                <i class="fa fa-fw fa-check"/> Reversed
+                            </div>
+                            <div t-elif="authorized_tx_ids" class="small badge text-bg-success orders_label_text_align">
+                                <i class="fa fa-fw fa-check"/> Authorized
+                            </div>
+                            <div t-else="" class="small badge text-bg-info orders_label_text_align">
+                                <i class="fa fa-fw fa-clock-o"/> Waiting Payment
+                            </div>
+                        </div>
+                        <div class="small d-lg-inline-block">Date: <span class="text-muted" t-field="i.invoice_date"/></div>
+                    </div>
+                </t>
+            </div>
+        </div>
+
+        <section id="details" style="page-break-inside: auto;">
+            <t t-if="product_documents">
+                <h4 id="details">Documents</h4>
+                <div class="d-flex flex-grow-1 flex-wrap gap-1 mb32">
+                    <t t-foreach="product_documents" t-as="document_sudo">
+                        <div class="bg-light p-2 rounded">
+                            <div class="position-relative text-center">
+                                <t t-set="attachment_sudo" t-value="document_sudo.ir_attachment_id"/>
+                                <t t-set="target" t-value="attachment_sudo.type == 'url' and '_blank' or '_self'"/>
+                                <a t-att-href="sale_order.get_portal_url('/document/' + str(document_sudo.id))" t-att-target="target" class="d-flex flex-row">
+                                    <div class="o_image" t-att-title="attachment_sudo.name" t-att-data-mimetype="attachment_sudo.mimetype" t-attf-data-src="/web/image/#{attachment_sudo.id}/100x80?access_token=#{attachment_sudo.access_token}"/>
+                                    <div class="o_portal_product_document align-self-center" t-out="attachment_sudo.name"/>
+                                </a>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </t>
+
+            <t t-set="display_discount" t-value="True in [line.discount &gt; 0 for line in sale_order.order_line]"/>
+
+            <div class="table-responsive">
+                <table t-att-data-order-id="sale_order.id" t-att-data-token="sale_order.access_token" class="table table-sm" id="sales_order_table">
+                    <thead class="bg-100">
+                        <tr>
+                            <th class="text-start" style="width:60px;">صورة</th>
+
+                            <th class="text-start" id="product_name_header">الاصناف</th>
+                            <th class="text-end" id="product_qty_header">الكمية</th>
+                            <th t-attf-class="text-end {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
+                                السعر
+                            </th>
+                            <th t-if="display_discount" t-attf-class="text-end {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
+                                <span>الخصم.%</span>
+                            </th>
+                            <th t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}" id="taxes_header">
+                                <span>الضرائب</span>
+                            </th>
+                            <th class="text-end" id="subtotal_header">
+                                <span>الاجمالي</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="sale_tbody">
+
+                        <t t-set="current_subtotal" t-value="0"/>
+                        <t t-set="lines_to_report" t-value="sale_order._get_order_lines_to_report()"/>
+
+                        <t t-foreach="lines_to_report" t-as="line">
+
+                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
+
+                            <tr t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                <t t-if="not line.display_type">
+                                    <td class="text-start align-middle" style="width:60px;">
+<t t-if="line.product_id">
+    <a href="#" data-bs-toggle="modal" t-att-data-bs-target="'#imgModal_%s' % line.id">
+        <img t-att-src="'/web/image/product.product/%s/image_128' % line.product_id.id" class="img-fluid rounded cursor-pointer" style="max-width:50px; max-height:50px;" alt="Product Image"/>
+    </a>
+
+    <!-- Modal -->
+    <div class="modal fade" t-att-id="'imgModal_%s' % line.id" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img t-att-src="'/web/image/product.product/%s/image_1024' % line.product_id.id" class="img-fluid rounded" alt="Product Image"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</t>
+</td>
+
+
+                                    <td id="product_name">
+                                        <span t-field="line.name"/>
+                                    </td>
+                                    <td class="text-end" id="quote_qty_td">
+                                        <div id="quote_qty">
+                                            <span t-out="int(line.product_uom_qty)"/>
+
+                                            
+                                        </div>
+                                    </td>
+                                   <td t-attf-class="text-end {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
+
+<!-- في حال تم التسعير -->
+<t t-if="sale_order.price_state == 'price_set'">
+    <div t-if="line.discount &gt;= 0" t-field="line.price_unit" t-att-style="line.discount and 'text-decoration: line-through' or None" t-att-class="(line.discount and 'text-danger' or '') + ' text-end'"/>
+
+    <div t-if="line.discount">
+        <t t-out="(1-line.discount / 100.0) * line.price_unit" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;decimal_precision&quot;: &quot;Product Price&quot;}"/>
+    </div>
+</t>
+
+<!-- في حال لم يتم التسعير -->
+<t t-else="">
+    <span class="text-muted fst-italic">بعد التسعير</span>
+</t>
+
+</td>
+
+                                    <td t-if="display_discount" t-attf-class="text-end {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
+
+<t t-if="sale_order.price_state == 'price_set'">
+    <strong t-if="line.discount &gt; 0" class="text-info">
+        <t t-out="((line.discount % 1) and '%s' or '%d') % line.discount"/>%
+    </strong>
+</t>
+
+<t t-else="">
+    <span class="text-muted fst-italic">بعد التسعير</span>
+</t>
+
+</td>
+
+                                    <td t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}" id="taxes">
+
+<t t-if="sale_order.price_state == 'price_set'">
+    <span t-out="', '.join(map(lambda x: (x.description or x.name), line.tax_id))"/>
+</t>
+
+<t t-else="">
+    <span class="text-muted fst-italic">بعد التسعير</span>
+</t>
+
+</td>
+
+                                    <td t-if="not line.is_downpayment" class="text-end" id="subtotal">
+
+<t t-if="sale_order.price_state == 'price_set'">
+    <span class="oe_order_line_price_subtotal" t-field="line.price_subtotal"/>
+</t>
+
+<t t-else="">
+    <span class="text-muted fst-italic">بعد التسعير</span>
+</t>
+
+</td>
+
+                                </t>
+                                <t t-if="line.display_type == 'line_section'">
+                                    <td colspan="99">
+                                        <span t-field="line.name"/>
+                                    </td>
+                                    <t t-set="current_section" t-value="line"/>
+                                    <t t-set="current_subtotal" t-value="0"/>
+                                </t>
+                                <t t-if="line.display_type == 'line_note'">
+                                    <td colspan="99">
+                                        <span t-field="line.name"/>
+                                    </td>
+                                </t>
+                            </tr>
+                            <tr t-if="     current_section     and (line_last or lines_to_report[line_index+1].display_type == 'line_section')     and not line.is_downpayment" class="is-subtotal text-end">
+
+<td colspan="99">
+
+    <t t-if="sale_order.price_state == 'price_set'">
+        <strong class="mr16">Subtotal</strong>
+        <span t-out="current_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: sale_order.currency_id}"/>
+    </t>
+
+    <t t-else="">
+        <span class="text-muted fst-italic">بعد التسعير</span>
+    </t>
+
+</td>
+</tr>
+
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="total" name="total" style="page-break-inside: avoid;">
+<div class="col-xs-7 col-md-5 ms-auto">
+
+    <!-- تحقق من حالة التسعير -->
+    <t t-if="sale_order.price_state == 'price_set'">
+        <table class="table table-sm">
+            <tr>
+                <td>الاجمالي الفرعي</td>
+                <td class="text-end">
+                    <span t-field="sale_order.amount_untaxed" t-options="{'widget': 'monetary', 'display_currency': sale_order.currency_id}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>الضريبة</td>
+                <td class="text-end">
+                    <span t-field="sale_order.amount_tax" t-options="{'widget': 'monetary', 'display_currency': sale_order.currency_id}"/>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>الاجمالي</strong></td>
+                <td class="text-end">
+                    <span t-field="sale_order.amount_total" t-options="{'widget': 'monetary', 'display_currency': sale_order.currency_id}"/>
+                </td>
+            </tr>
+        </table>
+    </t>
+
+    <t t-else="">
+        <!-- حالة لم يتم التسعير -->
+        <table class="table table-sm">
+            <tr>
+                <td>الاجمالي الفرعي</td>
+                <td class="text-end text-muted fst-italic">بعد التسعير</td>
+            </tr>
+            <tr>
+                <td>الضريبة</td>
+                <td class="text-end text-muted fst-italic">بعد التسعير</td>
+            </tr>
+            <tr>
+                <td><strong>الاجمالي</strong></td>
+                <td class="text-end text-muted fst-italic">بعد التسعير</td>
+            </tr>
+        </table>
+    </t>
+
+</div>
+</div>
+
+        </section>
+
+        <section t-if="sale_order.signature" id="signature" name="Signature">
+            <div class="row mt-4" name="signature">
+                <div t-attf-class="#{'col-3' if report_type != 'html' else 'col-sm-7 col-md-4'} ms-auto text-center">
+                    <h5>Signature</h5>
+                    <img t-att-src="image_data_uri(sale_order.signature)" style="max-height: 6rem; max-width: 100%;"/>
+                    <p t-field="sale_order.signed_by"/>
+                </div>
+            </div>
+        </section>
+
+        <section t-if="not is_html_empty(sale_order.note)" id="terms" class="mt-4">
+            <h4 class="">Terms &amp; Conditions</h4>
+            <hr class="mt-0 mb-1"/>
+            <t t-if="sale_order.terms_type == 'html'">
+                <!-- Note is plain text. This ensures a clickable link  -->
+                <t t-set="tc_url" t-value="'%s/terms' % (sale_order.get_base_url())"/>
+                <em>Terms &amp; Conditions: <a href="/terms"><t t-out="tc_url"/></a></em>
+            </t>
+            <t t-else="">
+                <em t-field="sale_order.note"/>
+            </t>
+        </section>
+
+        <section t-if="sale_order.payment_term_id" class="mt-4">
+            <h4 class="">شروط السداد</h4>
+            <hr class="mt-0 mb-1"/>
+            <span t-field="sale_order.payment_term_id.name"/>
+        </section>
+    </div>
+</t>

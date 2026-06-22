@@ -1,0 +1,88 @@
+<t name="دفع العميل - الخطوة 1" t-name="website_payment_mod.customer_payment">
+    <t t-call="website.layout">
+
+      <!-- استدعاء خط Cairo -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&amp;display=swap" rel="stylesheet"/>
+
+      <style>
+        /* تطبيق الخط */
+        .payment-options * {
+            font-family: 'Cairo', sans-serif !important;
+        }
+
+        /* تخصيص خيارات الدفع */
+        .payment-radio-label {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        /* تصميم الفورم */
+        .payment-form-box {
+            width: 60%;
+            margin: 0 auto;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 25px;
+            background: #fff;
+        }
+      </style>
+
+      <div class="container mt-5">
+        <t t-call="website_payment_mod.payment_portal_header"/>
+        <h2 class="text-center">الدفع - الخطوة 1</h2>
+
+        <div class="pb-5">
+
+          <!-- الفورم مع العرض 60% والحدود -->
+          <form action="/customer/payment/details" method="post" class="mt-4 d-flex justify-content-center">
+              
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+            <div class="payment-form-box">
+
+              <!-- خيارات الدفع -->
+              <div class="d-flex justify-content-center align-items-center gap-4 payment-options mt-3">
+
+                <!-- الدفع الكامل -->
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="payment_type" id="payment_full" value="full" required="required" checked="checked"/>
+                    <label class="form-check-label payment-radio-label" for="payment_full">
+                        الدفع الكامل
+                    </label>
+                </div>
+
+                <!-- سداد المتأخرات -->
+                <t t-if="aged_90_plus and aged_90_plus &gt; 0">
+                  <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="payment_type" id="payment_overdue" value="overdue" required="required"/>
+                      <label class="form-check-label payment-radio-label" for="payment_overdue">
+                          سداد المتأخرات
+                      </label>
+                  </div>
+                </t>
+
+                <!-- دفع جزئي -->
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="payment_type" id="payment_partial" value="partial" required="required"/>
+                    <label class="form-check-label payment-radio-label" for="payment_partial">
+                        دفع جزئي
+                    </label>
+                </div>
+
+              </div>
+
+              <!-- أزرار -->
+              <div class="d-flex justify-content-between mt-4">
+                <a class="btn btn-secondary" href="/">رجوع</a>
+                <button type="submit" class="btn btn-primary">التالي</button>
+              </div>
+
+            </div>
+            
+          </form>
+
+        </div>
+      </div>
+
+    </t>
+  </t>

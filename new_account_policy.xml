@@ -1,0 +1,135 @@
+<t name="Account Policy" t-name="customer_account_request.new_account_policy_template">
+    <t t-call="website.layout">
+
+        <style>
+            *, *::before, *::after { box-sizing: border-box; }
+
+            :root {
+              --gold: #C9982A; --gold-dark: #A87B1E;
+              --navy: #0D1B2E; --white: #FFFFFF;
+              --text-muted: #8A8A8A; --border: #E2DDD4; --input-bg: #FAFAF8;
+            }
+
+            body { font-family: "Cairo", sans-serif; background: #F4F4F2; color: #1a1a1a; }
+
+            /* ── PAGE HEADER ── */
+            .req-header {
+              background: var(--navy);
+              padding: 28px 40px;
+              text-align: center;
+              position: relative;
+              overflow: hidden;
+            }
+            .req-header::after {
+              content: "";
+              position: absolute;
+              inset: 0;
+              background: linear-gradient(135deg, rgba(201,152,42,0.12) 0%, transparent 60%);
+              pointer-events: none;
+            }
+            .req-header-logo { height: 46px; width: auto; margin-bottom: 16px; display: block; margin-left: auto; margin-right: auto; }
+            .req-header h1 { font-size: 26px; font-weight: 800; color: var(--white); margin: 0 0 6px; }
+            .req-header p { font-size: 13px; color: rgba(255,255,255,0.55); margin: 0; }
+
+            /* ── WRAPPER ── */
+            .req-body { max-width: 780px; margin: 0 auto; padding: 36px 20px 60px; direction: rtl; }
+
+            /* ── SECTION CARD ── */
+            .req-card { background: var(--white); border-radius: 16px; padding: 28px 32px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+            .req-card-title { font-size: 15px; font-weight: 800; color: var(--navy); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--gold); display: flex; align-items: center; gap: 10px; }
+            .req-card-title svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+            /* ── POLICY LIST ── */
+            .policy-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; }
+            .policy-list li {
+              font-size: 14px;
+              line-height: 1.9;
+              color: #2a2a2a;
+              padding: 14px 0;
+              border-bottom: 1px solid var(--border);
+              display: flex;
+              gap: 12px;
+              align-items: flex-start;
+            }
+            .policy-list li:last-child { border-bottom: none; padding-bottom: 0; }
+            .policy-bullet {
+              flex-shrink: 0;
+              margin-top: 6px;
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              background: var(--gold);
+            }
+
+            /* ── BACK LINK ── */
+            .req-back-wrap { text-align: center; margin-top: 8px; }
+            .req-back { display: inline-block; margin-top: 18px; font-size: 13px; color: var(--text-muted); text-decoration: none; }
+            .req-back:hover { color: var(--gold-dark); }
+
+            /* ── MOBILE ── */
+            @media (max-width: 600px) {
+              .req-header { padding: 20px 18px; }
+              .req-header h1 { font-size: 20px; }
+              .req-body { padding: 20px 12px 48px; }
+              .req-card { padding: 18px 16px; }
+            }
+        </style>
+
+        <!-- Header -->
+        <div class="req-header">
+            <img class="req-header-logo" src="https://echoemaar.com/web/image/414659-f352b2fe/orisa-png.webp" alt="ORISA Logo"/>
+            <h1>سياسة طلب فتح حساب جديد</h1>
+            <p>يُرجى قراءة السياسة التالية بعناية قبل تقديم طلب فتح الحساب</p>
+        </div>
+
+        <div class="req-body">
+
+            <div class="req-card">
+                <div class="req-card-title">
+                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    أحكام وشروط فتح الحساب
+                </div>
+                <ul class="policy-list">
+                    <li>
+                        <span class="policy-bullet"/>
+                        <span>تتيح شركة صدى الإعمار التجارية للعملاء الراغبين بالتعامل معها تقديم طلب فتح حساب جديد من خلال النموذج الإلكتروني المخصص لذلك.</span>
+                    </li>
+                    <li>
+                        <span class="policy-bullet"/>
+                        <span>يعد إرسال طلب فتح الحساب طلباً مبدئياً يخضع للمراجعة والتحقق من قبل الشركة، ولا يعتبر قبول الطلب أو فتح الحساب نهائياً إلا بعد موافقة الشركة وإشعار مقدم الطلب بذلك عبر إحدى وسائل التواصل المعتمدة.</span>
+                    </li>
+                    <li>
+                        <span class="policy-bullet"/>
+                        <span>تلتزم الجهة مقدمة الطلب بإدخال بيانات صحيحة وكاملة ومحدثة، وتتحمل كامل المسؤولية عن أي معلومات غير صحيحة أو ناقصة يتم تقديمها من خلال نموذج طلب فتح الحساب.</span>
+                    </li>
+                    <li>
+                        <span class="policy-bullet"/>
+                        <span>يحق لشركة صدى الإعمار التجارية طلب مستندات أو معلومات إضافية عند الحاجة، وذلك لاستكمال إجراءات التحقق والمراجعة قبل اعتماد الحساب أو بعده.</span>
+                    </li>
+                    <li>
+                        <span class="policy-bullet"/>
+                        <span>تحتفظ الشركة بحق قبول أو رفض طلب فتح الحساب وفقاً لإجراءاتها الداخلية، ودون أن يترتب على إرسال الطلب أي التزام على الشركة بقبوله.</span>
+                    </li>
+                    <li>
+                        <span class="policy-bullet"/>
+                        <span>فتح الحساب لا يمنح العميل تلقائياً أي تسهيلات ائتمانية أو أسعار خاصة أو شروط دفع مؤجلة، ما لم يتم اعتماد ذلك بشكل صريح من قبل الشركة أو بموجب اتفاق مستقل بين الطرفين.</span>
+                    </li>
+                    <li>
+                        <span class="policy-bullet"/>
+                        <span>يحق للشركة تعليق أو إلغاء الحساب في حال ثبوت تقديم بيانات غير صحيحة، أو إساءة استخدام الحساب، أو مخالفة الشروط والأحكام، أو وجود أي تعاملات قد تؤثر على حقوق الشركة أو تخالف الأنظمة المعمول بها في المملكة العربية السعودية.</span>
+                    </li>
+                    <li>
+                        <span class="policy-bullet"/>
+                        <span>يعد تقديم طلب فتح حساب جديد موافقة من مقدم الطلب على هذه السياسة وعلى الشروط والأحكام العامة وسياسات الموقع ذات العلاقة.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="req-back-wrap">
+                <a href="/account/request" class="req-back">العودة إلى نموذج طلب فتح الحساب</a>
+            </div>
+
+        </div>
+
+    </t>
+</t>

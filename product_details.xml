@@ -1,0 +1,385 @@
+<data inherit_id="website_sale.product" name="Product Details">
+    <xpath expr="//div[hasclass('row')][1]" position="attributes">
+        <attribute name="class" separator=" " add="top-breadcrumbs d-none mt-4"/>
+    </xpath>
+    <xpath expr="//div[hasclass('row')][1]//div[hasclass('col-lg-6')]" position="attributes">
+        <attribute name="class">col-md-6</attribute>
+    </xpath>
+    <!-- <xpath expr="//div[hasclass('mt-md-4')]" position="attributes">
+        <attribute name="class">col-lg-6 mb-4 mb-lg-0 image_overlap</attribute>
+    </xpath> -->
+
+    <xpath expr="//div[@id='product_details']" position="replace">
+        <t t-set="buynow_enabled" t-value="is_view_active('website_sale.product_buy_now')"/>
+        <t t-set="store_time" t-value="website.store_timing()"/>
+        <div id="product_detail_main" class="col-lg-6">
+          <div id="product_details">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/"><span class="icon icon-House "/></a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/shop" class="">المتجر</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <span class="">
+                            <t t-out="product.web_pro_name"/>
+                        </span>
+                    </li>
+                </ol>
+
+                <div class="product-name-share-button d-flex align-items-center">
+                    <h5 itemprop="name" t-field="product.web_pro_name" class="product-name text-uppercase fw-bold">
+                        Product Name</h5>
+                    <div class="dropdown d-flex align-items-center">
+
+                        <t t-if="is_view_active('website_sale.product_share_buttons')">
+                            <a role="button" class="nav-link dropdown-toggle p-0 ms-3" data-bs-toggle="dropdown">
+                                <span class="ri ri-share-line align-middle"/>
+                            </a>
+                            <div class="dropdown-menu share-dropdown">
+                                <div class="s_share d-flex" data-name="Share">
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={url}" target="_blank" class="s_share_facebook ">
+                                        <i class="fa fa-1x fa-facebook rounded shadow-sm"/>
+                                    </a>
+                                    <a href="https://twitter.com/intent/tweet?text={title}&amp;url={url}" target="_blank" class="s_share_twitter ">
+                                        <i class="fa fa-1x fa-twitter rounded shadow-sm"/>
+                                    </a>
+                                    <a href="https://wa.me/?text={url}" target="_blank" class="s_share_whatsapp ">
+                                        <i class="fa fa-1x fa-whatsapp rounded shadow-sm"/>
+                                    </a>
+                                    <a href="mailto:?body={url}&amp;subject={title}" class="s_share_email ">
+                                        <i class="fa fa-1x fa-envelope rounded shadow-sm"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                <span itemprop="url" style="display:none;" t-out="product.website_url"/>
+                <form t-if="product._is_add_to_cart_possible()" action="/shop/cart/update" method="POST">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                    <div class="js_product js_main_product">
+                        <p t-field="product.description_sale" class="description" placeholder="A short description that will also appear on documents."/>
+                        
+                        <t t-call="website_sale.product_price"/>
+                        <t t-if="is_view_active('website_sale.product_comment')">
+                            <t t-call="theme_emart_plant.product_item_stars"/>
+                        </t>
+                
+                        <div id="product_option_block" class="d-none"/>
+                        <div class="discount-label-product-page mb-3">
+                            <div class="discount-label d-flex align-items-center">
+                                <t t-if="combination_info['has_discounted_price']">
+                                    <lable class="label">
+                                        <span>حفظت</span>
+                                    </lable>
+                                    <t t-set="diff_amount" t-value="round(combination_info['list_price'] - combination_info['price'],2)"/>
+                                    <t t-set="dis_per" t-value="round(diff_amount*100/combination_info['list_price'])"/>
+                                    <div class="biz-emart-shop-product-discount-label">
+                                        <span class="biz-emart-shop-pro-label-disc">
+                                            <t t-out="'%s'%(dis_per)+'%'"/>
+                                        </span>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+
+                        <div class="product_info_list">
+                            <t t-if="product.public_categ_ids">
+                                <div class="bizemart_categ">
+                                    <p>
+                                        <span class="categ-title">الفئة </span>
+                                        <t t-foreach="product.public_categ_ids" t-as="categs">
+                                            <a t-att-href="keep('/shop/category/%s' % slug(categs), category=0)">
+                                                <span class="categ-name">
+                                                    <t t-out="categs.name"/>
+                                                </span>
+                                            </a>
+                                            <span>, </span>
+                                        </t>
+                                    </p>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="bizemart_color">
+                            <p>
+                                <span class="color-title">اللون: </span>
+                                <span class="color-value">
+                                    <t t-out="product.product_color"/>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="bizemart_color">
+                            <p>
+                                <span class="size-title" style="font-weight:bold;font-size:12px">المقاس: </span>
+                                <span class="size-value">
+                                    <t t-out="product.product_size"/>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="bizemart_cartoon">
+                            <p>
+                                <span class="size-title" style="font-weight:bold;font-size:12px">شد الكرتون: </span>
+                                <span class="size-value">
+                                    <t t-out="product.product_carton"/>
+                                </span>
+                            </p>
+                        </div>
+                        
+                        <t t-if="is_view_active('theme_emart_plant.product_template_highlights')">
+                            <t t-if="product.highlights_ids">
+                                <div class="product-services">
+                                    <div class="pull_left">
+                                        <h6 class="headline">المميزات </h6>
+                                    </div>
+                                    <div class="s-points">
+                                        <ul class="flex-column point-ul">
+                                            <li t-foreach="product.highlights_ids" t-as="high">
+                                                <span class="ms-2" t-out="high.name"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </t>
+                        </t>
+                
+                        <t t-placeholder="select">
+                            <input type="hidden" class="product_id" name="product_id" t-att-value="product_variant.id"/>
+                            <input type="hidden" class="product_template_id" name="product_template_id" t-att-value="product.id"/>
+                            <t t-if="combination" t-call="website_sale.variants">
+                                <t t-set="ul_class" t-value="'flex-column'"/>
+                                <t t-set="parent_combination" t-value="None"/>
+                            </t>
+                            <t t-else="">
+                                <ul class="d-none js_add_cart_variants mt16" t-att-data-attribute_exclusions="{'exclusions: []'}"/>
+                            </t>
+                        </t>
+
+                        <p t-if="True" class="css_not_available_msg alert alert-warning">هذه التركيبة غير موجودة.</p>
+                        <div>
+                            <div id="product_attributes_simple">
+                                <p class="text-muted">
+                                    <t t-set="single_value_attributes" t-value="product.valid_product_template_attribute_line_ids._prepare_single_value_for_display()"/>
+                                    <t t-foreach="single_value_attributes" t-as="attribute">
+                                        <span>
+                                            <span t-field="attribute.name" class="attribute_name"/>:
+                                            <t t-foreach="single_value_attributes[attribute]" t-as="ptal">
+                                                <span class="attribute_value" t-field="ptal.product_template_value_ids._only_active().name"/>
+                                                <t t-if="not ptal_last">, </t>
+                                            </t>
+                                        </span>
+                                    </t>
+                                </p>
+                            </div>
+                        </div>
+                    
+                        <t t-if="website.timings">
+                            <div id="o_wsale_cta_wrapper" class="d-flex flex-wrap align-items-center mt-3">
+                                <t t-if="store_time['store'] == True">
+                                    
+                                    <!-- حاوية الأزرار مع استخدام gap-3 لتوزيع المسافات بشكل متناسق -->
+                                    <div id="add_to_cart_wrap" t-attf-class="{{'d-none' if combination_info['prevent_zero_price_sale'] else 'd-inline-flex'}} align-items-center gap-3 w-100 w-xl-auto">
+                                        
+                                        <!-- عداد الكميات بتصميم متطور (حواف دائرية وتناسق ألوان) -->
+                                        <div class="css_quantity input-group" style="max-width: 140px; border: 2px solid var(--primary, #ffc107); border-radius: 50px; background-color: #fff; height: 48px; overflow: hidden;">
+                                            <a t-attf-href="#" class="btn btn-link js_add_cart_json shadow-none d-flex align-items-center justify-content-center border-0" style="color: var(--primary, #ffc107); width: 40px; text-decoration: none;" aria-label="Remove one" title="Remove one">
+                                                <i class="fa fa-minus fs-5"/>
+                                            </a>
+                                            <input type="text" class="form-control quantity text-center js_quantity shadow-none border-0 fw-bold fs-5 px-0" style="background: transparent; color: #333;" data-min="1" name="add_qty" t-att-value="add_qty or 1"/>
+                                            <a t-attf-href="#" class="btn btn-link float_left js_add_cart_json shadow-none d-flex align-items-center justify-content-center border-0" style="color: var(--primary, #ffc107); width: 40px; text-decoration: none;" aria-label="Add one" title="Add one">
+                                                <i class="fa fa-plus fs-5"/>
+                                            </a>
+                                        </div>
+
+                                       <!-- 1. حالة الزائر (غير مسجل الدخول) -->
+                                      <t t-if="request.env.user._is_public()">
+                                          <a role="button" id="add_to_cart_guest" class="btn btn-primary btn-default btn-lg d-flex align-items-center justify-content-center m-0" style="height: 48px; border-radius: 8px;" href="/custom/login" onclick="alert('يرجى تسجيل الدخول أولاً لتتمكن من إضافة المنتجات للسلة.');">
+                                              <span class="ri ri-shopping-bag-2-line me-2 align-middle fs-5"/>اضف للسلة
+                                          </a>
+                                      </t>
+                                      
+                                      <!-- 2. حالة العميل (مسجل الدخول) -->
+                                      <t t-else="">
+                                          <a role="button" id="add_to_cart" class="btn btn-primary btn-default btn-lg js_check_product a-submit d-flex align-items-center justify-content-center m-0" style="height: 48px; border-radius: 8px;" href="#">
+                                              <span class="ri ri-shopping-bag-2-line me-2 align-middle fs-5"/>اضف للسلة
+                                          </a>
+                                      </t>
+                                        
+                                        <t t-if="buynow_enabled">
+                                            <t t-if="uid and uid &gt; 0">
+                                                <a role="button" class="btn btn-secondary btn-lg sticky_cart_button d-flex align-items-center justify-content-center o_we_buy_now m-0" style="height: 48px; border-radius: 8px;" href="#">
+                                                    <span class="ri ri-share-forward-line align-middle me-2 text-white fs-5"/>
+                                                    <span>اطلب الآن</span>
+                                                </a>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-if="website.prevent_guest_checkout">
+                                                    <t t-if="request.website.viewref('theme_emart_plant.loginsignup_popup_bizt').active">
+                                                        <a class="btn btn-secondary openpop buy_now_login sticky_cart_button btn-lg d-flex align-items-center justify-content-center m-0" style="height: 48px; border-radius: 8px;" href="#" data-bs-toggle="modal" data-bs-target="#popupuserlogin" t-att-data-theme_name="request.website.sudo().theme_id.name">
+                                                            <span class="ri ri-share-forward-line align-middle me-2 text-white fs-5"/>
+                                                            <span>اطلب الآن</span>
+                                                        </a>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <a role="button" class="btn btn-secondary buy_now_login sticky_cart_button btn-lg d-flex align-items-center justify-content-center m-0" style="height: 48px; border-radius: 8px;" href="/web/login">
+                                                            <span class="ri ri-share-forward-line align-middle me-2 text-white fs-5"/>
+                                                            <span>اطلب الآن</span>
+                                                        </a>
+                                                    </t>
+                                                </t>
+                                                <t t-else="">
+                                                    <a role="button" class="btn btn-primary sticky_cart_button btn-lg d-flex align-items-center justify-content-center o_we_buy_now m-0" style="height: 48px; border-radius: 8px;" href="#">
+                                                        <span class="ri ri-share-forward-line align-middle me-2 text-white fs-5"/> 
+                                                        <span>اطلب الآن</span>
+                                                    </a>
+                                                </t>
+                                            </t>
+                                        </t>
+                                    </div>
+                                </t>
+                            </div>
+                        </t>
+
+                        <t t-else="">
+                            <div class="biz-emart-shop-block-content mt-3">
+                                <div id="o_wsale_cta_wrapper" class="d-flex flex-wrap align-items-center">
+                                
+                                    <!-- حاوية الأزرار مع استخدام gap-3 لتوزيع المسافات بشكل متناسق -->
+                                    <div id="add_to_cart_wrap" t-attf-class="{{'d-none' if combination_info['prevent_zero_price_sale'] else 'd-inline-flex'}} align-items-center gap-3 w-100 w-xl-auto">
+                                        
+                                        <!-- عداد الكميات بتصميم متطور -->
+                                        <div class="css_quantity input-group" style="max-width: 140px; border: 2px solid var(--primary, #ffc107); border-radius: 50px; background-color: #fff; height: 48px; overflow: hidden;">
+                                            <a t-attf-href="#" class="btn btn-link js_add_cart_json shadow-none d-flex align-items-center justify-content-center border-0" style="color: var(--primary, #ffc107); width: 40px; text-decoration: none;" aria-label="Remove one" title="Remove one">
+                                                <i class="fa fa-minus fs-5"/>
+                                            </a>
+                                            <input type="text" class="form-control quantity text-center js_quantity shadow-none border-0 fw-bold fs-5 px-0" style="background: transparent; color: #333;" data-min="1" name="add_qty" t-att-value="add_qty or 1"/>
+                                            <a t-attf-href="#" class="btn btn-link float_left js_add_cart_json shadow-none d-flex align-items-center justify-content-center border-0" style="color: var(--primary, #ffc107); width: 40px; text-decoration: none;" aria-label="Add one" title="Add one">
+                                                <i class="fa fa-plus fs-5"/>
+                                            </a>
+                                        </div>
+
+                                       <!-- 1. حالة الزائر (غير مسجل الدخول) -->
+<t t-if="request.env.user._is_public()">
+<a role="button" id="add_to_cart_guest" class="btn btn-primary btn-default btn-lg d-flex align-items-center justify-content-center m-0" style="height: 48px; border-radius: 8px;" href="/custom/login" onclick="alert('يرجى تسجيل الدخول أولاً لتتمكن من إضافة المنتجات للسلة.');">
+    <span class="ri ri-shopping-bag-2-line me-2 align-middle fs-5"/>اضف للسلة
+</a>
+</t>
+
+<!-- 2. حالة العميل (مسجل الدخول) -->
+<t t-else="">
+<a role="button" id="add_to_cart" class="btn btn-primary btn-default btn-lg js_check_product a-submit d-flex align-items-center justify-content-center m-0" style="height: 48px; border-radius: 8px;" href="#">
+    <span class="ri ri-shopping-bag-2-line me-2 align-middle fs-5"/>اضف للسلة
+</a>
+</t>
+                                        
+                                        <t t-if="buynow_enabled">
+                                            <t t-if="uid and uid &gt; 0">
+                                                <a role="button" class="btn btn-secondary btn-lg sticky_cart_button d-flex align-items-center justify-content-center o_we_buy_now m-0" style="height: 48px; border-radius: 8px;" href="#">
+                                                    <span class="ri ri-share-forward-line align-middle me-2 text-white fs-5"/>
+                                                    <span>اطلب الآن</span>
+                                                </a>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-if="website.prevent_guest_checkout">
+                                                    <t t-if="request.website.viewref('theme_emart_plant.loginsignup_popup_bizt').active">
+                                                        <a class="btn btn-secondary openpop buy_now_login sticky_cart_button btn-lg d-flex align-items-center justify-content-center m-0" style="height: 48px; border-radius: 8px;" href="#" data-bs-toggle="modal" data-bs-target="#popupuserlogin" t-att-data-theme_name="request.website.sudo().theme_id.name">
+                                                            <span class="ri ri-share-forward-line align-middle me-2 text-white fs-5"/>
+                                                            <span>اطلب الآن</span>
+                                                        </a>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <a role="button" class="btn btn-secondary buy_now_login sticky_cart_button btn-lg d-flex align-items-center justify-content-center m-0" style="height: 48px; border-radius: 8px;" href="/web/login">
+                                                            <span class="ri ri-share-forward-line align-middle me-2 text-white fs-5"/>
+                                                            <span>اطلب الآن</span>
+                                                        </a>
+                                                    </t>
+                                                </t>
+                                                <t t-else="">
+                                                    <a role="button" class="btn btn-secondary sticky_cart_button btn-lg d-flex align-items-center justify-content-center o_we_buy_now m-0" style="height: 48px; border-radius: 8px;" href="#">
+                                                        <span class="ri ri-share-forward-line align-middle me-2 text-white fs-5"/>
+                                                        <span>اطلب الآن</span>
+                                                    </a>
+                                                </t>
+                                            </t>
+                                        </t>
+                                        
+                                        <!-- زر المفضلة كجزء من عناصر gap -->
+                                        <t t-if="is_view_active('website_sale_wishlist.product_add_to_wishlist')">
+                                            <a type="button" role="button" t-att-class="'btn o_add_wishlist d-flex align-items-center justify-content-center m-0 ' + ('btn-danger' if in_wish else '')" style="height: 48px; width: 48px; border-radius: 50%; background-color: #2c2c35; color: white;" title="Add to Wishlist" t-att-data-in-wish="in_wish" t-att-data-product-product-id="product.product_variant_ids[0].id if product.product_variant_ids else '0'" data-action="o_wishlist">
+                                                <span t-att-class="'fa align-middle wishlist-heart fs-5 ' + ('fa-heart text-danger' if in_wish else 'fa-heart-o')" role="img" aria-label="Add to wishlist"/>
+                                            </a>
+                                        </t>
+
+                                        <t t-set="product_variant_id" t-value="product._get_first_possible_variant_id()"/>
+                                        <t t-set="hasQuantities" t-value="false"/>
+                                        <t t-set="hasBuyNow" t-value="false"/>
+                                        <t t-set="ctaSizeBig" t-value="not hasQuantities or not hasBuyNow"/>
+                                    </div>  
+                                </div>
+                            </div>
+                        </t>
+                    
+                        <div class="availability_messages o_not_editable"/>
+                        <t t-if="website.timings">
+                            <t t-if="not store_time['store'] == True">
+                                <div class="store_time_warning mt-3">
+                                    <div class="alert alert-danger text-center mt16">
+                                        <strong>المتجر مغلق</strong>
+                                        <span>
+                                            يرجى الزيارة بين
+                                            <t t-out="store_time['opening_time']"/> to
+                                            <t t-out="store_time['closing_time']"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </t>
+                        </t>
+
+                        <div class="product_info_list mt-4">
+                            <t t-if="product.brand_id">
+                                <div class="product-brand">
+                                    <div class="row align-items-center">
+                                        <div class="col-8 col-md-10">
+                                            <h2 class="brand-title">
+                                                <span t-out="product.brand_id.name"/>
+                                            </h2>
+                                            <p class="brand-description">
+                                                <span t-out="product.brand_id.brand_decription"/>
+                                            </p>
+                                        </div>
+                                        <div class="col-4 col-md-2">
+                                            <a t-field="product.brand_id.image" t-options="{'widget': 'image'}" t-att-href="'/shop?brand=' + slug(product.brand_id)"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </form>
+                <p t-elif="not product.active" class="alert alert-warning">هذا المنتج لم يعد متوفرا.</p>
+                <p t-else="" class="alert alert-warning">هذا المنتج ليس له تركيبة صالحة.</p>
+                <div id="o_product_terms_and_share">
+                </div>
+                <t t-if="any([product[field.name] for field in website.shop_extra_field_ids])">
+                    <hr/>
+                    <p class="text-muted">
+                        <t t-foreach="website.shop_extra_field_ids" t-as="field" t-if="product[field.name]">
+                            <b><t t-esc="field.label"/>: </b>
+                            <t t-if="field.field_id.ttype != &quot;binary&quot;">
+                                <span t-esc="product[field.name]" t-options="{'widget': field.field_id.ttype}"/>
+                            </t>
+                            <t t-else="">
+                                <a target="_blank" t-attf-href="/web/content/product.template/#{product.id}/#{field.name}?download=1">
+                                    <i class="fa fa-file"/>
+                                </a>
+                            </t>
+                            <br/>
+                        </t>
+                    </p>
+                </t>
+          </div>
+        </div>
+    </xpath>
+</data>

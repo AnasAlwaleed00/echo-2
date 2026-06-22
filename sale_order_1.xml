@@ -1,0 +1,1349 @@
+<t name="Sales Order Portal Content" t-name="sale.sale_order_portal_content">
+
+    <style>
+        .eop-so, .eop-so *, .eop-so *::before, .eop-so *::after {
+            box-sizing: border-box;
+            font-family: "Cairo", sans-serif;
+        }
+
+        .eop-so {
+            --gold: #C9982A;
+            --gold-dark: #A87B1E;
+            --gold-light: rgba(201, 152, 42, 0.14);
+            --navy: #0D1B2E;
+            --bg: #F7F5F0;
+            --card: #FFFFFF;
+            --border: #E8E2D9;
+            --text: #1A1A2E;
+            --muted: #8A8578;
+            --green: #16a34a;
+            --green-bg: #f0fdf4;
+            --blue: #2563eb;
+            --blue-bg: #eff6ff;
+            --amber: #b45309;
+            --amber-bg: #fffbeb;
+            --red: #dc2626;
+            --red-bg: #fef2f2;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .eop-so h2, .eop-so h4, .eop-so h5, .eop-so p { margin: 0; padding: 0; }
+        .eop-so a { color: inherit; }
+
+        .eop-so-hero {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 24px;
+            margin-bottom: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .eop-so-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #FDE021, var(--gold));
+        }
+
+        .eop-so-hero-top {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+        }
+
+        .eop-so-hero h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        .eop-so-hero h2 em {
+            font-style: normal;
+            color: var(--gold-dark);
+            font-weight: 800;
+        }
+
+        .eop-so-hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .eop-so-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .eop-so-badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .eop-so-badge-green { background: var(--green-bg); color: var(--green); }
+        .eop-so-badge-green .eop-so-badge-dot { background: var(--green); }
+        .eop-so-badge-blue { background: var(--blue-bg); color: var(--blue); }
+        .eop-so-badge-blue .eop-so-badge-dot { background: var(--blue); }
+        .eop-so-badge-amber { background: var(--amber-bg); color: var(--amber); }
+        .eop-so-badge-amber .eop-so-badge-dot { background: var(--amber); }
+        .eop-so-badge-red { background: var(--red-bg); color: var(--red); }
+        .eop-so-badge-red .eop-so-badge-dot { background: var(--red); }
+        .eop-so-badge-gold { background: var(--gold-light); color: var(--gold-dark); }
+
+        .eop-so-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gold-dark);
+            background: var(--gold-light);
+            border: 1px solid rgba(201, 152, 42, 0.25);
+            padding: 7px 14px;
+            border-radius: 20px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .eop-so-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .eop-so-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px 22px;
+        }
+
+        .eop-so-date {
+            direction: ltr;
+            unicode-bidi: isolate;
+            display: inline-block;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0;
+        }
+
+        .eop-so-card-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 20px !important;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .eop-so-card-title svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .eop-so-info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+
+        .eop-so-info-table tbody tr {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .eop-so-info-table tbody tr:last-child { border-bottom: none; }
+
+        .eop-so-info-table th {
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 13px;
+            padding: 9px 0 9px 12px;
+            vertical-align: top;
+            white-space: nowrap;
+            width: 1%;
+        }
+
+        .eop-so-info-table td {
+            color: var(--text);
+            font-weight: 600;
+            font-size: 13px;
+            padding: 9px 0;
+            text-align: start;
+            word-break: break-word;
+        }
+
+        .eop-so-info-table td .eop-so-badge {
+            display: inline-flex;
+            vertical-align: middle;
+        }
+
+        .eop-so-address {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.85;
+            font-weight: 600;
+            padding-bottom: 2px;
+        }
+
+        .eop-so-address .fa,
+        .eop-so-address i[class*="fa-"] {
+            display: none !important;
+        }
+
+        .eop-so-address > div,
+        .eop-so-address span {
+            display: block;
+            line-height: 1.85;
+            margin: 0;
+        }
+
+        .eop-so-address .gap-2,
+        .eop-so-address .gap-1 {
+            gap: 0 !important;
+        }
+
+        .eop-so-info-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 9px 0;
+            border-bottom: 1px dashed rgba(232, 226, 217, 0.8);
+            font-size: 13px;
+        }
+
+        .eop-so-info-row:last-child { border-bottom: none; }
+
+        .eop-so-info-label {
+            color: var(--muted);
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .eop-so-info-value {
+            color: var(--text);
+            font-weight: 600;
+            text-align: left;
+            word-break: break-word;
+        }
+
+        .eop-so-invoice-item {
+            padding: 12px 14px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .eop-so-invoice-item:last-child { margin-bottom: 0; }
+
+        .eop-so-invoice-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .eop-so-invoice-link {
+            font-weight: 700;
+            color: var(--gold-dark) !important;
+            font-size: 13px;
+            transition: color 0.15s;
+        }
+
+        .eop-so-invoice-link:hover { color: var(--navy) !important; }
+
+        .eop-so-invoice-date {
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .eop-so-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        .eop-so-section-head {
+            padding: 16px 22px;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .eop-so-table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .eop-so-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 680px;
+        }
+
+        .eop-so-table thead th {
+            padding: 13px 16px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--muted);
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .eop-so-table tbody td {
+            padding: 14px 16px;
+            font-size: 13px;
+            color: var(--text);
+            vertical-align: middle;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .eop-so-table tbody tr:last-child td { border-bottom: none; }
+        .eop-so-table tbody tr:hover:not(.o_line_section):not(.o_line_note) { background: rgba(201, 152, 42, 0.03); }
+
+        .eop-so-table .o_line_section td {
+            background: var(--gold-light);
+            font-weight: 800;
+            color: var(--navy);
+            font-size: 13px;
+        }
+
+        .eop-so-table .o_line_note td {
+            background: var(--bg);
+            font-style: italic;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .eop-so-table .is-subtotal td {
+            background: rgba(201, 152, 42, 0.06);
+            font-weight: 700;
+            text-align: left !important;
+        }
+
+        .eop-so-product-img {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .eop-so-product-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(13, 27, 46, 0.12);
+        }
+
+        .eop-so-product-name {
+            font-weight: 600;
+            color: var(--navy);
+            line-height: 1.45;
+        }
+
+        .eop-so-qty {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            padding: 4px 10px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .eop-so-pending {
+            color: var(--muted);
+            font-style: normal;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none !important;
+        }
+
+        .eop-so-price-old {
+            text-decoration: line-through;
+            color: var(--red);
+            font-size: 12px;
+        }
+
+        .eop-so-discount-tag {
+            display: inline-block;
+            background: var(--blue-bg);
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+
+        .eop-so-totals {
+            padding: 18px 22px 22px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .eop-so-totals-box {
+            width: 100%;
+            max-width: 360px;
+            margin-top: 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            padding: 4px 0;
+        }
+
+        .eop-so-totals-table {
+            margin: 0 !important;
+        }
+
+        .eop-so-totals-table td {
+            padding: 11px 18px !important;
+            font-size: 13px;
+            border: none !important;
+            border-bottom: 1px dashed var(--border) !important;
+            vertical-align: middle;
+        }
+
+        .eop-so-totals-table tr:last-child td { border-bottom: none !important; }
+
+        .eop-so-totals-table tr.eop-so-totals-grand td {
+            background: linear-gradient(135deg, var(--navy), #1a3050);
+            color: #fff;
+            font-size: 14px;
+            padding: 14px 18px !important;
+        }
+
+        .eop-so-totals-table tr.eop-so-totals-grand td.text-end,
+        .eop-so-totals-table tr.eop-so-totals-grand td.text-end strong,
+        .eop-so-totals-table tr.eop-so-totals-grand td.text-end span {
+            color: #FDE021 !important;
+            font-size: 16px;
+        }
+
+        .eop-so-totals-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 11px 18px;
+            font-size: 13px;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .eop-so-totals-row:last-child { border-bottom: none; }
+
+        .eop-so-totals-row.is-grand {
+            background: linear-gradient(135deg, var(--navy), #1a3050);
+            color: #fff;
+            padding: 14px 18px;
+        }
+
+        .eop-so-totals-row.is-grand .eop-so-totals-val {
+            color: #FDE021;
+            font-size: 18px;
+        }
+
+        .eop-so-totals-label { font-weight: 600; color: var(--muted); }
+        .eop-so-totals-row.is-grand .eop-so-totals-label { color: rgba(255,255,255,0.7); font-weight: 700; }
+        .eop-so-totals-val { font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; }
+
+        .eop-so-docs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 16px 22px 20px;
+        }
+
+        .eop-so-doc {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 12px;
+            transition: border-color 0.15s;
+        }
+
+        .eop-so-doc:hover { border-color: rgba(201, 152, 42, 0.4); }
+
+        .eop-so-doc a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .eop-so-doc-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .eop-so-footer-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px 22px;
+            margin-bottom: 18px;
+        }
+
+        .eop-so-footer-section h4,
+        .eop-so-footer-section h5 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 12px !important;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .eop-so-footer-section em,
+        .eop-so-footer-section span {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .eop-so-signature {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .eop-so-signature img {
+            max-height: 6rem;
+            max-width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin: 10px 0;
+        }
+
+        .eop-so #intro_row,
+        .eop-so #informations {
+            --gutter-x: 0px;
+            --bs-gutter-x: 0;
+        }
+
+        .eop-so-lines-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        .eop-so-lines-card .eop-so-section-head {
+            margin-bottom: 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .eop-so-lines-card .table-responsive {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: none;
+            border-radius: 0;
+        }
+
+        .eop-so-lines-card .table-responsive .table {
+            display: table;
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        .eop-so-lines-card #total {
+            padding: 0 22px 20px;
+            border-top: 1px solid var(--border);
+            background: var(--bg);
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .eop-so-lines-card #total .eop-so-totals-box {
+            margin-inline-start: auto;
+        }
+
+        .eop-so-lines-card #total .col-xs-7,
+        .eop-so-lines-card #total .col-md-5 {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 !important;
+            padding: 0;
+        }
+
+        @media (max-width: 767.98px) {
+            .eop-so {
+                padding-bottom: 8px;
+            }
+
+            .eop-so #informations.row {
+                --bs-gutter-x: 0;
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .eop-so #informations .mb-4 {
+                margin-bottom: 12px !important;
+            }
+
+            .eop-so-hero {
+                padding: 14px 16px;
+                margin-bottom: 10px;
+                border-radius: 12px;
+            }
+
+            .eop-so-hero-top {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+            }
+
+            .eop-so-hero-top > .col-12 {
+                padding: 0;
+                margin-bottom: 0 !important;
+            }
+
+            .eop-so-hero h2 {
+                font-size: 15px;
+                line-height: 1.5;
+            }
+
+            .eop-so-hero h2 em {
+                font-size: 14px;
+                display: block;
+                margin-top: 4px;
+            }
+
+            .eop-so-hero-meta {
+                margin-top: 10px;
+                gap: 6px;
+                align-items: center;
+            }
+
+            .eop-so-badge {
+                font-size: 10px;
+                padding: 4px 10px;
+                white-space: normal;
+            }
+
+            .eop-so-count {
+                font-size: 11px;
+                padding: 5px 11px;
+                margin-top: 0;
+            }
+
+            .eop-so-grid {
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+
+            .eop-so-card {
+                padding: 14px 16px;
+                border-radius: 12px;
+            }
+
+            .eop-so-card-title {
+                font-size: 15px;
+                margin-bottom: 16px !important;
+                padding-bottom: 14px;
+            }
+
+            .eop-so-card-title svg {
+                width: 17px;
+                height: 17px;
+            }
+
+            .eop-so-info-table tbody {
+                white-space: normal !important;
+            }
+
+            .eop-so-info-table tbody tr {
+                display: block;
+                padding: 11px 0;
+            }
+
+            .eop-so-info-table tbody tr:first-child {
+                padding-top: 4px;
+            }
+
+            .eop-so-info-table th,
+            .eop-so-info-table td {
+                display: block;
+                width: 100% !important;
+                padding: 0;
+                text-align: right;
+                white-space: normal;
+            }
+
+            .eop-so-info-table th {
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--muted);
+                padding-bottom: 3px;
+                line-height: 1.3;
+            }
+
+            .eop-so-info-table th.ps-0,
+            .eop-so-info-table td.pb-0 {
+                padding-left: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            .eop-so-info-table td {
+                font-size: 13px;
+                line-height: 1.55;
+                padding-bottom: 0;
+            }
+
+            .eop-so-info-table td .eop-so-badge {
+                margin-top: 2px;
+            }
+
+            .eop-so-address {
+                font-size: 12px;
+                line-height: 1.75;
+            }
+
+            .eop-so-address > div,
+            .eop-so-address span {
+                line-height: 1.75;
+            }
+
+            .eop-so-section,
+            .eop-so-lines-card,
+            .eop-so-footer-section {
+                border-radius: 12px;
+                margin-bottom: 10px;
+            }
+
+            .eop-so-section-head {
+                padding: 12px 16px;
+                font-size: 13px;
+            }
+
+            .eop-so-table-wrap {
+                overflow-x: visible;
+            }
+
+            .eop-so-table {
+                min-width: 0 !important;
+            }
+
+            .eop-so-table thead {
+                display: none;
+            }
+
+            .eop-so-table tbody tr:not(.o_line_section):not(.o_line_note):not(.is-subtotal) {
+                display: grid;
+                grid-template-columns: 52px minmax(0, 1fr) auto;
+                grid-template-rows: auto auto;
+                gap: 6px 10px;
+                padding: 12px 16px;
+                align-items: start;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .eop-so-table tbody tr:not(.o_line_section):not(.o_line_note):not(.is-subtotal) td {
+                display: block;
+                padding: 0;
+                border: none;
+            }
+
+            .eop-so-table tbody tr:not(.o_line_section):not(.o_line_note):not(.is-subtotal) td:first-child {
+                grid-row: 1 / span 2;
+                grid-column: 1;
+                align-self: center;
+            }
+
+            .eop-so-table tbody tr:not(.o_line_section):not(.o_line_note):not(.is-subtotal) td#product_name {
+                grid-column: 2 / span 2;
+                grid-row: 1;
+            }
+
+            .eop-so-table tbody tr:not(.o_line_section):not(.o_line_note):not(.is-subtotal) td#quote_qty_td {
+                grid-column: 2;
+                grid-row: 2;
+                align-self: center;
+            }
+
+            .eop-so-table tbody tr:not(.o_line_section):not(.o_line_note):not(.is-subtotal) td#quote_qty_td::before {
+                content: "الكمية: ";
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--muted);
+            }
+
+            .eop-so-table tbody tr:not(.o_line_section):not(.o_line_note):not(.is-subtotal) td#subtotal {
+                grid-column: 3;
+                grid-row: 2;
+                align-self: center;
+                text-align: left;
+                font-size: 12px;
+            }
+
+            .eop-so-table tbody tr:not(.o_line_section):not(.o_line_note):not(.is-subtotal) td#subtotal .eop-so-pending {
+                font-size: 11px;
+            }
+
+            .eop-so-table tbody tr:not(.o_line_section):not(.o_line_note):not(.is-subtotal) td.d-none {
+                display: none !important;
+            }
+
+            .eop-so-product-img {
+                width: 44px;
+                height: 44px;
+            }
+
+            .eop-so-product-name {
+                font-size: 12px;
+                line-height: 1.5;
+            }
+
+            .eop-so-qty {
+                min-width: 28px;
+                padding: 3px 8px;
+                font-size: 12px;
+            }
+
+            .eop-so-table .o_line_section td,
+            .eop-so-table .o_line_note td {
+                display: block;
+                padding: 10px 16px;
+            }
+
+            .eop-so-table .is-subtotal td {
+                display: block;
+                padding: 10px 16px;
+                text-align: right !important;
+            }
+
+            .eop-so-lines-card #total {
+                padding: 12px 16px 16px;
+                border-top: 1px solid var(--border);
+            }
+
+            .eop-so-lines-card #total .eop-so-totals-box {
+                max-width: 100%;
+                margin-top: 0;
+                margin-inline-start: 0;
+            }
+
+            .eop-so-totals-table td {
+                padding: 10px 14px !important;
+                font-size: 12px;
+            }
+
+            .eop-so-totals-table tr.eop-so-totals-grand td {
+                padding: 12px 14px !important;
+                font-size: 13px;
+            }
+
+            .eop-so-docs {
+                padding: 12px 16px 14px;
+            }
+
+            .eop-so-footer-section {
+                padding: 14px 16px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .eop-so-grid { grid-template-columns: 1fr 1fr; }
+            .eop-so-hero h2 { font-size: 22px; }
+            .eop-so-hero h2 em {
+                display: inline;
+                font-size: inherit;
+            }
+        }
+
+        @media print {
+            .eop-so-hero, .eop-so-card, .eop-so-section, .eop-so-footer-section, .eop-so-lines-card {
+                border: 1px solid #ddd;
+                box-shadow: none;
+            }
+        }
+    </style>
+
+    <t t-set="line_count" t-value="len(sale_order.order_line.filtered(lambda l: not l.display_type))"/>
+
+    <div class="eop-so">
+
+        <!-- Intro / Hero -->
+        <div id="introduction" t-attf-class="eop-so-hero #{'border-bottom-0 pt-0 pb-3' if report_type == 'html' else ''}">
+            <div id="intro_row" class="row eop-so-hero-top">
+                <div class="col-12 col-lg flex-grow-1 mb-1 mb-lg-0">
+                    <h2 class="my-0">
+                        <t t-out="sale_order.type_name"/>
+                        <span aria-hidden="true"> — </span>
+                        <em t-out="sale_order.name"/>
+                    </h2>
+                    <div class="eop-so-hero-meta">
+                        <t t-if="sale_order.state == 'sale'">
+                            <span class="eop-so-badge eop-so-badge-green">
+                                <span class="eop-so-badge-dot"/>
+                                مؤكد
+                            </span>
+                        </t>
+                        <t t-elif="sale_order.state == 'cancel'">
+                            <span class="eop-so-badge eop-so-badge-red">
+                                <span class="eop-so-badge-dot"/>
+                                ملغي
+                            </span>
+                        </t>
+                        <t t-elif="sale_order.state == 'draft' and sale_order.price_state != 'price_set'">
+                            <span class="eop-so-badge eop-so-badge-amber">
+                                <span class="eop-so-badge-dot"/>
+                                قيد التسعير
+                            </span>
+                        </t>
+                        <t t-elif="sale_order.state == 'draft' and sale_order.price_state == 'price_set'">
+                            <span class="eop-so-badge eop-so-badge-blue">
+                                <span class="eop-so-badge-dot"/>
+                                تم التسعير
+                            </span>
+                        </t>
+                        <t t-if="sale_order.price_state == 'price_set'">
+                            <span class="eop-so-badge eop-so-badge-gold">
+                                الأسعار متاحة
+                            </span>
+                        </t>
+                        <t t-else="">
+                            <span class="eop-so-badge eop-so-badge-amber">
+                                الأسعار قيد التحديد
+                            </span>
+                        </t>
+                        <span class="eop-so-count">
+                            <t t-out="line_count"/>
+                            <span>صنف</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content">
+
+            <span id="transaction_info">
+                <div t-if="sale_order.get_portal_last_transaction() and not invoices and sale_order.state in ('sent', 'sale') and portal_confirmation == 'pay' and not success and not error" t-att-data-order-id="sale_order.id" style="margin-bottom:16px;">
+                    <t t-if="sale_order.transaction_ids">
+                        <t t-call="payment.transaction_status">
+                            <t t-set="tx" t-value="sale_order.get_portal_last_transaction()"/>
+                        </t>
+                    </t>
+                </div>
+            </span>
+
+            <div id="informations" class="row eop-so-grid">
+
+                <!-- Order Information -->
+                <div id="sale_info" class="eop-so-card w-full col-12 mb-4">
+                    <span id="sale_info_title">
+                        <h4 class="eop-so-card-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9982A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 10a4 4 0 0 1-8 0"/>
+                                <path d="M3.103 6.034h17.794"/>
+                                <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/>
+                            </svg>
+                            معلومات الطلب
+                        </h4>
+                    </span>
+                    <table class="table table-borderless table-sm eop-so-info-table">
+                        <tbody id="sale_info_table">
+                            <tr>
+                                <th t-if="sale_order.state in ['sale', 'cancel']" class="ps-0 pb-0">العميل:</th>
+                                <th t-else="" class="ps-0 pb-0">العميل:</th>
+                                <td class="w-100 pb-0 text-wrap"><span t-field="sale_order.partner_id"/></td>
+                            </tr>
+                            <tr>
+                                <th t-if="sale_order.state in ['sale', 'cancel']" class="ps-0 pb-0">تاريخ الطلب:</th>
+                                <th t-else="" class="ps-0 pb-0">التاريخ:</th>
+                                <td class="w-100 pb-0 text-wrap">
+                                    <span class="eop-so-date" t-out="sale_order.date_order.strftime('%Y-%m-%d') if sale_order.date_order else ''"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th t-if="sale_order.state in ['sale', 'cancel']" class="ps-0 pb-0">المندوب:</th>
+                                <th t-else="" class="ps-0 pb-0">مندوب المبيعات:</th>
+                                <td class="w-100 pb-0 text-wrap"><span t-field="sale_order.user_id"/></td>
+                            </tr>
+                            <tr>
+                                <th t-if="sale_order.state in ['sale', 'cancel']" class="ps-0 pb-0">حالة الطلب:</th>
+                                <th t-else="" class="ps-0 pb-0">حالة الطلب:</th>
+                                <td class="w-100 pb-0 text-wrap">
+                                    <t t-if="sale_order.state == 'sale'">
+                                        <span class="eop-so-badge eop-so-badge-green"><span class="eop-so-badge-dot"/>مؤكد</span>
+                                    </t>
+                                    <t t-elif="sale_order.state == 'cancel'">
+                                        <span class="eop-so-badge eop-so-badge-red"><span class="eop-so-badge-dot"/>ملغي</span>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="sale_order.state"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th t-if="sale_order.state in ['sale', 'cancel']" class="ps-0 pb-0">حالة التسعير:</th>
+                                <th t-else="" class="ps-0 pb-0">حالة التسعير:</th>
+                                <td class="w-100 pb-0 text-wrap">
+                                    <t t-if="sale_order.price_state == 'price_set'">
+                                        <span class="eop-so-badge eop-so-badge-blue"><span class="eop-so-badge-dot"/>تم التسعير</span>
+                                    </t>
+                                    <t t-elif="sale_order.price_state == 'price_not_set'">
+                                        <span class="eop-so-badge eop-so-badge-amber"><span class="eop-so-badge-dot"/>قيد التسعير</span>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="sale_order.price_state"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr t-if="sale_order.validity_date and sale_order.state in ['draft', 'sent']">
+                                <th class="ps-0 pb-0">تاريخ الانتهاء:</th>
+                                <td class="w-100 pb-0 text-wrap">
+                                    <span class="eop-so-date" t-out="sale_order.validity_date.strftime('%Y-%m-%d') if sale_order.validity_date else ''"/>
+                                </td>
+                            </tr>
+                            <tr t-if="sale_order.client_order_ref">
+                                <th class="ps-0 pb-0">مرجعكم:</th>
+                                <td class="w-100 pb-0 text-wrap"><span t-field="sale_order.client_order_ref"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Shipping Address -->
+                <div id="customer_info" class="eop-so-card w-full col-12 mb-4">
+                    <h4 class="eop-so-card-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9982A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        عنوان الشحن
+                    </h4>
+                    <div class="eop-so-address">
+                        <div t-field="sale_order.partner_shipping_id" t-options="{ 'widget': 'contact', 'fields': ['name', 'address'], 'no_marker': True }"/>
+                    </div>
+                </div>
+
+                <t t-set="invoices" t-value="sale_order.invoice_ids.filtered(lambda i: i.state not in ['draft', 'cancel']).sorted('date', reverse=True)[:3]"/>
+
+                <!-- Last Invoices -->
+                <div id="sale_invoices" t-if="invoices and sale_order.state in ['sale', 'cancel']" class="eop-so-card col-12 col-lg-6 mb-4">
+                    <h4 class="eop-so-card-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9982A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+                            <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+                        </svg>
+                        آخر الفواتير
+                    </h4>
+                    <t t-foreach="invoices" t-as="i">
+                        <t t-set="report_url" t-value="i.get_portal_url()"/>
+                        <t t-set="authorized_tx_ids" t-value="i.authorized_transaction_ids"/>
+                        <div class="eop-so-invoice-item">
+                            <div class="eop-so-invoice-top">
+                                <a t-att-href="report_url" class="eop-so-invoice-link">
+                                    <span t-out="i.name"/>
+                                </a>
+                                <t t-if="i.payment_state in ('paid', 'in_payment')">
+                                    <span class="eop-so-badge eop-so-badge-green">
+                                        <span class="eop-so-badge-dot"/>
+                                        مدفوع
+                                    </span>
+                                </t>
+                                <t t-elif="i.payment_state == 'reversed'">
+                                    <span class="eop-so-badge eop-so-badge-green">
+                                        <span class="eop-so-badge-dot"/>
+                                        مرتجع
+                                    </span>
+                                </t>
+                                <t t-elif="authorized_tx_ids">
+                                    <span class="eop-so-badge eop-so-badge-blue">
+                                        <span class="eop-so-badge-dot"/>
+                                        مصرّح
+                                    </span>
+                                </t>
+                                <t t-else="">
+                                    <span class="eop-so-badge eop-so-badge-amber">
+                                        <span class="eop-so-badge-dot"/>
+                                        بانتظار الدفع
+                                    </span>
+                                </t>
+                            </div>
+                            <div class="eop-so-invoice-date">
+                                التاريخ: <span t-field="i.invoice_date"/>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+
+            </div>
+
+            <section id="details" style="page-break-inside: auto;">
+
+                <!-- Product Documents -->
+                <t t-if="product_documents">
+                    <div class="eop-so-section">
+                        <div class="eop-so-section-head">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9982A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+                                <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+                            </svg>
+                            المستندات
+                        </div>
+                        <div class="eop-so-docs">
+                            <t t-foreach="product_documents" t-as="document_sudo">
+                                <div class="eop-so-doc">
+                                    <t t-set="attachment_sudo" t-value="document_sudo.ir_attachment_id"/>
+                                    <t t-set="target" t-value="attachment_sudo.type == 'url' and '_blank' or '_self'"/>
+                                    <a t-att-href="sale_order.get_portal_url('/document/' + str(document_sudo.id))" t-att-target="target">
+                                        <div class="o_image" t-att-title="attachment_sudo.name" t-att-data-mimetype="attachment_sudo.mimetype" t-attf-data-src="/web/image/#{attachment_sudo.id}/100x80?access_token=#{attachment_sudo.access_token}"/>
+                                        <span class="eop-so-doc-name" t-out="attachment_sudo.name"/>
+                                    </a>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+
+                <t t-set="display_discount" t-value="True in [line.discount &gt; 0 for line in sale_order.order_line]"/>
+
+                <!-- Order Lines -->
+                <div class="eop-so-lines-card">
+                <div class="eop-so-section-head">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9982A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m7.5 4.27 9 5.15"/>
+                        <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+                    </svg>
+                    الأصناف
+                </div>
+
+                <div class="table-responsive eop-so-table-wrap">
+                    <table t-att-data-order-id="sale_order.id" t-att-data-token="sale_order.access_token" class="table table-sm eop-so-table" id="sales_order_table">
+                        <thead class="bg-100">
+                                <tr>
+                                    <th class="text-start" style="width:60px;">صورة</th>
+                                    <th class="text-start" id="product_name_header">الأصناف</th>
+                                    <th class="text-end" id="product_qty_header">الكمية</th>
+                                    <th t-attf-class="text-end {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">السعر</th>
+                                    <th t-if="display_discount" t-attf-class="text-end {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">الخصم %</th>
+                                    <th t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}" id="taxes_header">الضرائب</th>
+                                    <th class="text-end" id="subtotal_header">الإجمالي</th>
+                                </tr>
+                            </thead>
+                            <tbody class="sale_tbody">
+
+                                <t t-set="current_subtotal" t-value="0"/>
+                                <t t-set="lines_to_report" t-value="sale_order._get_order_lines_to_report()"/>
+
+                                <t t-foreach="lines_to_report" t-as="line">
+
+                                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
+
+                                    <tr t-att-class="'o_line_section' if line.display_type == 'line_section' else 'o_line_note' if line.display_type == 'line_note' else ''">
+                                        <t t-if="not line.display_type">
+                                            <td class="text-start align-middle" style="width:60px;">
+                                                <t t-if="line.product_id">
+                                                    <a href="#" data-bs-toggle="modal" t-att-data-bs-target="'#imgModal_%s' % line.id">
+                                                        <img t-att-src="'/web/image/product.product/%s/image_128' % line.product_id.id" class="eop-so-product-img" alt="Product Image"/>
+                                                    </a>
+                                                    <div class="modal fade" t-att-id="'imgModal_%s' % line.id" tabindex="-1">
+                                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-body text-center">
+                                                                    <img t-att-src="'/web/image/product.product/%s/image_1024' % line.product_id.id" class="img-fluid rounded" alt="Product Image"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </td>
+                                            <td id="product_name">
+                                                <span class="eop-so-product-name" t-field="line.name"/>
+                                            </td>
+                                            <td class="text-end" id="quote_qty_td">
+                                                <div id="quote_qty">
+                                                    <span class="eop-so-qty" t-out="int(line.product_uom_qty)"/>
+                                                </div>
+                                            </td>
+                                            <td t-attf-class="text-end {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
+                                                <t t-if="sale_order.price_state == 'price_set'">
+                                                    <div t-if="line.discount &gt;= 0" t-field="line.price_unit" t-att-style="line.discount and 'text-decoration: line-through' or None" t-att-class="(line.discount and 'eop-so-price-old' or '') + ' text-end'"/>
+                                                    <div t-if="line.discount">
+                                                        <t t-out="(1-line.discount / 100.0) * line.price_unit" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;decimal_precision&quot;: &quot;Product Price&quot;}"/>
+                                                    </div>
+                                                </t>
+                                                <t t-else="">
+                                                    <span class="eop-so-pending">بعد التسعير</span>
+                                                </t>
+                                            </td>
+                                            <td t-if="display_discount" t-attf-class="text-end {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
+                                                <t t-if="sale_order.price_state == 'price_set'">
+                                                    <span t-if="line.discount &gt; 0" class="eop-so-discount-tag">
+                                                        <t t-out="((line.discount % 1) and '%s' or '%d') % line.discount"/>%
+                                                    </span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span class="eop-so-pending">بعد التسعير</span>
+                                                </t>
+                                            </td>
+                                            <td t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}" id="taxes">
+                                                <t t-if="sale_order.price_state == 'price_set'">
+                                                    <span t-out="', '.join(map(lambda x: (x.description or x.name), line.tax_id))"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <span class="eop-so-pending">بعد التسعير</span>
+                                                </t>
+                                            </td>
+                                            <td t-if="not line.is_downpayment" class="text-end" id="subtotal">
+                                                <t t-if="sale_order.price_state == 'price_set'">
+                                                    <span class="oe_order_line_price_subtotal" t-field="line.price_subtotal" style="font-weight:700;"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <span class="eop-so-pending">بعد التسعير</span>
+                                                </t>
+                                            </td>
+                                        </t>
+                                        <t t-if="line.display_type == 'line_section'">
+                                            <td colspan="99">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                            <t t-set="current_section" t-value="line"/>
+                                            <t t-set="current_subtotal" t-value="0"/>
+                                        </t>
+                                        <t t-if="line.display_type == 'line_note'">
+                                            <td colspan="99">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                    <tr t-if="current_section and (line_last or lines_to_report[line_index+1].display_type == 'line_section') and not line.is_downpayment" class="is-subtotal text-end">
+                                        <td colspan="99">
+                                            <t t-if="sale_order.price_state == 'price_set'">
+                                                <strong>المجموع الفرعي</strong>
+                                                <span t-out="current_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: sale_order.currency_id}"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span class="eop-so-pending">بعد التسعير</span>
+                                            </t>
+                                        </td>
+                                    </tr>
+
+                                </t>
+                            </tbody>
+                        </table>
+                </div>
+
+                <div id="total" name="total" style="page-break-inside: avoid;">
+                    <div class="eop-so-totals-box">
+                        <t t-if="sale_order.price_state == 'price_set'">
+                            <table class="table table-sm eop-so-totals-table">
+                                <tr>
+                                    <td>الإجمالي الفرعي</td>
+                                    <td class="text-end">
+                                        <span t-field="sale_order.amount_untaxed" t-options="{'widget': 'monetary', 'display_currency': sale_order.currency_id}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>الضريبة</td>
+                                    <td class="text-end">
+                                        <span t-field="sale_order.amount_tax" t-options="{'widget': 'monetary', 'display_currency': sale_order.currency_id}"/>
+                                    </td>
+                                </tr>
+                                <tr class="eop-so-totals-grand">
+                                    <td><strong>الإجمالي</strong></td>
+                                    <td class="text-end">
+                                        <strong>
+                                            <span t-field="sale_order.amount_total" t-options="{'widget': 'monetary', 'display_currency': sale_order.currency_id}"/>
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </t>
+                        <t t-else="">
+                            <table class="table table-sm eop-so-totals-table">
+                                <tr>
+                                    <td>الإجمالي الفرعي</td>
+                                    <td class="text-end"><span class="eop-so-pending">بعد التسعير</span></td>
+                                </tr>
+                                <tr>
+                                    <td>الضريبة</td>
+                                    <td class="text-end"><span class="eop-so-pending">بعد التسعير</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>الإجمالي</strong></td>
+                                    <td class="text-end"><span class="eop-so-pending">بعد التسعير</span></td>
+                                </tr>
+                            </table>
+                        </t>
+                    </div>
+                </div>
+                </div>
+
+            </section>
+
+            <section t-if="sale_order.signature" id="signature" name="Signature">
+                <div class="eop-so-footer-section" name="signature">
+                    <div t-attf-class="#{'col-3' if report_type != 'html' else ''} eop-so-signature">
+                        <h5>التوقيع</h5>
+                        <img t-att-src="image_data_uri(sale_order.signature)"/>
+                        <p t-field="sale_order.signed_by"/>
+                    </div>
+                </div>
+            </section>
+
+            <section t-if="not is_html_empty(sale_order.note)" id="terms" class="eop-so-footer-section">
+                <h4>الشروط والأحكام</h4>
+                <t t-if="sale_order.terms_type == 'html'">
+                    <t t-set="tc_url" t-value="'%s/terms' % (sale_order.get_base_url())"/>
+                    <em>الشروط والأحكام: <a href="/terms" style="color:var(--gold-dark);"><t t-out="tc_url"/></a></em>
+                </t>
+                <t t-else="">
+                    <em t-field="sale_order.note"/>
+                </t>
+            </section>
+
+            <section t-if="sale_order.payment_term_id" class="eop-so-footer-section">
+                <h4>شروط السداد</h4>
+                <span t-field="sale_order.payment_term_id.name"/>
+            </section>
+
+        </div>
+    </div>
+</t>

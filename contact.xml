@@ -1,0 +1,297 @@
+<t t-name="website.-1">
+    <t t-call="website.layout">
+
+        <div id="wrap" class="bg-gray-50 text-gray-800">
+
+            
+            <section class="hero">
+                <div class="hero-bg"/>
+            
+                <div class="hero-inner">
+                    <span class="hero-eyebrow">تواصل</span>
+                    <h1 class="text-white">تواصل معنا</h1>
+                    <p class="text-white">يسعدنا تواصلكم معنا عبر فروعنا المختلفة في أي وقت</p>
+                </div>
+            </section>
+            
+            
+            <section class="py-24 bg-gradient-to-b from-gray-50 to-white o_colored_level" style="background-image: linear-gradient(rgb(249, 250, 251), rgb(255, 255, 255));">
+                <div class="mx-auto px-6 container">
+                    
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">فروعنا</h2>
+                        <div class="w-24 h-1.5 bg-[#fab803] mx-auto rounded-full"/>
+                    </div>
+            
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            
+                        
+                        <div class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                            <div class="relative overflow-hidden">
+                                <img class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" src="https://echoemaarerp.com/web/image/302523-dd591bb1/مكتب الادارة.jpeg" alt="مكتب الادارة - بريدة" loading="lazy"/>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"><p><br/></p></div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-1.5 h-8 bg-[#fab803] rounded-full"/>
+                                    <h4 class="text-xl font-bold text-gray-900">مكتب الادارة - القصيم بريدة</h4>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex items-start gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <p class="text-sm text-gray-600 leading-relaxed">حي المنتزه الشرقي - طريق عثمان بن عفان</p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                                        </svg>
+                                        <a href="tel:+966920000136" class="text-sm text-gray-700 font-medium hover:text-[#fab803] transition-colors o_force_ltr" dir="ltr">920000136</a>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                                        </svg>
+                                        <a href="mailto:info@echoemaar.com" class="text-sm text-gray-700 hover:text-[#fab803] transition-colors o_force_ltr" dir="ltr">info@echoemaar.com</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        
+                        <div class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                            <div class="relative overflow-hidden">
+                                <img class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" src="https://echoemaarerp.com/web/image/291754-ab2a0fea/%D8%AC%D8%AF%D8%A9.webp" alt="فرع جدة" loading="lazy"/>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"/>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-1.5 h-8 bg-[#fab803] rounded-full"/>
+                                    <h4 class="text-xl font-bold text-gray-900">فرع جدة</h4>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex items-start gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <p class="text-sm text-gray-600 leading-relaxed">حي النخيل - شارع سعيد بن يعقوب الدمشقي</p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                                        </svg>
+                                        <a href="tel:+966920000136" class="text-sm text-gray-700 font-medium hover:text-[#fab803] transition-colors o_force_ltr" dir="ltr">920000136</a>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                                        </svg>
+                                        <a href="mailto:info@echoemaar.com" class="text-sm text-gray-700 hover:text-[#fab803] transition-colors o_force_ltr" dir="ltr">info@echoemaar.com</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        
+                        <div class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                            <div class="relative overflow-hidden">
+                                <img src="/web/image/414627-b46d0136/%D8%B1%D9%8A%D8%A7%D8%B6.webp" alt="" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110 img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="291760" data-original-src="/web/image/291760-df6a1d58/%D8%B1%D9%8A%D8%A7%D8%B6.webp" data-mimetype-before-conversion="image/webp" data-resize-width="690"/>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"/>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-1.5 h-8 bg-[#fab803] rounded-full"/>
+                                    <h4 class="text-xl font-bold text-gray-900">فرع الرياض</h4>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex items-start gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <p class="text-sm text-gray-600 leading-relaxed">حي السلي - شارع غزوة ذات الرقاع</p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                                        </svg>
+                                        <a href="tel:+966920000136" class="text-sm text-gray-700 font-medium hover:text-[#fab803] transition-colors o_force_ltr" dir="ltr">920000136</a>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                                        </svg>
+                                        <a href="mailto:info@echoemaar.com" class="text-sm text-gray-700 hover:text-[#fab803] transition-colors o_force_ltr" dir="ltr">info@echoemaar.com</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        
+                        <div class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                            <div class="relative overflow-hidden">
+                                <img class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" src="https://echoemaarerp.com/web/image/291764-61fe9c2c/قصيم.webp" alt="فرع القصيم" loading="lazy"/>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"/>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-1.5 h-8 bg-[#fab803] rounded-full"/>
+                                    <h4 class="text-xl font-bold text-gray-900">فرع القصيم</h4>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex items-start gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <p class="text-sm text-gray-600 leading-relaxed">حي النقل - مقابل نادي الفروسية</p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                                        </svg>
+                                        <a href="tel:+966920000136" class="text-sm text-gray-700 font-medium hover:text-[#fab803] transition-colors o_force_ltr" dir="ltr">920000136</a>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                                        </svg>
+                                        <a href="mailto:info@echoemaar.com" class="text-sm text-gray-700 hover:text-[#fab803] transition-colors o_force_ltr" dir="ltr">info@echoemaar.com</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        
+                        <div class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                            <div class="relative overflow-hidden">
+                                <img class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" src="https://echoemaarerp.com/web/image/291758-90b1bf7f/خميس.webp" alt="فرع خميس مشيط" loading="lazy"/>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"/>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-1.5 h-8 bg-[#fab803] rounded-full"/>
+                                    <h4 class="text-xl font-bold text-gray-900">فرع خميس مشيط</h4>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex items-start gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <p class="text-sm text-gray-600 leading-relaxed">حي التصامن - خميس مشيط</p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                                        </svg>
+                                        <a href="tel:+966920000136" class="text-sm text-gray-700 font-medium hover:text-[#fab803] transition-colors o_force_ltr" dir="ltr">920000136</a>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                                        </svg>
+                                        <a href="mailto:info@echoemaar.com" class="text-sm text-gray-700 hover:text-[#fab803] transition-colors o_force_ltr" dir="ltr">info@echoemaar.com</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        
+                        <div class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                            <div class="relative overflow-hidden">
+                                <img class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" src="https://echoemaarerp.com/web/image/291756-46c22cbf/جيزان.webp" alt="فرع جازان" loading="lazy"/>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"/>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-1.5 h-8 bg-[#fab803] rounded-full"/>
+                                    <h4 class="text-xl font-bold text-gray-900">فرع جازان</h4>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex items-start gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <p class="text-sm text-gray-600 leading-relaxed">حي الصناعية - شارع سبيع التيمي</p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                                        </svg>
+                                        <a href="tel:+966920000136" class="text-sm text-gray-700 font-medium hover:text-[#fab803] transition-colors o_force_ltr" dir="ltr">920000136</a>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <svg class="w-5 h-5 text-[#fab803] flex-shrink-0" fill="currentColor" viewbox="0 0 20 20">
+                                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                                        </svg>
+                                        <a href="mailto:info@echoemaar.com" class="text-sm text-gray-700 hover:text-[#fab803] transition-colors o_force_ltr" dir="ltr">info@echoemaar.com</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+            </section>
+
+            
+
+            
+            <section class="py-12 bg-gray-100 text-center">
+                <h2 class="text-2xl font-bold">تواصل معنا</h2>
+            </section>
+
+            
+            <section class="py-16 bg-gray-100">
+                <div class="container mx-auto px-6 max-w-3xl">
+                    <form action="/website/form/" method="post" class="space-y-6 bg-white p-8 rounded-xl shadow-sm">
+
+                        <div>
+                            <label class="block mb-1 text-sm">اسمك *</label>
+                            <input class="w-full border rounded-lg px-4 py-2" type="text" name="name" required="1"/>
+                        </div>
+
+                        <div>
+                            <label class="block mb-1 text-sm">رقم الهاتف</label>
+                            <input class="w-full border rounded-lg px-4 py-2" type="tel" name="phone"/>
+                        </div>
+
+                        <div>
+                            <label class="block mb-1 text-sm">بريدك الإلكتروني *</label>
+                            <input class="w-full border rounded-lg px-4 py-2" type="email" name="email_from" required=""/>
+                        </div>
+
+                        <div>
+                            <label class="block mb-1 text-sm">شركتك</label>
+                            <input class="w-full border rounded-lg px-4 py-2" type="text" name="company"/>
+                        </div>
+
+                        <div>
+                            <label class="block mb-1 text-sm">الموضوع *</label>
+                            <input class="w-full border rounded-lg px-4 py-2" type="text" name="subject" required=""/>
+                        </div>
+
+                        <div>
+                            <label class="block mb-1 text-sm">سؤالك *</label>
+                            <textarea class="w-full border rounded-lg px-4 py-2" name="description" rows="4" required="1"/>
+                        </div>
+
+                        <input type="hidden" name="email_to" value="info@echoemaar.com"/><input type="hidden" value="607cdc342f6c0e66fff468e4aaec8a832876ca05e4bb1b28c9067a74c81952a5" class="form-control s_website_form_input s_website_form_custom" name="website_form_signature"/><div class="text-end">
+                            <button type="submit" class="bg-primary-600 text-white px-8 py-3 rounded hover:bg-gray-800 transition">
+                                إرسال
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </section>
+
+        </div>
+    </t>
+</t>

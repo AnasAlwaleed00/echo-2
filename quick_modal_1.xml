@@ -1,0 +1,1223 @@
+<t name="Quick View Details" t-name="theme_emart_plant.get_product_qv_details_template">
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <style>
+        /* ── Echo Quick View — high-specificity overrides for theme CSS ── */
+        .quick-modal.eqv,
+        .quick-modal.eqv .quick-popout,
+        .quick-modal.eqv .quick-popout * {
+            box-sizing: border-box;
+        }
+
+        .quick-modal.eqv,
+        .quick-modal.eqv .quick-popout,
+        .quick-modal.eqv .quick-popout *:not([class*="fa"]):not([class*="ri"]) {
+            font-family: "Cairo", sans-serif !important;
+        }
+
+        .quick-modal.eqv {
+                --gold: #C9982A;
+                --gold-dark: #A87B1E;
+                --gold-light: rgba(201, 152, 42, 0.14);
+                --navy: #0D1B2E;
+                --card: #FFFFFF;
+                --border: #E8E2D9;
+                --text: #1A1A2E;
+                --muted: #8A8578;
+                --bg-soft: #F7F5F0;
+                --shadow: 0 24px 64px rgba(13, 27, 46, 0.22);
+            --radius: 16px;
+            direction: rtl;
+        }
+
+        .quick-modal.eqv h1,
+        .quick-modal.eqv h2,
+        .quick-modal.eqv p { margin: 0; padding: 0; }
+
+        /* Backdrop */
+        .quick-modal-backdrop {
+            position: fixed !important;
+            inset: 0 !important;
+            background: rgba(13, 27, 46, 0.6) !important;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 1040 !important;
+            animation: eqvFadeIn 0.22s ease;
+        }
+
+        @keyframes eqvFadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        @keyframes eqvSlideUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modal shell */
+        .quick-modal.eqv {
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 1050 !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            pointer-events: none;
+        }
+
+        .quick-modal.eqv .quick-popout {
+            pointer-events: all;
+            background: #FFFFFF !important;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 960px;
+            max-height: calc(100dvh - 32px);
+            min-height: 0 !important;
+            height: auto !important;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex !important;
+            flex-direction: column;
+            position: relative;
+            animation: eqvSlideUp 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+            border: 1px solid var(--border);
+        }
+
+        .quick-modal.eqv .eqv-form {
+            display: flex !important;
+            flex-direction: column !important;
+            flex: 1 !important;
+            overflow: hidden !important;
+            min-height: 0 !important;
+        }
+
+        /* CTA area — reset theme absolute positioning */
+        .quick-modal.eqv .eqv-cta-wrap,
+        .quick-modal.eqv #o_wsale_cta_wrapper,
+        .quick-modal.eqv #add_to_cart_wrap,
+        .quick-modal.eqv .ajax_cart_modal_tools,
+        .quick-modal.eqv .css_quantity,
+        .quick-modal.eqv .biz-compare-button,
+        .quick-modal.eqv .btn-cart,
+        .quick-modal.eqv .o_we_buy_now,
+        .quick-modal.eqv .buy_now_login {
+            position: static !important;
+            left: auto !important;
+            top: auto !important;
+            right: auto !important;
+            bottom: auto !important;
+            transform: none !important;
+            float: none !important;
+        }
+
+        .quick-modal.eqv .eqv-cta-wrap {
+            margin-top: 16px !important;
+            padding-top: 16px !important;
+            border-top: 1px solid var(--border) !important;
+            width: 100% !important;
+            clear: both !important;
+        }
+
+        .quick-modal.eqv #o_wsale_cta_wrapper {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            align-items: center !important;
+            gap: 10px !important;
+            width: 100% !important;
+        }
+
+        .quick-modal.eqv #add_to_cart_wrap {
+            display: flex !important;
+            flex-direction: column !important;
+            flex-wrap: nowrap !important;
+            align-items: stretch !important;
+            gap: 10px !important;
+            width: 100% !important;
+            margin-top: 0 !important;
+        }
+
+        .quick-modal.eqv #add_to_cart_wrap:not(.d-none) {
+            display: flex !important;
+        }
+
+        .quick-modal.eqv .ajax_cart_modal_tools {
+            flex: 1 1 auto !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            margin: 0 !important;
+        }
+
+        .quick-modal.eqv .ajax_cart_modal_tools .btn-cart {
+            width: 100% !important;
+            display: flex !important;
+        }
+
+        /* Close button — high contrast */
+        .quick-modal.eqv .quick_close {
+            position: absolute !important;
+            top: 12px !important;
+            left: 12px !important;
+            right: auto !important;
+            z-index: 20 !important;
+            width: 44px !important;
+            height: 44px !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            background: rgba(13, 27, 46, 0.82) !important;
+            border: none !important;
+            border-radius: 50% !important;
+            color: #FFFFFF !important;
+            text-decoration: none !important;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.25) !important;
+            transition: background 0.15s, transform 0.15s;
+            padding: 0 !important;
+            margin: 0 !important;
+            opacity: 1 !important;
+        }
+
+        .quick-modal.eqv .quick_close:hover {
+            background: rgba(13, 27, 46, 0.95) !important;
+            color: #FFFFFF !important;
+            transform: scale(1.06);
+        }
+
+        .quick-modal.eqv .quick_close i {
+            font-size: 22px !important;
+            line-height: 1 !important;
+            color: #FFFFFF !important;
+        }
+
+        /* Scrollable body */
+        .quick-modal.eqv .eqv-scroll {
+            overflow-y: auto;
+            overflow-x: hidden;
+            flex: 1;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Bootstrap neutralizer inside modal */
+        .quick-modal.eqv .row {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            --bs-gutter-x: 0;
+            display: flex !important;
+            flex-wrap: wrap;
+        }
+
+        .quick-modal.eqv .container.oe_website_sale {
+            max-width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            width: 100% !important;
+        }
+
+        .quick-modal.eqv #product_detail_main {
+            margin: 0 !important;
+            width: 100% !important;
+            display: flex !important;
+            flex-wrap: wrap !important;
+            align-items: flex-start !important;
+        }
+
+        .quick-modal.eqv .eqv-header-top {
+            width: 100% !important;
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+            padding: 16px 18px 6px !important;
+            order: 1 !important;
+        }
+
+        .quick-modal.eqv .eqv-header-top .eqv-title {
+            margin-bottom: 0 !important;
+        }
+
+        .quick-modal.eqv .product-img-section {
+            order: 2 !important;
+        }
+
+        .quick-modal.eqv .quick_modal_product_details {
+            order: 3 !important;
+        }
+
+        .quick-modal.eqv .eqv-qty-row {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            width: 100% !important;
+        }
+
+        .quick-modal.eqv .eqv-qty-row .css_quantity {
+            flex: 1 1 auto !important;
+            max-width: none !important;
+            margin: 0 !important;
+        }
+
+        .quick-modal.eqv .eqv-qty-row .biz-compare-button {
+            flex: 0 0 48px !important;
+            margin: 0 !important;
+        }
+
+        .quick-modal.eqv [class*="col-"] {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        /* Gallery */
+        .quick-modal.eqv .product-img-section {
+            padding: 0 !important;
+            background: var(--bg-soft) !important;
+            border-bottom: none !important;
+            width: 100% !important;
+            flex-shrink: 0;
+            margin-bottom: 14px !important;
+        }
+
+        .quick-modal.eqv .product-img-box,
+        .quick-modal.eqv .o_wsale_product_images {
+            padding: 6px 12px !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            min-height: 0 !important;
+            max-height: 240px !important;
+            overflow: hidden;
+            width: 100% !important;
+        }
+
+        .quick-modal.eqv .o_wsale_product_images .carousel,
+        .quick-modal.eqv .o_wsale_product_images .carousel-inner,
+        .quick-modal.eqv .o_wsale_product_images .carousel-item,
+        .quick-modal.eqv .o_wsale_product_images .o_carousel_product_indicators {
+            min-height: 0 !important;
+            max-height: 230px !important;
+            height: auto !important;
+        }
+
+        .quick-modal.eqv .product-img-box img,
+        .quick-modal.eqv .o_wsale_product_images img {
+            max-height: 220px !important;
+            height: auto !important;
+            width: auto !important;
+            max-width: 100% !important;
+            object-fit: contain !important;
+            border-radius: 8px;
+            display: block !important;
+            margin: 0 auto !important;
+        }
+
+        /* Details panel */
+        .quick-modal.eqv .quick_modal_product_details {
+            padding: 0 18px 14px !important;
+            width: 100% !important;
+            background: #FFFFFF !important;
+        }
+
+        .quick-modal.eqv .eqv-price-row {
+            margin-top: 4px !important;
+        }
+
+        .quick-modal.eqv .js_product.js_main_product {
+            display: block !important;
+            width: 100% !important;
+        }
+
+        .quick-modal.eqv .eqv-header {
+            padding: 0 0 14px !important;
+            margin-bottom: 0 !important;
+        }
+
+        .quick-modal.eqv h1.eqv-title,
+        .quick-modal.eqv .eqv-title,
+        .quick-modal.eqv h1[itemprop="name"] {
+            font-size: 18px !important;
+            font-weight: 800 !important;
+            color: #0D1B2E !important;
+            line-height: 1.5 !important;
+            margin-bottom: 10px !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        .quick-modal.eqv .eqv-price-row {
+            display: flex !important;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .quick-modal.eqv .eqv-price-row .oe_price,
+        .quick-modal.eqv .eqv-price-row .product_price,
+        .quick-modal.eqv .eqv-price-row .css_editable_mode_hidden,
+        .quick-modal.eqv .eqv-price-row span[itemprop="price"],
+        .quick-modal.eqv .eqv-price-row .oe_currency_value {
+            font-size: 20px !important;
+            font-weight: 800 !important;
+            color: #A87B1E !important;
+        }
+
+        .quick-modal.eqv .eqv-view-detail {
+            display: inline-flex !important;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            color: #8A8578 !important;
+            text-decoration: none !important;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: var(--bg-soft);
+            white-space: nowrap;
+        }
+
+        .quick-modal.eqv .eqv-view-detail:hover {
+            color: #A87B1E !important;
+            border-color: rgba(201, 152, 42, 0.4);
+            background: rgba(201, 152, 42, 0.14);
+        }
+
+        /* Variants */
+        .quick-modal.eqv .js_add_cart_variants {
+            margin: 12px 0 !important;
+            padding: 0 !important;
+            list-style: none !important;
+        }
+
+        .quick-modal.eqv .js_add_cart_variants > li {
+            margin-bottom: 12px !important;
+        }
+
+        .quick-modal.eqv .js_add_cart_variants strong,
+        .quick-modal.eqv .js_add_cart_variants .attribute_name {
+            display: block !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            color: #0D1B2E !important;
+            margin-bottom: 8px !important;
+        }
+
+        .quick-modal.eqv .css_not_available_msg {
+            font-size: 13px !important;
+            border-radius: 10px !important;
+            margin: 10px 0 !important;
+            border: none !important;
+            background: #fffbeb !important;
+            color: #b45309 !important;
+        }
+
+        /* Sticky footer (mobile) / action bar (desktop) */
+        .quick-modal.eqv .eqv-actions,
+        .quick-modal.eqv .eqv-footer {
+            flex-shrink: 0;
+            background: #FFFFFF !important;
+        }
+
+        /* Quantity stepper — equal thirds across full width */
+        .quick-modal.eqv .css_quantity.input-group {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr 1fr !important;
+            width: 100% !important;
+            max-width: none !important;
+            flex-wrap: nowrap !important;
+            align-items: stretch !important;
+        }
+
+        .quick-modal.eqv .css_quantity {
+            border: 1px solid var(--border) !important;
+            border-radius: 10px !important;
+            overflow: hidden;
+            background: var(--bg-soft) !important;
+            height: 48px !important;
+        }
+
+        .quick-modal.eqv .css_quantity .btn-link {
+            width: 100% !important;
+            height: 100% !important;
+            min-width: 0 !important;
+            padding: 0 !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            color: #0D1B2E !important;
+            background: transparent !important;
+            border: none !important;
+            font-size: 14px !important;
+            box-shadow: none !important;
+            margin: 0 !important;
+            float: none !important;
+        }
+
+        .quick-modal.eqv .css_quantity .btn-link:hover {
+            background: rgba(201, 152, 42, 0.14) !important;
+            color: #A87B1E !important;
+        }
+
+        .quick-modal.eqv .css_quantity .quantity,
+        .quick-modal.eqv .css_quantity .js_quantity {
+            border: none !important;
+            background: transparent !important;
+            font-weight: 700 !important;
+            font-size: 16px !important;
+            color: #A87B1E !important;
+            height: 100% !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+            text-align: center !important;
+            line-height: 48px !important;
+            align-self: center !important;
+            justify-self: center !important;
+            -moz-appearance: textfield;
+        }
+
+        .quick-modal.eqv .css_quantity .quantity::-webkit-outer-spin-button,
+        .quick-modal.eqv .css_quantity .quantity::-webkit-inner-spin-button,
+        .quick-modal.eqv .css_quantity .js_quantity::-webkit-outer-spin-button,
+        .quick-modal.eqv .css_quantity .js_quantity::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Primary CTA */
+        .quick-modal.eqv .btn-cart,
+        .quick-modal.eqv .o_we_buy_now,
+        .quick-modal.eqv .buy_now_login,
+        .quick-modal.eqv .openpop.buy_now_login {
+            height: 50px !important;
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-radius: 12px !important;
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            padding: 0 20px !important;
+            white-space: nowrap;
+            text-decoration: none !important;
+            line-height: 1 !important;
+        }
+
+        .quick-modal.eqv .btn-cart.btn-primary {
+            background: linear-gradient(135deg, #C9982A 0%, #A87B1E 100%) !important;
+            border: none !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 4px 14px rgba(201, 152, 42, 0.35) !important;
+        }
+
+        .quick-modal.eqv .btn-cart.btn-primary:hover {
+            color: #FFFFFF !important;
+            box-shadow: 0 6px 20px rgba(201, 152, 42, 0.45) !important;
+        }
+
+        .quick-modal.eqv .o_we_buy_now,
+        .quick-modal.eqv .buy_now_login,
+        .quick-modal.eqv .openpop.buy_now_login {
+            background: #0D1B2E !important;
+            border: none !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 4px 14px rgba(13, 27, 46, 0.2) !important;
+        }
+
+        .quick-modal.eqv .o_we_buy_now span,
+        .quick-modal.eqv .buy_now_login span,
+        .quick-modal.eqv .btn-cart span {
+            color: #FFFFFF !important;
+        }
+
+        /* Wishlist */
+        .quick-modal.eqv .eqv-wishlist-wrap {
+            flex-shrink: 0;
+        }
+
+        .quick-modal.eqv .biz-compare-button {
+            margin: 0 !important;
+        }
+
+        .quick-modal.eqv .o_add_wishlist,
+        .quick-modal.eqv .o_add_wishlist.btn,
+        .quick-modal.eqv .o_add_wishlist.btn-default {
+            width: 48px !important;
+            height: 48px !important;
+            min-width: 48px !important;
+            max-width: 48px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 10px !important;
+            background: #FFFFFF !important;
+            background-color: #FFFFFF !important;
+            color: #8A8578 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            pointer-events: auto !important;
+            cursor: pointer !important;
+            overflow: visible !important;
+            line-height: 1 !important;
+        }
+
+        .quick-modal.eqv .o_add_wishlist:hover {
+            color: #dc2626 !important;
+            border-color: rgba(220, 38, 38, 0.35) !important;
+            background: #fef2f2 !important;
+        }
+
+        .quick-modal.eqv .o_add_wishlist[disabled],
+        .quick-modal.eqv .o_add_wishlist.disabled {
+            color: #dc2626 !important;
+            border-color: rgba(220, 38, 38, 0.35) !important;
+            background: #fef2f2 !important;
+            opacity: 1 !important;
+        }
+
+        /* Remix Icon only — hide conflicting FA classes from theme */
+        .quick-modal.eqv .o_add_wishlist .fa,
+        .quick-modal.eqv .o_add_wishlist .wishlist-heart.fa {
+            display: none !important;
+        }
+
+        .quick-modal.eqv .o_add_wishlist .eqv-heart-icon,
+        .quick-modal.eqv .o_add_wishlist i.eqv-heart-icon {
+            font-family: "remixicon" !important;
+            font-size: 22px !important;
+            font-style: normal !important;
+            line-height: 1 !important;
+            color: #8A8578 !important;
+            pointer-events: none !important;
+            display: block !important;
+            width: 22px !important;
+            height: 22px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            text-align: center !important;
+            position: static !important;
+            transform: none !important;
+        }
+
+        .quick-modal.eqv .o_add_wishlist .eqv-heart-icon::before,
+        .quick-modal.eqv .o_add_wishlist i.eqv-heart-icon::before {
+            display: block !important;
+            line-height: 1 !important;
+            margin: 0 auto !important;
+        }
+
+        .quick-modal.eqv .o_add_wishlist:hover .eqv-heart-icon {
+            color: #dc2626 !important;
+        }
+
+        .quick-modal.eqv .o_add_wishlist[disabled] .eqv-heart-icon,
+        .quick-modal.eqv .o_add_wishlist.disabled .eqv-heart-icon {
+            color: #dc2626 !important;
+        }
+
+        .quick-modal.eqv .eqv-store-closed {
+            width: 100%;
+            border-radius: 10px;
+            border: none !important;
+            background: #fffbeb !important;
+            color: #b45309 !important;
+            font-size: 13px;
+            padding: 12px 14px;
+            text-align: center;
+        }
+
+        .quick-modal.eqv .eqv-guest-hint {
+            font-size: 12px !important;
+            color: #8A8578 !important;
+            text-align: center;
+            margin-top: 8px !important;
+            line-height: 1.5;
+        }
+
+        .quick-modal.eqv .availability_messages {
+            width: 100% !important;
+            margin: 8px 0 0 !important;
+            font-size: 13px !important;
+        }
+
+        /* Error state */
+        .quick-modal.eqv.eqv-error .quick-popout {
+            padding: 48px 24px 24px;
+            text-align: center;
+            max-width: 420px;
+        }
+
+        .quick-modal.eqv #product_detail_main > [class*="col-"] {
+            min-width: 0 !important;
+        }
+
+        /* Tablet + desktop shared */
+        @media (min-width: 768px) {
+            .quick-modal.eqv .quick-popout {
+                max-height: calc(100dvh - 48px);
+                overflow-y: auto !important;
+            }
+
+            .quick-modal.eqv h1.eqv-title,
+            .quick-modal.eqv .eqv-title {
+                font-size: 21px !important;
+            }
+
+            .quick-modal.eqv .eqv-header-top {
+                padding: 20px 24px 10px !important;
+            }
+        }
+
+        /* Tablet — stacked layout (matches col-md-12 until xl) */
+        @media (min-width: 768px) and (max-width: 1199px) {
+            .quick-modal.eqv .quick-popout {
+                max-width: 640px !important;
+            }
+
+            .quick-modal.eqv #product_detail_main {
+                flex-wrap: wrap !important;
+            }
+
+            .quick-modal.eqv .product-img-section,
+            .quick-modal.eqv .quick_modal_product_details {
+                flex: 0 0 100% !important;
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+
+            .quick-modal.eqv .product-img-section {
+                border-bottom: 1px solid var(--border) !important;
+                border-left: none !important;
+                margin-bottom: 0 !important;
+            }
+
+            .quick-modal.eqv .quick_modal_product_details {
+                padding: 16px 24px 16px !important;
+            }
+
+            .quick-modal.eqv .product-img-box,
+            .quick-modal.eqv .o_wsale_product_images {
+                max-height: min(42dvh, 380px) !important;
+                padding: 12px 24px !important;
+            }
+
+            .quick-modal.eqv .o_wsale_product_images .carousel,
+            .quick-modal.eqv .o_wsale_product_images .carousel-inner,
+            .quick-modal.eqv .o_wsale_product_images .carousel-item {
+                max-height: min(40dvh, 360px) !important;
+            }
+
+            .quick-modal.eqv .product-img-box img,
+            .quick-modal.eqv .o_wsale_product_images img {
+                max-height: min(38dvh, 350px) !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .quick-modal.eqv #add_to_cart_wrap {
+                flex-direction: column !important;
+                align-items: stretch !important;
+            }
+
+            .quick-modal.eqv .eqv-qty-row {
+                width: 100% !important;
+            }
+
+            .quick-modal.eqv .eqv-qty-row .css_quantity {
+                max-width: none !important;
+                flex: 1 1 auto !important;
+            }
+
+            .quick-modal.eqv .ajax_cart_modal_tools {
+                width: 100% !important;
+            }
+
+            .quick-modal.eqv .ajax_cart_modal_tools .btn-cart,
+            .quick-modal.eqv .btn-cart,
+            .quick-modal.eqv .o_we_buy_now {
+                width: 100% !important;
+            }
+        }
+
+        /* Desktop — title on top, image + details side by side */
+        @media (min-width: 1200px) {
+            .quick-modal.eqv .quick-popout {
+                max-width: 960px !important;
+            }
+
+            .quick-modal.eqv #product_detail_main {
+                display: grid !important;
+                grid-template-columns: minmax(0, 42fr) minmax(0, 58fr) !important;
+                grid-template-rows: auto auto !important;
+                flex-wrap: wrap !important;
+                align-items: start !important;
+            }
+
+            .quick-modal.eqv #product_detail_main > [class*="col-"] {
+                width: auto !important;
+                max-width: none !important;
+                flex: none !important;
+            }
+
+            .quick-modal.eqv .eqv-header-top {
+                grid-column: 1 / -1 !important;
+                grid-row: 1 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .quick-modal.eqv .product-img-section {
+                grid-column: 1 !important;
+                grid-row: 2 !important;
+                flex: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                border-bottom: none !important;
+                border-left: 1px solid var(--border);
+                margin-bottom: 0 !important;
+            }
+
+            .quick-modal.eqv .quick_modal_product_details {
+                grid-column: 2 !important;
+                grid-row: 2 !important;
+                flex: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                padding: 16px 24px 16px !important;
+                display: block !important;
+                overflow: hidden !important;
+            }
+
+            .quick-modal.eqv .js_product.js_main_product,
+            .quick-modal.eqv .quick_modal_product_details form {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+            }
+
+            .quick-modal.eqv .product-img-box,
+            .quick-modal.eqv .o_wsale_product_images {
+                min-height: 0 !important;
+                max-height: 420px !important;
+                padding: 16px 20px 12px !important;
+            }
+
+            .quick-modal.eqv .o_wsale_product_images .carousel,
+            .quick-modal.eqv .o_wsale_product_images .carousel-inner,
+            .quick-modal.eqv .o_wsale_product_images .carousel-item {
+                max-height: 400px !important;
+            }
+
+            .quick-modal.eqv .product-img-box img,
+            .quick-modal.eqv .o_wsale_product_images img {
+                max-height: 390px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .quick-modal.eqv .eqv-cta-wrap {
+                margin-top: 16px !important;
+            }
+
+            .quick-modal.eqv #add_to_cart_wrap {
+                flex-direction: column !important;
+                flex-wrap: nowrap !important;
+                align-items: stretch !important;
+                width: 100% !important;
+            }
+
+            .quick-modal.eqv .eqv-qty-row {
+                width: 100% !important;
+            }
+
+            .quick-modal.eqv .eqv-qty-row .css_quantity {
+                max-width: none !important;
+                flex: 1 1 auto !important;
+            }
+
+            .quick-modal.eqv .ajax_cart_modal_tools {
+                width: 100% !important;
+                min-width: 0 !important;
+            }
+
+            .quick-modal.eqv .ajax_cart_modal_tools .btn-cart,
+            .quick-modal.eqv .btn-cart,
+            .quick-modal.eqv .o_we_buy_now {
+                width: 100% !important;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 767px) {
+            .quick-modal.eqv {
+                padding: 0 !important;
+                align-items: flex-end !important;
+            }
+
+            .quick-modal.eqv .quick-popout {
+                max-height: 92dvh;
+                border-radius: 16px 16px 0 0 !important;
+                width: 100% !important;
+                overflow-y: auto !important;
+            }
+
+            .quick-modal.eqv .eqv-header-top {
+                padding: 14px 16px 4px !important;
+            }
+
+            .quick-modal.eqv .product-img-section {
+                margin-bottom: 12px !important;
+            }
+
+            .quick-modal.eqv .eqv-price-row {
+                padding: 0 0 12px !important;
+            }
+
+            .quick-modal.eqv .product-img-box,
+            .quick-modal.eqv .o_wsale_product_images {
+                max-height: min(42dvh, 320px) !important;
+                padding: 4px 8px !important;
+            }
+
+            .quick-modal.eqv .o_wsale_product_images .carousel,
+            .quick-modal.eqv .o_wsale_product_images .carousel-inner,
+            .quick-modal.eqv .o_wsale_product_images .carousel-item {
+                max-height: min(40dvh, 305px) !important;
+            }
+
+            .quick-modal.eqv .product-img-box img,
+            .quick-modal.eqv .o_wsale_product_images img {
+                max-height: min(38dvh, 295px) !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .quick-modal.eqv .eqv-qty-row .css_quantity {
+                flex: 1 1 auto !important;
+                width: 100% !important;
+                max-width: none !important;
+            }
+
+            .quick-modal.eqv .quick_modal_product_details {
+                padding: 0 16px 12px !important;
+            }
+
+            .quick-modal.eqv h1.eqv-title,
+            .quick-modal.eqv .eqv-title {
+                font-size: 16px !important;
+            }
+
+            .quick-modal.eqv .eqv-view-detail {
+                font-size: 11px !important;
+                padding: 5px 10px;
+            }
+        }
+    </style>
+
+    <t t-if="product">
+        <t t-set="combination" t-value="product._get_first_possible_combination()"/>
+        <t t-set="combination_info" t-value="product._get_combination_info(combination, add_qty=add_qty or 1)"/>
+        <t t-set="product_variant" t-value="product.env['product.product'].browse(combination_info['product_id'])"/>
+
+        <div class="quick-modal-backdrop"/>
+        <t t-set="store_time" t-value="website.store_timing()"/>
+
+        <div class="quick-modal eqv">
+            <div itemscope="itemscope" itemtype="http://schema.org/Product" class="js_sale quick-popout">
+                <a href="#" class="quick_close" aria-label="إغلاق" title="إغلاق">
+                    <i class="ri ri-close-line align-middle"/>
+                </a>
+
+                <div class="container oe_website_sale" id="product_detail">
+                    <div id="product_detail_main" class="row justify-content-center eqv-layout" t-att-data-image_width="website.product_page_image_width" t-att-data-image_layout="website.product_page_image_layout">
+
+                        <div class="col-12 eqv-header-top">
+                            <t t-if="product.web_pro_name">
+                                <h1 itemprop="name" class="eqv-title" t-field="product.web_pro_name">Product Name</h1>
+                            </t>
+                            <t t-else="">
+                                <h1 itemprop="name" class="eqv-title" t-field="product.name">Product Name</h1>
+                            </t>
+                        </div>
+
+                        <div class="col-md-12 col-xl-5 product-img-section">
+                            <div class="product-img-box o_wsale_product_images">
+                                <t t-call="website_sale.shop_product_images"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-xl-7 quick_modal_product_details" id="product_details">
+                            <span itemprop="url" style="display:none;" t-out="product.website_url"/>
+
+                            <form t-if="product._is_add_to_cart_possible()" action="/shop/cart/update" method="POST">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                                <div class="js_product js_main_product">
+
+                                    <div class="eqv-price-row preview-price-details-container product-name-share pb16">
+                                        <t t-call="website_sale.product_price"/>
+                                        <a t-att-href="'/shop/%s' % slug(product)" class="eqv-view-detail view-detail text-decoration-none">
+                                            مشاهدة التفاصيل
+                                            <span class="ri ri-arrow-left-line align-middle"/>
+                                        </a>
+                                    </div>
+
+                                    <t t-placeholder="select">
+                                        <input type="hidden" class="product_id" name="product_id" t-att-value="product_variant.id"/>
+                                        <input type="hidden" class="product_template_id" name="product_template_id" t-att-value="product.id"/>
+                                        <t t-if="combination" t-call="website_sale.variants">
+                                            <t t-set="ul_class" t-value="'flex-column'"/>
+                                            <t t-set="parent_combination" t-value="None"/>
+                                        </t>
+                                        <t t-else="">
+                                            <ul class="d-none js_add_cart_variants mt-3" t-att-data-attribute_exclusions="{'exclusions: []'}"/>
+                                        </t>
+                                    </t>
+
+                                    <p t-if="True" class="css_not_available_msg alert alert-warning">هذا الخيار غير متوفر.</p>
+
+                                    <t t-nocache="Wishlist state depends on user and must not be shared between users.">
+                                        <t t-set="product_variant" t-value="product_variant or product._create_first_product_variant()"/>
+                                        <t t-set="in_wish" t-value="product_variant and product_variant._is_in_wishlist()"/>
+                                    </t>
+
+                                    <div id="o_wsale_cta_wrapper" class="d-flex align-items-center flex-wrap eqv-cta-wrap">
+                                        <div id="add_to_cart_wrap" t-attf-class="{{'d-none' if combination_info['prevent_zero_price_sale'] else 'd-flex'}} align-items-center w-100 w-xl-auto mt-3 mt-xl-0">
+
+                                            <div class="eqv-qty-row">
+                                                <div class="css_quantity input-group">
+                                                    <a t-attf-href="#" class="btn btn-link js_add_cart_json border-end-0 shadow-none" aria-label="تقليل الكمية" title="تقليل الكمية">
+                                                        <i class="fa fa-minus"/>
+                                                    </a>
+                                                    <input type="text" class="form-control quantity text-center js_quantity border-start-0 border-end-0 shadow-none" data-min="1" name="add_qty" t-att-value="add_qty or 1" inputmode="numeric" pattern="[0-9]*" autocomplete="off" aria-label="الكمية"/>
+                                                    <a t-attf-href="#" class="btn btn-link float_left js_add_cart_json border-start-0 shadow-none" aria-label="زيادة الكمية" title="زيادة الكمية">
+                                                        <i class="fa fa-plus"/>
+                                                    </a>
+                                                </div>
+
+                                                <div class="biz-compare-button eqv-wishlist-wrap">
+                                                    <button type="button" role="button" class="btn btn-default o_add_wishlist" t-att-disabled="in_wish or None" title="أضف للمفضلة" t-att-data-product-template-id="product.id" t-att-data-product-product-id="product_variant.id" data-action="o_wishlist" aria-label="أضف للمفضلة">
+                                                        <i class="ri ri-heart-line eqv-heart-icon" role="img" aria-label="أضف للمفضلة"/>
+                                                    </button>
+                                                    <t t-set="product_variant_id" t-value="product._get_first_possible_variant_id()"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="ajax_cart_modal_tools ms-2 me-2">
+                                                <t t-if="request.env.user._is_public()">
+                                                    <a role="button" class="btn btn-md btn-cart btn-primary fw-bold two w-100" href="/custom/login">
+                                                        <span class="ri ri-shopping-bag-2-line me-2 align-middle"/>
+                                                        <span class="align-middle">إضافة للسلة</span>
+                                                    </a>
+                                                    <p class="eqv-guest-hint">
+                                                        <a href="/custom/login">سجّل الدخول</a> لإضافة المنتجات إلى سلتك
+                                                    </p>
+                                                </t>
+                                                <t t-else="">
+                                                    <a role="button" class="btn btn-md btn-cart btn-primary a-submit-btn ajax-cart-btn js_check_product fw-bold two w-100" href="#">
+                                                        <span class="ri ri-shopping-bag-2-line me-2 align-middle"/>
+                                                        <span class="align-middle">إضافة للسلة</span>
+                                                    </a>
+                                                </t>
+                                            </div>
+
+                                            <t t-if="is_view_active('website_sale.product_buy_now')">
+                                    <t t-if="website.timings">
+                                        <t t-if="store_time['store'] == True">
+                                            <t t-if="uid and uid &gt; 0">
+                                                <a role="button" class="btn btn-secondary btn-lg o_we_buy_now sticky_cart_button w-100 mt-2" href="#">
+                                                    <span class="ri ri-flashlight-line align-middle"/>
+                                                    <span>شراء الآن</span>
+                                                </a>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-if="website.prevent_guest_checkout">
+                                                    <t t-if="request.website.viewref('theme_emart_plant.loginsignup_popup_bizt').active">
+                                                        <a role="button" class="btn btn-secondary btn-lg openpop buy_now_login sticky_cart_button w-100 mt-2" href="#" data-bs-toggle="modal" data-bs-target="#popupuserlogin" t-att-data-theme_name="request.website.sudo().theme_id.name">
+                                                            <span class="ri ri-flashlight-line align-middle"/>
+                                                            <span>شراء الآن</span>
+                                                        </a>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <a role="button" class="btn btn-secondary btn-lg buy_now_login sticky_cart_button w-100 mt-2" href="/web/login">
+                                                            <span class="ri ri-flashlight-line align-middle"/>
+                                                            <span>شراء الآن</span>
+                                                        </a>
+                                                    </t>
+                                                </t>
+                                                <t t-else="">
+                                                    <a role="button" class="btn btn-secondary btn-lg o_we_buy_now sticky_cart_button w-100 mt-2" href="#">
+                                                        <span class="ri ri-flashlight-line align-middle"/>
+                                                        <span>شراء الآن</span>
+                                                    </a>
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <div class="eqv-store-closed alert alert-warning text-center">
+                                                <strong>المتجر مغلق</strong>
+                                                <span>
+                                                    يُرجى الزيارة بين
+                                                    <t t-out="store_time['opening_time']"/>
+                                                    و
+                                                    <t t-out="store_time['closing_time']"/>
+                                                </span>
+                                            </div>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-if="uid and uid &gt; 0">
+                                            <a role="button" class="btn btn-secondary btn-lg o_we_buy_now sticky_cart_button w-100 mt-2" href="#">
+                                                <span class="ri ri-flashlight-line align-middle"/>
+                                                <span>شراء الآن</span>
+                                            </a>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="website.prevent_guest_checkout">
+                                                <t t-if="request.website.viewref('theme_emart_plant.loginsignup_popup_bizt').active">
+                                                    <a role="button" class="btn btn-secondary btn-lg openpop buy_now_login sticky_cart_button w-100 mt-2" href="#" data-bs-toggle="modal" data-bs-target="#popupuserlogin" t-att-data-theme_name="request.website.sudo().theme_id.name">
+                                                        <span class="ri ri-flashlight-line align-middle"/>
+                                                        <span>شراء الآن</span>
+                                                    </a>
+                                                </t>
+                                                <t t-else="">
+                                                    <a role="button" class="btn btn-secondary btn-lg buy_now_login sticky_cart_button w-100 mt-2" href="/web/login">
+                                                        <span class="ri ri-flashlight-line align-middle"/>
+                                                        <span>شراء الآن</span>
+                                                    </a>
+                                                </t>
+                                            </t>
+                                            <t t-else="">
+                                                <a role="button" class="btn btn-secondary btn-lg o_we_buy_now sticky_cart_button w-100 mt-2" href="#">
+                                                    <span class="ri ri-flashlight-line align-middle"/>
+                                                    <span>شراء الآن</span>
+                                                </a>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </t>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="availability_messages o_not_editable"/>
+                                <t t-nocache="The wishlist depends on the user and must not be shared with other users. The product come from the controller.">
+                                    <t t-set="product_variant" t-value="product_variant or product._create_first_product_variant()"/>
+                                    <t t-set="in_wish" t-value="product_variant and product_variant._is_in_wishlist()"/>
+                                    <button t-if="product_variant" type="button" role="button" class="btn btn-link px-0 pe-3 o_add_wishlist_dyn d-none" t-att-disabled="in_wish or None" t-att-data-product-template-id="product.id" t-att-data-product-product-id="product_variant.id" data-action="o_wishlist" title="أضف للمفضلة">
+                                        <i class="fa fa-heart-o me-2" role="img" aria-label="أضف للمفضلة"/>أضف للمفضلة
+                                    </button>
+                                </t>
+
+                                <div id="contact_us_wrapper" t-attf-class="{{'d-flex' if combination_info['prevent_zero_price_sale'] else 'd-none'}} oe_structure oe_structure_solo #{_div_classes}">
+                                    <section class="s_text_block" data-snippet="s_text_block" data-name="Text">
+                                        <div class="container">
+                                            <a t-att-href="website.contact_us_button_url" class="btn btn-primary btn_cta">
+                                                تواصل معنا
+                                            </a>
+                                        </div>
+                                    </section>
+                                </div>
+                            </form>
+
+                            <p t-elif="not product.active" class="css_not_available_msg alert alert-warning">هذا المنتج لم يعد متوفراً.</p>
+                            <p t-else="" class="css_not_available_msg alert alert-warning">لا يوجد خيار صالح لهذا المنتج.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            <![CDATA[
+            (function () {
+                var qtySelector = '.quick-modal.eqv .css_quantity .js_quantity';
+
+                function getQtyInput(target) {
+                    var el = target && target.nodeType === 1 ? target : (target && target.parentElement);
+                    if (!el) {
+                        return null;
+                    }
+                    if (typeof el.matches === 'function') {
+                        return el.matches(qtySelector) ? el : (el.closest ? el.closest(qtySelector) : null);
+                    }
+                    if (typeof el.msMatchesSelector === 'function') {
+                        return el.msMatchesSelector(qtySelector) ? el : null;
+                    }
+                    return null;
+                }
+
+                function sanitizeQtyValue(input) {
+                    input.value = input.value.replace(/\D/g, '');
+                }
+
+                function normalizeQtyValue(input) {
+                    var min = parseInt(input.getAttribute('data-min'), 10) || 1;
+                    sanitizeQtyValue(input);
+                    if (!input.value || parseInt(input.value, 10) < min) {
+                        input.value = String(min);
+                    }
+                }
+
+                document.addEventListener('keydown', function (e) {
+                    var input = getQtyInput(e.target);
+                    if (!input) {
+                        return;
+                    }
+                    var allowed = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'];
+                    if (allowed.indexOf(e.key) !== -1 || e.ctrlKey || e.metaKey) {
+                        return;
+                    }
+                    if (!/^\d$/.test(e.key)) {
+                        e.preventDefault();
+                    }
+                }, true);
+
+                document.addEventListener('input', function (e) {
+                    var input = getQtyInput(e.target);
+                    if (!input) {
+                        return;
+                    }
+                    sanitizeQtyValue(input);
+                }, true);
+
+                document.addEventListener('paste', function (e) {
+                    var input = getQtyInput(e.target);
+                    if (!input) {
+                        return;
+                    }
+                    e.preventDefault();
+                    var text = (e.clipboardData || window.clipboardData).getData('text') || '';
+                    input.value = text.replace(/\D/g, '');
+                }, true);
+
+                document.addEventListener('blur', function (e) {
+                    var input = getQtyInput(e.target);
+                    if (!input) {
+                        return;
+                    }
+                    normalizeQtyValue(input);
+                }, true);
+            })();
+            ]]>
+        </script>
+    </t>
+
+    <t t-if="error">
+        <div class="quick-modal-backdrop"/>
+        <div class="quick-modal eqv eqv-error">
+            <div class="quick-popout">
+                <a href="#" class="quick_close" aria-label="إغلاق">
+                    <i class="ri ri-close-line"/>
+                </a>
+                <div class="alert alert-warning" t-out="error"/>
+            </div>
+        </div>
+    </t>
+</t>
