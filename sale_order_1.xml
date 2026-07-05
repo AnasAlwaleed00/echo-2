@@ -125,6 +125,55 @@
             flex-shrink: 0;
         }
 
+        .eop-so-confirm-wrap {
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+        }
+
+        .eop-so-lines-card .eop-so-confirm-wrap {
+            padding: 4px 22px 22px;
+            background: var(--bg);
+        }
+
+        .eop-so-lines-card .eop-so-confirm-wrap .eop-so-confirm-btn {
+            margin-inline-start: auto;
+        }
+
+        .eop-so-confirm-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 210px;
+            padding: 12px 30px;
+            background: #2e9e4d;
+            color: #fff !important;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1;
+            border: none;
+            border-radius: 999px;
+            box-shadow: 0 4px 14px rgba(46, 158, 77, 0.28);
+            text-decoration: none !important;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+        }
+
+        .eop-so-confirm-btn:hover,
+        .eop-so-confirm-btn:focus {
+            background: #25843f;
+            color: #fff !important;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(46, 158, 77, 0.35);
+        }
+
+        .eop-so-confirm-btn svg {
+            width: 17px;
+            height: 17px;
+            flex-shrink: 0;
+        }
+
         .eop-so-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -163,6 +212,31 @@
             width: 18px;
             height: 18px;
             flex-shrink: 0;
+        }
+
+        .eop-so-card-title--invoice {
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .eop-so-card-title-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .eop-so-card-title .eop-so-invoice-actions {
+            margin-inline-start: auto;
+            flex-shrink: 0;
+        }
+
+        button.eop-so-invoice-action {
+            padding: 0;
+            cursor: pointer;
+            font: inherit;
+            appearance: none;
+            -webkit-appearance: none;
         }
 
         .eop-so-info-table {
@@ -214,7 +288,7 @@
             display: none !important;
         }
 
-        .eop-so-address > div,
+        .eop-so-address &gt; div,
         .eop-so-address span {
             display: block;
             line-height: 1.85;
@@ -258,31 +332,297 @@
             border: 1px solid var(--border);
             border-radius: 10px;
             margin-bottom: 10px;
+            min-width: 0;
         }
 
         .eop-so-invoice-item:last-child { margin-bottom: 0; }
 
         .eop-so-invoice-top {
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            gap: 8px 10px;
             margin-bottom: 6px;
+            min-width: 0;
         }
 
         .eop-so-invoice-link {
+            flex: 1 1 auto;
+            min-width: 0;
             font-weight: 700;
             color: var(--gold-dark) !important;
             font-size: 13px;
             transition: color 0.15s;
+            word-break: break-word;
+            line-height: 1.45;
+        }
+
+        .eop-so-invoice-top .eop-so-badge {
+            flex-shrink: 0;
+            margin-inline-start: auto;
         }
 
         .eop-so-invoice-link:hover { color: var(--navy) !important; }
+
+        .eop-so-invoice-name-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .eop-so-invoice-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .eop-so-invoice-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--gold-dark) !important;
+            text-decoration: none !important;
+            transition: color 0.15s, border-color 0.15s, background 0.15s;
+        }
+
+        .eop-so-invoice-action svg {
+            stroke: currentColor;
+        }
+
+        .eop-so-invoice-action:hover {
+            color: var(--navy) !important;
+            border-color: var(--gold);
+            background: var(--gold-light);
+        }
+
+        .eop-so-invoice-download {
+            position: relative;
+        }
+
+        .eop-so-invoice-download.is-loading {
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+        .eop-so-invoice-download.is-loading svg {
+            visibility: hidden;
+        }
+
+        .eop-so-invoice-download.is-loading::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(201, 152, 42, 0.2);
+            border-top-color: var(--gold-dark);
+            border-radius: 50%;
+            animation: eop-so-pdf-spin 0.7s linear infinite;
+        }
 
         .eop-so-invoice-date {
             font-size: 11px;
             color: var(--muted);
             font-weight: 600;
+        }
+
+        .eop-so-pdf-modal .modal-dialog {
+            max-width: min(95vw, 920px);
+            margin: 1rem auto;
+        }
+
+        @media (max-width: 767.98px) {
+            .eop-so-pdf-modal .modal-dialog {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                min-height: 100dvh;
+            }
+
+            .eop-so-pdf-modal .modal-content {
+                border-radius: 0;
+                border: 0;
+                min-height: 100dvh;
+            }
+
+            .eop-so-pdf-viewer {
+                height: calc(100dvh - 57px);
+                min-height: calc(100dvh - 57px);
+            }
+        }
+
+        .eop-so-pdf-zoom-hint {
+            display: none;
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            background: rgba(13, 27, 46, 0.72);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .eop-so-pdf-modal .modal-content {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .eop-so-pdf-modal .modal-header {
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .eop-so-pdf-modal .modal-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--navy);
+            flex: 1 1 auto;
+            min-width: 0;
+            margin: 0;
+        }
+
+        .eop-so-pdf-modal-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .eop-so-pdf-modal .modal-body {
+            padding: 0;
+            background: #f4f4f4;
+        }
+
+        .eop-so-pdf-viewer {
+            height: min(78vh, 720px);
+            background: #f4f4f4;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .eop-so-pdf-scroll {
+            position: absolute;
+            inset: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            z-index: 1;
+            direction: ltr;
+            text-align: center;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 767.98px) {
+            .eop-so-pdf-scroll {
+                padding: 0 !important;
+            }
+        }
+
+        .eop-so-pdf-scale-wrap {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: start;
+            overflow: hidden;
+            line-height: 0;
+            max-width: 100%;
+        }
+
+        .eop-so-pdf-frame {
+            width: 794px;
+            max-width: 100%;
+            border: 0;
+            display: block;
+            background: #fff;
+            overflow: hidden;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Mobile pinch-zoom viewer — must come after base rules */
+        @media (max-width: 767.98px) {
+            .eop-so-pdf-scroll {
+                overflow: hidden !important;
+                padding: 0 !important;
+                text-align: left;
+                touch-action: none;
+                -webkit-user-select: none;
+                user-select: none;
+            }
+
+            .eop-so-pdf-scale-wrap {
+                margin: 0 !important;
+                max-width: none !important;
+                overflow: visible !important;
+                transform-origin: 0 0;
+                will-change: transform;
+            }
+
+            .eop-so-pdf-frame {
+                width: 794px !important;
+                max-width: none !important;
+                pointer-events: none;
+            }
+
+            .eop-so-pdf-zoom-hint.is-visible {
+                display: flex;
+            }
+        }
+
+        .eop-so-pdf-loading {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #f4f4f4;
+            color: var(--navy);
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 2;
+            transition: opacity 0.2s;
+        }
+
+        .eop-so-pdf-loading.is-hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .eop-so-pdf-spinner {
+            width: 22px;
+            height: 22px;
+            border: 2px solid rgba(13, 27, 46, 0.15);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: eop-so-pdf-spin 0.7s linear infinite;
+        }
+
+        @keyframes eop-so-pdf-spin {
+            to { transform: rotate(360deg); }
         }
 
         .eop-so-section {
@@ -314,6 +654,36 @@
             width: 100%;
             border-collapse: collapse;
             min-width: 680px;
+            table-layout: fixed;
+        }
+
+        .eop-so-table thead th.eop-so-product-img-head,
+        .eop-so-table tbody td.eop-so-product-img-cell {
+            width: 72px;
+            min-width: 72px;
+            max-width: 72px;
+            padding: 10px 8px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .eop-so-product-img-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            flex-shrink: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: #fff;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .eop-so-product-img-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(13, 27, 46, 0.12);
         }
 
         .eop-so-table thead th {
@@ -358,18 +728,17 @@
         }
 
         .eop-so-product-img {
-            width: 48px;
-            height: 48px;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 1px solid var(--border);
+            display: block;
+            width: 56px !important;
+            height: 56px !important;
+            min-width: 56px;
+            max-width: none !important;
+            max-height: none !important;
+            object-fit: contain;
+            border-radius: 0;
+            border: none;
             cursor: pointer;
-            transition: transform 0.15s, box-shadow 0.15s;
-        }
-
-        .eop-so-product-img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(13, 27, 46, 0.12);
+            background: #fff;
         }
 
         .eop-so-product-name {
@@ -636,7 +1005,7 @@
                 gap: 0;
             }
 
-            .eop-so-hero-top > .col-12 {
+            .eop-so-hero-top &gt; .col-12 {
                 padding: 0;
                 margin-bottom: 0 !important;
             }
@@ -656,6 +1025,26 @@
                 margin-top: 10px;
                 gap: 6px;
                 align-items: center;
+            }
+
+            .eop-so-confirm-wrap {
+                justify-content: center;
+            }
+
+            .eop-so-lines-card .eop-so-confirm-wrap {
+                padding: 0 16px 16px;
+            }
+
+            .eop-so-lines-card .eop-so-confirm-wrap .eop-so-confirm-btn {
+                margin-inline-start: 0;
+            }
+
+            .eop-so-confirm-btn {
+                min-width: 190px;
+                width: 100%;
+                max-width: 280px;
+                padding: 11px 24px;
+                font-size: 14px;
             }
 
             .eop-so-badge {
@@ -742,7 +1131,7 @@
                 line-height: 1.75;
             }
 
-            .eop-so-address > div,
+            .eop-so-address &gt; div,
             .eop-so-address span {
                 line-height: 1.75;
             }
@@ -773,7 +1162,7 @@
 
             .eop-so-table tbody tr:not(.o_line_section):not(.o_line_note):not(.is-subtotal) {
                 display: grid;
-                grid-template-columns: 52px minmax(0, 1fr) auto;
+                grid-template-columns: 56px minmax(0, 1fr) auto;
                 grid-template-rows: auto auto;
                 gap: 6px 10px;
                 padding: 12px 16px;
@@ -787,10 +1176,19 @@
                 border: none;
             }
 
-            .eop-so-table tbody tr:not(.o_line_section):not(.o_line_note):not(.is-subtotal) td:first-child {
+            .eop-so-table tbody tr:not(.o_line_section):not(.o_line_note):not(.is-subtotal) td.eop-so-product-img-cell {
                 grid-row: 1 / span 2;
                 grid-column: 1;
                 align-self: center;
+                width: auto;
+                min-width: 0;
+                max-width: none;
+                padding: 0;
+            }
+
+            .eop-so-product-img-link {
+                width: 52px;
+                height: 52px;
             }
 
             .eop-so-table tbody tr:not(.o_line_section):not(.o_line_note):not(.is-subtotal) td#product_name {
@@ -828,8 +1226,9 @@
             }
 
             .eop-so-product-img {
-                width: 44px;
-                height: 44px;
+                width: 52px !important;
+                height: 52px !important;
+                min-width: 52px;
             }
 
             .eop-so-product-name {
@@ -883,6 +1282,10 @@
             .eop-so-footer-section {
                 padding: 14px 16px;
             }
+        }
+
+        #sale_invoices {
+            grid-column: 1 / -1;
         }
 
         @media (min-width: 768px) {
@@ -1064,23 +1467,50 @@
 
                 <t t-set="invoices" t-value="sale_order.invoice_ids.filtered(lambda i: i.state not in ['draft', 'cancel']).sorted('date', reverse=True)[:3]"/>
 
-                <!-- Last Invoices -->
-                <div id="sale_invoices" t-if="invoices and sale_order.state in ['sale', 'cancel']" class="eop-so-card col-12 col-lg-6 mb-4">
-                    <h4 class="eop-so-card-title">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9982A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
-                            <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
-                        </svg>
-                        آخر الفواتير
+                <!-- Invoice Preview -->
+                <div id="sale_invoices" t-if="invoices and sale_order.state in ['sale', 'cancel']" class="eop-so-card col-12 mb-4">
+                    <t t-set="i" t-value="invoices[0]"/>
+                    <t t-set="report_url" t-value="i.get_portal_url()"/>
+                    <t t-set="html_url" t-value="i.get_portal_url(report_type='html')"/>
+                    <t t-set="pdf_url" t-value="i.get_portal_url(report_type='pdf')"/>
+                    <t t-set="pdf_download_url" t-value="i.get_portal_url(report_type='pdf', download=True)"/>
+                    <t t-set="authorized_tx_ids" t-value="i.authorized_transaction_ids"/>
+                    <h4 class="eop-so-card-title eop-so-card-title--invoice">
+                        <span class="eop-so-card-title-label">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9982A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+                                <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+                            </svg>
+                            معاينة الفاتورة
+                        </span>
+                        <div class="eop-so-invoice-actions">
+                            <a href="#" class="eop-so-invoice-action" data-bs-toggle="modal" t-att-data-bs-target="'#pdfModal_%s' % i.id" title="معاينة" aria-label="معاينة">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="eop-so-invoice-action eop-so-invoice-download" t-att-data-pdf-url="pdf_download_url" t-attf-data-pdf-name="#{i.name}.pdf" title="تحميل" aria-label="تحميل">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 15V3"/>
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <path d="m7 10 5 5 5-5"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="eop-so-invoice-action eop-so-invoice-share" t-att-data-share-url="report_url" title="مشاركة" aria-label="مشاركة">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="18" cy="5" r="3"/>
+                                    <circle cx="6" cy="12" r="3"/>
+                                    <circle cx="18" cy="19" r="3"/>
+                                    <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/>
+                                    <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
+                                </svg>
+                            </a>
+                        </div>
                     </h4>
-                    <t t-foreach="invoices" t-as="i">
-                        <t t-set="report_url" t-value="i.get_portal_url()"/>
-                        <t t-set="authorized_tx_ids" t-value="i.authorized_transaction_ids"/>
-                        <div class="eop-so-invoice-item">
-                            <div class="eop-so-invoice-top">
-                                <a t-att-href="report_url" class="eop-so-invoice-link">
-                                    <span t-out="i.name"/>
-                                </a>
+                    <div class="eop-so-invoice-item">
+                        <div class="eop-so-invoice-top">
+                            <span class="eop-so-invoice-link" t-out="i.name"/>
                                 <t t-if="i.payment_state in ('paid', 'in_payment')">
                                     <span class="eop-so-badge eop-so-badge-green">
                                         <span class="eop-so-badge-dot"/>
@@ -1106,11 +1536,43 @@
                                     </span>
                                 </t>
                             </div>
-                            <div class="eop-so-invoice-date">
-                                التاريخ: <span t-field="i.invoice_date"/>
+                        <div class="eop-so-invoice-date">
+                            التاريخ: <span class="eop-so-date" t-field="i.invoice_date"/>
+                        </div>
+                    </div>
+                    <div class="modal fade eop-so-pdf-modal" t-att-id="'pdfModal_%s' % i.id" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-xl modal-fullscreen-sm-down">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" t-out="i.name"/>
+                                    <div class="eop-so-pdf-modal-actions">
+                                        <a href="#" class="eop-so-invoice-action eop-so-invoice-download" t-att-data-pdf-url="pdf_download_url" t-attf-data-pdf-name="#{i.name}.pdf" title="تحميل" aria-label="تحميل">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M12 15V3"/>
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                                <path d="m7 10 5 5 5-5"/>
+                                            </svg>
+                                        </a>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"/>
+                                    </div>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="eop-so-pdf-viewer">
+                                        <div class="eop-so-pdf-loading">
+                                            <span class="eop-so-pdf-spinner" aria-hidden="true"/>
+                                            <span>جاري تحميل الفاتورة...</span>
+                                        </div>
+                                        <div class="eop-so-pdf-scroll">
+                                            <div class="eop-so-pdf-scale-wrap">
+                                                <iframe class="eop-so-pdf-frame" scrolling="no" t-att-data-report-src="html_url" title="معاينة الفاتورة"/>
+                                            </div>
+                                        </div>
+                                        <div class="eop-so-pdf-zoom-hint">قرصة للتكبير · اسحب للتحريك</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </t>
+                    </div>
                 </div>
 
             </div>
@@ -1158,7 +1620,7 @@
                     <table t-att-data-order-id="sale_order.id" t-att-data-token="sale_order.access_token" class="table table-sm eop-so-table" id="sales_order_table">
                         <thead class="bg-100">
                                 <tr>
-                                    <th class="text-start" style="width:60px;">صورة</th>
+                                    <th class="text-center eop-so-product-img-head">صورة</th>
                                     <th class="text-start" id="product_name_header">الأصناف</th>
                                     <th class="text-end" id="product_qty_header">الكمية</th>
                                     <th t-attf-class="text-end {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">السعر</th>
@@ -1178,10 +1640,10 @@
 
                                     <tr t-att-class="'o_line_section' if line.display_type == 'line_section' else 'o_line_note' if line.display_type == 'line_note' else ''">
                                         <t t-if="not line.display_type">
-                                            <td class="text-start align-middle" style="width:60px;">
+                                            <td class="eop-so-product-img-cell">
                                                 <t t-if="line.product_id">
-                                                    <a href="#" data-bs-toggle="modal" t-att-data-bs-target="'#imgModal_%s' % line.id">
-                                                        <img t-att-src="'/web/image/product.product/%s/image_128' % line.product_id.id" class="eop-so-product-img" alt="Product Image"/>
+                                                    <a href="#" class="eop-so-product-img-link" data-bs-toggle="modal" t-att-data-bs-target="'#imgModal_%s' % line.id">
+                                                        <img t-att-src="'/web/image/product.product/%s/image_256' % line.product_id.id" class="eop-so-product-img" alt="Product Image"/>
                                                     </a>
                                                     <div class="modal fade" t-att-id="'imgModal_%s' % line.id" tabindex="-1">
                                                         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -1203,16 +1665,16 @@
                                                 </div>
                                             </td>
                                             <td t-attf-class="text-end {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
-                                                <t t-if="sale_order.price_state == 'price_set'">
-                                                    <div t-if="line.discount &gt;= 0" t-field="line.price_unit" t-att-style="line.discount and 'text-decoration: line-through' or None" t-att-class="(line.discount and 'eop-so-price-old' or '') + ' text-end'"/>
-                                                    <div t-if="line.discount">
-                                                        <t t-out="(1-line.discount / 100.0) * line.price_unit" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;decimal_precision&quot;: &quot;Product Price&quot;}"/>
-                                                    </div>
-                                                </t>
-                                                <t t-else="">
-                                                    <span class="eop-so-pending">بعد التسعير</span>
-                                                </t>
-                                            </td>
+    <t t-if="sale_order.price_state == 'price_set'">
+        <div t-if="line.discount &gt;= 0" t-field="line.price_unit" t-att-style="line.discount and 'text-decoration: line-through' or None" t-att-class="(line.discount and 'eop-so-price-old' or '') + ' text-end'"/>
+        <div t-if="line.discount">
+            <t t-out="round((1 - line.discount / 100.0) * line.price_unit, 2)" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;decimal_precision&quot;: &quot;Product Price&quot;}"/>
+        </div>
+    </t>
+    <t t-else="">
+        <span class="eop-so-pending">بعد التسعير</span>
+    </t>
+</td>
                                             <td t-if="display_discount" t-attf-class="text-end {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
                                                 <t t-if="sale_order.price_state == 'price_set'">
                                                     <span t-if="line.discount &gt; 0" class="eop-so-discount-tag">
@@ -1286,6 +1748,12 @@
                                         <span t-field="sale_order.amount_tax" t-options="{'widget': 'monetary', 'display_currency': sale_order.currency_id}"/>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>الخصم</td>
+                                    <td class="text-end">
+                                        <span t-field="sale_order.amount_discount" t-options="{'widget': 'monetary', 'display_currency': sale_order.currency_id}"/>
+                                    </td>
+                                </tr>
                                 <tr class="eop-so-totals-grand">
                                     <td><strong>الإجمالي</strong></td>
                                     <td class="text-end">
@@ -1306,6 +1774,12 @@
                                     <td>الضريبة</td>
                                     <td class="text-end"><span class="eop-so-pending">بعد التسعير</span></td>
                                 </tr>
+                                <!-- <tr>-->
+                                <!--    <td>الخصم</td>-->
+                                <!--    <td class="text-end">-->
+                                <!--        <span t-field="sale_order.amount_discount" t-options="{'widget': 'monetary', 'display_currency': sale_order.currency_id}"/>-->
+                                <!--    </td>-->
+                                <!--</tr>-->
                                 <tr>
                                     <td><strong>الإجمالي</strong></td>
                                     <td class="text-end"><span class="eop-so-pending">بعد التسعير</span></td>
@@ -1313,6 +1787,15 @@
                             </table>
                         </t>
                     </div>
+                </div>
+
+                <div class="eop-so-confirm-wrap" t-if="sale_order.price_state == 'price_set' and sale_order.state == 'draft'">
+                    <a role="button" class="eop-so-confirm-btn" t-attf-href="/my/orders/#{sale_order.id}/confirm?access_token=#{sale_order.access_token}">
+                        تأكيد الطلب
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M20 6 9 17l-5-5"/>
+                        </svg>
+                    </a>
                 </div>
                 </div>
 
@@ -1346,4 +1829,529 @@
 
         </div>
     </div>
+
+    <script>
+        (function () {
+            function isIOS() {
+                return /iPad|iPhone|iPod/.test(navigator.userAgent)
+                    || (navigator.platform === 'MacIntel' &amp;&amp; navigator.maxTouchPoints &gt; 1);
+            }
+
+            function copyTextToClipboard(text) {
+                if (navigator.clipboard &amp;&amp; window.isSecureContext) {
+                    return navigator.clipboard.writeText(text).catch(function () {
+                        return copyTextToClipboardFallback(text);
+                    });
+                }
+                return copyTextToClipboardFallback(text);
+            }
+
+            function copyTextToClipboardFallback(text) {
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.setAttribute('readonly', '');
+                textarea.style.position = 'fixed';
+                textarea.style.top = '0';
+                textarea.style.left = '0';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                } catch (err) {}
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+
+            function isMobilePreview() {
+                return window.matchMedia('(max-width: 767.98px)').matches;
+            }
+
+            function getTouchDistance(t1, t2) {
+                var dx = t2.clientX - t1.clientX;
+                var dy = t2.clientY - t1.clientY;
+                return Math.sqrt(dx * dx + dy * dy);
+            }
+
+            function destroyMobilePinchZoom(modal) {
+                if (!modal._eopPinch) return;
+                var pinch = modal._eopPinch;
+                if (pinch.viewport &amp;&amp; pinch.onTouchStart) {
+                    pinch.viewport.removeEventListener('touchstart', pinch.onTouchStart);
+                    pinch.viewport.removeEventListener('touchmove', pinch.onTouchMove);
+                    pinch.viewport.removeEventListener('touchend', pinch.onTouchEnd);
+                    pinch.viewport.removeEventListener('touchcancel', pinch.onTouchEnd);
+                }
+                modal._eopPinch = null;
+            }
+
+            function clampMobilePan(modal) {
+                var pinch = modal._eopPinch;
+                if (!pinch) return;
+                var vw = pinch.viewport.clientWidth;
+                var vh = pinch.viewport.clientHeight;
+                var scaledW = pinch.contentWidth * pinch.scale;
+                var scaledH = pinch.contentHeight * pinch.scale;
+                var minX = scaledW &lt;= vw ? (vw - scaledW) / 2 : vw - scaledW;
+                var maxX = scaledW &lt;= vw ? (vw - scaledW) / 2 : 0;
+                var minY = scaledH &lt;= vh ? (vh - scaledH) / 2 : vh - scaledH;
+                var maxY = scaledH &lt;= vh ? (vh - scaledH) / 2 : 0;
+                pinch.x = Math.min(maxX, Math.max(minX, pinch.x));
+                pinch.y = Math.min(maxY, Math.max(minY, pinch.y));
+            }
+
+            function applyMobilePinchTransform(modal) {
+                var pinch = modal._eopPinch;
+                if (!pinch || !pinch.wrap) return;
+                clampMobilePan(modal);
+                pinch.wrap.style.transform = 'translate(' + pinch.x + 'px,' + pinch.y + 'px) scale(' + pinch.scale + ')';
+                pinch.wrap.style.webkitTransform = pinch.wrap.style.transform;
+            }
+
+            function fitMobilePinchToScreen(modal) {
+                var pinch = modal._eopPinch;
+                if (!pinch) return;
+                var vw = pinch.viewport.clientWidth;
+                var vh = pinch.viewport.clientHeight;
+                if (vw &lt; 50 || vh &lt; 50) return;
+                var scaleW = vw / pinch.contentWidth;
+                var scaleH = vh / pinch.contentHeight;
+                pinch.minScale = Math.min(scaleW, scaleH);
+                pinch.scale = pinch.minScale;
+                pinch.x = (vw - pinch.contentWidth * pinch.scale) / 2;
+                pinch.y = (vh - pinch.contentHeight * pinch.scale) / 2;
+                applyMobilePinchTransform(modal);
+            }
+
+            function initMobilePinchZoom(modal, contentWidth, contentHeight) {
+                if (!isMobilePreview()) return;
+
+                if (modal._eopPinch) {
+                    var existing = modal._eopPinch;
+                    var wasFitted = Math.abs(existing.scale - existing.minScale) &lt; 0.02;
+                    existing.contentWidth = contentWidth;
+                    existing.contentHeight = contentHeight;
+                    existing.wrap.style.width = contentWidth + 'px';
+                    existing.wrap.style.height = contentHeight + 'px';
+                    if (wasFitted) {
+                        fitMobilePinchToScreen(modal);
+                    } else {
+                        clampMobilePan(modal);
+                        applyMobilePinchTransform(modal);
+                    }
+                    return;
+                }
+
+                var viewport = modal.querySelector('.eop-so-pdf-scroll');
+                var wrap = modal.querySelector('.eop-so-pdf-scale-wrap');
+                var iframe = modal.querySelector('.eop-so-pdf-frame');
+                var hint = modal.querySelector('.eop-so-pdf-zoom-hint');
+                if (!viewport || !wrap || !iframe) return;
+
+                var pinch = {
+                    viewport: viewport,
+                    wrap: wrap,
+                    hint: hint,
+                    contentWidth: contentWidth,
+                    contentHeight: contentHeight,
+                    scale: 1,
+                    minScale: 1,
+                    maxScale: 4,
+                    x: 0,
+                    y: 0,
+                    touches: [],
+                    startDistance: 0,
+                    startScale: 1,
+                    startX: 0,
+                    startY: 0,
+                    panStartX: 0,
+                    panStartY: 0,
+                    lastTap: 0
+                };
+                modal._eopPinch = pinch;
+
+                wrap.style.width = contentWidth + 'px';
+                wrap.style.height = contentHeight + 'px';
+                wrap.style.maxWidth = 'none';
+                iframe.style.width = contentWidth + 'px';
+                iframe.style.height = contentHeight + 'px';
+                iframe.style.maxWidth = 'none';
+                fitMobilePinchToScreen(modal);
+                setTimeout(function () { fitMobilePinchToScreen(modal); }, 150);
+                setTimeout(function () { fitMobilePinchToScreen(modal); }, 500);
+
+                if (hint) {
+                    hint.classList.add('is-visible');
+                    setTimeout(function () {
+                        if (hint) hint.classList.remove('is-visible');
+                    }, 3200);
+                }
+
+                pinch.onTouchStart = function (e) {
+                    if (e.touches.length === 2) {
+                        pinch.startDistance = getTouchDistance(e.touches[0], e.touches[1]);
+                        pinch.startScale = pinch.scale;
+                        pinch.panStartX = pinch.x;
+                        pinch.panStartY = pinch.y;
+                    } else if (e.touches.length === 1) {
+                        pinch.panStartX = pinch.x;
+                        pinch.panStartY = pinch.y;
+                        pinch.startX = e.touches[0].clientX;
+                        pinch.startY = e.touches[0].clientY;
+                        var now = Date.now();
+                        if (now - pinch.lastTap &lt; 300) {
+                            if (pinch.scale &gt; pinch.minScale * 1.2) {
+                                fitMobilePinchToScreen(modal);
+                            } else {
+                                pinch.scale = Math.min(pinch.maxScale, pinch.minScale * 2.2);
+                                var vw = viewport.clientWidth;
+                                var vh = viewport.clientHeight;
+                                pinch.x = (vw - pinch.contentWidth * pinch.scale) / 2;
+                                pinch.y = (vh - pinch.contentHeight * pinch.scale) / 2;
+                                applyMobilePinchTransform(modal);
+                            }
+                            pinch.lastTap = 0;
+                        } else {
+                            pinch.lastTap = now;
+                        }
+                    }
+                };
+
+                pinch.onTouchMove = function (e) {
+                    e.preventDefault();
+                    if (e.touches.length === 2 &amp;&amp; pinch.startDistance &gt; 0) {
+                        var dist = getTouchDistance(e.touches[0], e.touches[1]);
+                        pinch.scale = Math.min(pinch.maxScale, Math.max(pinch.minScale, pinch.startScale * (dist / pinch.startDistance)));
+                        var vw = viewport.clientWidth;
+                        var vh = viewport.clientHeight;
+                        pinch.x = (vw - pinch.contentWidth * pinch.scale) / 2;
+                        pinch.y = (vh - pinch.contentHeight * pinch.scale) / 2;
+                        applyMobilePinchTransform(modal);
+                    } else if (e.touches.length === 1) {
+                        var dx = e.touches[0].clientX - pinch.startX;
+                        var dy = e.touches[0].clientY - pinch.startY;
+                        pinch.x = pinch.panStartX + dx;
+                        pinch.y = pinch.panStartY + dy;
+                        applyMobilePinchTransform(modal);
+                    }
+                };
+
+                pinch.onTouchEnd = function () {
+                    pinch.startDistance = 0;
+                    clampMobilePan(modal);
+                    applyMobilePinchTransform(modal);
+                };
+
+                viewport.addEventListener('touchstart', pinch.onTouchStart, { passive: true });
+                viewport.addEventListener('touchmove', pinch.onTouchMove, { passive: false });
+                viewport.addEventListener('touchend', pinch.onTouchEnd, { passive: true });
+                viewport.addEventListener('touchcancel', pinch.onTouchEnd, { passive: true });
+            }
+
+            function clearFrameLayout(iframe, wrap) {
+                if (iframe) {
+                    iframe.style.removeProperty('width');
+                    iframe.style.removeProperty('height');
+                    iframe.style.removeProperty('transform');
+                    iframe.style.removeProperty('transform-origin');
+                    iframe.style.removeProperty('-webkit-transform');
+                    iframe.style.removeProperty('-webkit-transform-origin');
+                }
+                if (wrap) {
+                    wrap.style.removeProperty('width');
+                    wrap.style.removeProperty('height');
+                    wrap.style.removeProperty('min-height');
+                    wrap.style.removeProperty('max-width');
+                    wrap.style.removeProperty('overflow');
+                    wrap.style.removeProperty('transform');
+                    wrap.style.removeProperty('-webkit-transform');
+                    wrap.style.removeProperty('transform-origin');
+                }
+            }
+
+            function resetPdfFrame(modal) {
+                destroyMobilePinchZoom(modal);
+                var iframe = modal.querySelector('.eop-so-pdf-frame');
+                var wrap = modal.querySelector('.eop-so-pdf-scale-wrap');
+                var loading = modal.querySelector('.eop-so-pdf-loading');
+                if (iframe) {
+                    if (modal._eopLoadHandler) {
+                        iframe.removeEventListener('load', modal._eopLoadHandler);
+                        modal._eopLoadHandler = null;
+                    }
+                    iframe.removeAttribute('src');
+                }
+                clearFrameLayout(iframe, wrap);
+                if (loading) loading.classList.remove('is-hidden');
+            }
+
+            function injectReportStyles(doc) {
+                try {
+                    if (!doc || !doc.head || doc.getElementById('eop-report-fit')) return;
+                    var style = doc.createElement('style');
+                    style.id = 'eop-report-fit';
+                    style.textContent = [
+                        'html, body { margin: 0 !important; padding: 0 !important; background: #fff !important; overflow-x: hidden !important; }',
+                        'header, footer, nav, .navbar, .o_portal_navbar, #wrapwrap &gt; header, #wrapwrap &gt; footer { display: none !important; }',
+                        '#wrapwrap, main, .o_portal_wrap { padding: 0 !important; margin: 0 auto !important; max-width: 100% !important; }',
+                        'table { max-width: 100% !important; }',
+                        'img { max-width: 100% !important; height: auto !important; }'
+                    ].join('\n');
+                    doc.head.appendChild(style);
+                } catch (e) { /* Safari may block iframe doc access */ }
+            }
+
+            function measureReportHeight(doc) {
+                var reportRoot = doc.querySelector('.o_portal_html_view, .page, article, main, #wrapwrap')
+                    || doc.body;
+                return Math.max(
+                    reportRoot.scrollHeight || 0,
+                    reportRoot.offsetHeight || 0,
+                    doc.documentElement.scrollHeight || 0,
+                    doc.body.scrollHeight || 0,
+                    doc.documentElement.offsetHeight || 0,
+                    doc.body.offsetHeight || 0,
+                    1123
+                ) + 2;
+            }
+
+            function getReportDimensions(iframe) {
+                var contentWidth = 794;
+                var contentHeight = 1123;
+                try {
+                    var doc = iframe.contentDocument || (iframe.contentWindow &amp;&amp; iframe.contentWindow.document);
+                    if (!doc || !doc.body) return { contentWidth: contentWidth, contentHeight: contentHeight };
+                    var href = doc.location &amp;&amp; doc.location.href;
+                    if (!href || href === 'about:blank') {
+                        return { contentWidth: contentWidth, contentHeight: contentHeight };
+                    }
+                    injectReportStyles(doc);
+                    contentHeight = measureReportHeight(doc);
+                    if (!isMobilePreview()) {
+                        var reportRoot = doc.querySelector('.o_portal_html_view, .page, article, main, #wrapwrap')
+                            || doc.body;
+                        var measuredWidth = reportRoot.offsetWidth || doc.body.offsetWidth || 0;
+                        if (measuredWidth &gt;= 600 &amp;&amp; measuredWidth &lt;= 920) {
+                            contentWidth = measuredWidth;
+                        }
+                    }
+                } catch (e) { /* cross-origin or Safari restriction */ }
+                return { contentWidth: contentWidth, contentHeight: contentHeight };
+            }
+
+            function applyFrameStyles(iframe, wrap, contentWidth, contentHeight, containerWidth, modal) {
+                if (isMobilePreview()) {
+                    iframe.style.width = contentWidth + 'px';
+                    iframe.style.height = contentHeight + 'px';
+                    iframe.style.overflow = 'hidden';
+                    iframe.setAttribute('scrolling', 'no');
+                    iframe.style.maxWidth = 'none';
+                    wrap.style.maxWidth = 'none';
+                    initMobilePinchZoom(modal, contentWidth, contentHeight);
+                    return;
+                }
+
+                clearFrameLayout(iframe, wrap);
+                iframe.style.removeProperty('max-width');
+                wrap.style.removeProperty('max-width');
+
+                var scale = Math.min(1, containerWidth / contentWidth);
+                var scaledWidth  = Math.max(1, Math.ceil(contentWidth  * scale));
+                var scaledHeight = Math.max(1, Math.ceil(contentHeight * scale));
+
+                iframe.style.width = contentWidth + 'px';
+                iframe.style.height = contentHeight + 'px';
+                iframe.style.overflow = 'hidden';
+                iframe.setAttribute('scrolling', 'no');
+                wrap.style.width = scaledWidth + 'px';
+                wrap.style.height = scaledHeight + 'px';
+                wrap.style.overflow = 'hidden';
+                iframe.style.transform = 'scale(' + scale + ')';
+                iframe.style.transformOrigin = 'top left';
+                iframe.style.webkitTransform = 'scale(' + scale + ')';
+                iframe.style.webkitTransformOrigin = 'top left';
+            }
+
+            function getScrollContainerWidth(modal) {
+                var scroll = modal.querySelector('.eop-so-pdf-scroll');
+                var viewer = modal.querySelector('.eop-so-pdf-viewer');
+                var target = scroll || viewer;
+                if (!target) return 0;
+                var width = target.clientWidth;
+                if (scroll) {
+                    var style = window.getComputedStyle(scroll);
+                    width -= parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+                }
+                return Math.max(50, width);
+            }
+
+            function resizeReportFrame(modal) {
+                try {
+                    var iframe = modal.querySelector('.eop-so-pdf-frame');
+                    var wrap = modal.querySelector('.eop-so-pdf-scale-wrap');
+                    if (!iframe || !wrap || !iframe.getAttribute('src')) return;
+
+                    var containerWidth = getScrollContainerWidth(modal);
+                    if (containerWidth &lt; 50) {
+                        setTimeout(function () { resizeReportFrame(modal); }, 100);
+                        return;
+                    }
+
+                    var dims = getReportDimensions(iframe);
+                    applyFrameStyles(iframe, wrap, dims.contentWidth, dims.contentHeight, containerWidth, modal);
+                } catch (e) { /* prevent Odoo error dialog on mobile Safari */ }
+            }
+
+            function loadReportInFrame(modal) {
+                var iframe = modal.querySelector('.eop-so-pdf-frame');
+                var loading = modal.querySelector('.eop-so-pdf-loading');
+                if (!iframe) return;
+
+                var reportSrc = iframe.getAttribute('data-report-src');
+                if (!reportSrc) return;
+
+                if (modal._eopLoadHandler) {
+                    iframe.removeEventListener('load', modal._eopLoadHandler);
+                }
+
+                if (loading) loading.classList.remove('is-hidden');
+
+                modal._eopLoadHandler = function () {
+                    resizeReportFrame(modal);
+                    if (loading) loading.classList.add('is-hidden');
+                    setTimeout(function () { resizeReportFrame(modal); }, 300);
+                    setTimeout(function () { resizeReportFrame(modal); }, 1200);
+                    setTimeout(function () { resizeReportFrame(modal); }, 2500);
+                };
+
+                iframe.addEventListener('load', modal._eopLoadHandler);
+                iframe.setAttribute('src', reportSrc);
+            }
+
+            document.querySelectorAll('.eop-so-pdf-modal').forEach(function (modal) {
+                modal.addEventListener('show.bs.modal', function () {
+                    loadReportInFrame(modal);
+                });
+                modal.addEventListener('shown.bs.modal', function () {
+                    requestAnimationFrame(function () {
+                        resizeReportFrame(modal);
+                        setTimeout(function () { resizeReportFrame(modal); }, 100);
+                        setTimeout(function () { resizeReportFrame(modal); }, 400);
+                    });
+                });
+                modal.addEventListener('hidden.bs.modal', function () {
+                    resetPdfFrame(modal);
+                });
+            });
+
+            window.addEventListener('resize', function () {
+                document.querySelectorAll('.eop-so-pdf-modal.show').forEach(function (modal) {
+                    if (isMobilePreview() &amp;&amp; modal._eopPinch) {
+                        fitMobilePinchToScreen(modal);
+                    } else {
+                        resizeReportFrame(modal);
+                    }
+                });
+            });
+
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', function () {
+                    document.querySelectorAll('.eop-so-pdf-modal.show').forEach(function (modal) {
+                        if (isMobilePreview() &amp;&amp; modal._eopPinch) {
+                            fitMobilePinchToScreen(modal);
+                        } else {
+                            resizeReportFrame(modal);
+                        }
+                    });
+                });
+            }
+
+            window.addEventListener('orientationchange', function () {
+                setTimeout(function () {
+                    document.querySelectorAll('.eop-so-pdf-modal.show').forEach(function (modal) {
+                        if (isMobilePreview() &amp;&amp; modal._eopPinch) {
+                            fitMobilePinchToScreen(modal);
+                        } else {
+                            resizeReportFrame(modal);
+                        }
+                    });
+                }, 200);
+            });
+
+            document.querySelectorAll('.eop-so-invoice-download').forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (btn.classList.contains('is-loading')) return;
+
+                    var url = btn.getAttribute('data-pdf-url');
+                    var filename = btn.getAttribute('data-pdf-name') || 'invoice.pdf';
+                    if (!url) return;
+
+                    function setLoading(loading) {
+                        btn.classList.toggle('is-loading', loading);
+                        if (loading) {
+                            btn.setAttribute('aria-busy', 'true');
+                        } else {
+                            btn.removeAttribute('aria-busy');
+                        }
+                    }
+
+                    setLoading(true);
+
+                    fetch(url, { credentials: 'same-origin' })
+                        .then(function (res) {
+                            if (!res.ok) throw new Error('download failed');
+                            return res.blob();
+                        })
+                        .then(function (blob) {
+                            if (isIOS()) {
+                                var file = new File([blob], filename, { type: 'application/pdf' });
+                                if (navigator.canShare &amp;&amp; navigator.canShare({ files: [file] })) {
+                                    return navigator.share({ files: [file], title: filename });
+                                }
+                                var iosBlobUrl = URL.createObjectURL(blob);
+                                var opened = window.open(iosBlobUrl, '_blank');
+                                if (!opened) window.location.href = iosBlobUrl;
+                                setTimeout(function () { URL.revokeObjectURL(iosBlobUrl); }, 60000);
+                                return;
+                            }
+
+                            var blobUrl = URL.createObjectURL(blob);
+                            var link = document.createElement('a');
+                            link.href = blobUrl;
+                            link.download = filename;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            setTimeout(function () { URL.revokeObjectURL(blobUrl); }, 60000);
+                        })
+                        .catch(function () {
+                            window.open(url, '_blank');
+                        })
+                        .finally(function () {
+                            setLoading(false);
+                        });
+                });
+            });
+
+            document.querySelectorAll('.eop-so-invoice-share').forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var url = btn.getAttribute('data-share-url') || window.location.href;
+
+                    if (navigator.share) {
+                        navigator.share({ title: document.title, url: url }).catch(function (err) {
+                            if (err &amp;&amp; (err.name === 'AbortError' || err.name === 'NotAllowedError')) {
+                                return;
+                            }
+                        });
+                        return;
+                    }
+
+                    copyTextToClipboard(url);
+                });
+            });
+        })();
+    </script>
 </t>

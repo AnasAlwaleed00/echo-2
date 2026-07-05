@@ -1,0 +1,727 @@
+<t t-name="website.orisa_help_page">
+
+    <t t-call="website.layout">
+
+        <div id="wrap" class="oe_structure" style="background-color: #fcfcfc; direction: rtl;">
+
+            <style>
+
+                /* تنسيق البنر العلوي */
+
+               /* تنسيق البنر لمركزة العناصر */
+
+.hero-banner {
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        background-color: #0b1a26;
+
+        /* تقليل المساحات العلوية والسفلية */
+
+        padding: 20px 10px !important; 
+
+        text-align: center;
+         font-family: 'Cairo', sans-serif !important;
+
+    }
+
+
+    /* تنسيق الشعار ليصبح أصغر ومناسباً */
+
+    .hero-banner img.help-img {
+
+        max-width: 100px !important; /* حجم الشعار */
+
+        width: 100%;
+
+        height: auto;
+
+        margin-bottom: 15px; /* تقليل المسافة بين الشعار والنص */
+
+    }
+
+
+    /* ضبط حجم الخطوط لتتناسب مع المساحة الجديدة */
+
+    .hero-banner h1 {
+
+        font-size: 1.5rem; 
+
+        margin-bottom: 5px; /* مسافة بسيطة جداً أسفل العنوان */
+
+        color: #ffffff;
+         font-family: 'Cairo', sans-serif !important;
+
+    }
+
+
+    .hero-banner p {
+
+        font-size: 0.9rem;
+
+        margin-bottom: 0;
+
+        color: #e0e0e0;
+
+        opacity: 0.8;
+         font-family: 'Cairo', sans-serif !important;
+
+    }
+
+                .orisa-container { max-width: 1100px; margin-bottom: 50px; }
+
+                
+
+                /* تنسيق الترقيم الاحترافي */
+
+                .step-list { list-style: none; padding: 0; counter-reset: step-counter; }
+
+                .step-list li { position: relative; margin-bottom: 25px; padding-right: 55px; line-height: 1.8; color: #444; }
+
+                .step-list li::before {
+
+                    content: counter(step-counter, decimal-leading-zero);
+
+                    counter-increment: step-counter;
+
+                    position: absolute;
+
+                    right: 0;
+
+                    top: 0;
+
+                    background: #c5a059;
+
+                    color: #fff;
+
+                    width: 40px;
+
+                    height: 40px;
+
+                    border-radius: 50%;
+
+                    display: flex;
+
+                    align-items: center;
+
+                    justify-content: center;
+
+                    font-weight: bold;
+
+                    font-size: 16px;
+
+                    box-shadow: 0 4px 8px rgba(197, 160, 89, 0.3);
+
+                }
+
+
+                .help-sidebar {  font-family: 'Cairo', sans-serif !important; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: sticky; top: 120px; }
+
+                .help-link {  font-family: 'Cairo', sans-serif !important; display: block; padding: 12px 15px; margin-bottom: 8px; border-radius: 8px; cursor: pointer; color: #555; font-weight: 600; transition: all 0.3s ease; border-right: 3px solid transparent; }
+
+                .help-link:hover { background: #f8f5ef; color: #c5a059; border-right: 3px solid #c5a059; }
+
+                .help-link.active { background: #c5a059; color: #fff; box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3); }
+
+                .help-content {  font-family: 'Cairo', sans-serif !important;padding: 40px; background: #fff; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.05); min-height: 500px; }
+
+                .help-section {  font-family: 'Cairo', sans-serif !important; display: none; animation: fadeIn 0.5s ease; }
+
+                .help-section.active { display: block; }
+
+                @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+                .help-img { width: 100%; max-width: 700px; margin-top: 25px; border-radius: 10px; border: 1px solid #eee; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+
+                h2 {  font-family: 'Cairo', sans-serif !important; color: #c5a059; font-weight: 700; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 2px solid #f8f5ef; }
+
+                p {  font-family: 'Cairo', sans-serif !important; line-height: 1.8; color: #666; }
+                .styled-list {
+        list-style: none;
+        padding: 0;
+        counter-reset: list-counter;
+    }
+
+    .styled-list li {
+        counter-increment: list-counter;
+        position: relative;
+        margin-bottom: 20px;
+        padding-right: 65px;
+        line-height: 1.8;
+        font-size: 16px;
+        color: #444;
+        font-family: 'Cairo', sans-serif !important;
+    }
+
+    .styled-list li::before {
+        content: counter(list-counter, decimal-leading-zero);
+        position: absolute;
+        right: 0;
+        top: 0;
+        background-color: #c5a059;
+        color: #ffffff;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        font-size: 18px;
+        box-shadow: 0 4px 8px rgba(197, 160, 89, 0.3);
+    }
+
+    .styled-list li strong {
+        color: #333;
+    }
+
+                .help-nav-scroll {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .help-content video {
+                    max-width: 100%;
+                    height: auto;
+                }
+
+                /* Tablet */
+                @media (max-width: 991.98px) {
+                    .orisa-container {
+                        padding-left: 16px;
+                        padding-right: 16px;
+                        margin-bottom: 32px;
+                    }
+
+                    .help-sidebar {
+                        position: static;
+                        top: auto;
+                        margin-bottom: 20px;
+                    }
+
+                    .help-content {
+                        padding: 28px 24px;
+                        min-height: auto;
+                    }
+
+                    h2 {
+                        font-size: 1.35rem;
+                    }
+                }
+
+                /* Mobile */
+                @media (max-width: 767.98px) {
+                    .hero-banner {
+                        padding: 16px 12px !important;
+                    }
+
+                    .hero-banner img.help-img {
+                        max-width: 72px !important;
+                        margin-bottom: 10px;
+                    }
+
+                    .hero-banner h1 {
+                        font-size: 1.2rem;
+                        line-height: 1.4;
+                    }
+
+                    .hero-banner p {
+                        font-size: 0.82rem;
+                        line-height: 1.6;
+                        padding: 0 8px;
+                    }
+
+                    .orisa-container {
+                        padding-left: 12px;
+                        padding-right: 12px;
+                        margin-bottom: 24px;
+                    }
+
+                    .help-sidebar {
+                        padding: 14px 12px;
+                        border-radius: 10px;
+                    }
+
+                    .help-sidebar h5 {
+                        font-size: 0.95rem !important;
+                        margin-bottom: 12px !important;
+                    }
+
+                    .help-nav-scroll {
+                        flex-direction: row;
+                        flex-wrap: nowrap;
+                        overflow-x: auto;
+                        gap: 8px;
+                        padding-bottom: 4px;
+                        -webkit-overflow-scrolling: touch;
+                        scrollbar-width: none;
+                    }
+
+                    .help-nav-scroll::-webkit-scrollbar {
+                        display: none;
+                    }
+
+                    .help-link {
+                        flex: 0 0 auto;
+                        white-space: nowrap;
+                        margin-bottom: 0;
+                        padding: 10px 14px;
+                        font-size: 0.82rem;
+                        border-right: none;
+                        border-bottom: 3px solid transparent;
+                    }
+
+                    .help-link:hover {
+                        border-right: none;
+                        border-bottom: 3px solid #c5a059;
+                    }
+
+                    .help-link.active {
+                        border-right: none;
+                        border-bottom: none;
+                    }
+
+                    .help-content {
+                        padding: 20px 16px;
+                        border-radius: 10px;
+                    }
+
+                    h2 {
+                        font-size: 1.15rem;
+                        margin-bottom: 18px;
+                    }
+
+                    p, .step-list li, .styled-list li {
+                        font-size: 0.9rem;
+                    }
+
+                    .step-list li {
+                        margin-bottom: 18px;
+                        padding-right: 48px;
+                    }
+
+                    .step-list li::before {
+                        width: 34px;
+                        height: 34px;
+                        font-size: 13px;
+                    }
+
+                    .styled-list li {
+                        margin-bottom: 16px;
+                        padding-right: 50px;
+                        line-height: 1.7;
+                    }
+
+                    .styled-list li::before {
+                        width: 38px;
+                        height: 38px;
+                        font-size: 15px;
+                    }
+
+                    .help-img {
+                        margin-top: 16px;
+                        border-radius: 8px;
+                    }
+                }
+
+                /* Small phones */
+                @media (max-width: 479.98px) {
+                    .hero-banner h1 {
+                        font-size: 1.05rem;
+                    }
+
+                    .help-content {
+                        padding: 16px 12px;
+                    }
+
+                    .help-link {
+                        padding: 8px 12px;
+                        font-size: 0.78rem;
+                    }
+
+                    .step-list li {
+                        padding-right: 42px;
+                    }
+
+                    .step-list li::before {
+                        width: 30px;
+                        height: 30px;
+                        font-size: 12px;
+                    }
+
+                    .styled-list li {
+                        padding-right: 44px;
+                    }
+
+                    .styled-list li::before {
+                        width: 34px;
+                        height: 34px;
+                        font-size: 13px;
+                    }
+                }
+
+            </style>
+
+
+            
+
+            <div class="hero-banner">
+
+                                                <img src="/web/image/585831-bd3d9892/orisa-png.webp" alt="" class="help-img img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="414658" data-original-src="/web/image/414658-87062dcd/orisa-png.png" data-mimetype-before-conversion="image/png" data-resize-width="225" loading="lazy"/>
+
+
+                <h1>مركز مساعدة منصة ORISA</h1>
+
+                <p>دليلك الشامل والذكي لإدارة عملياتك التجارية وتسهيل التعاملات الرقمية بكل احترافية.</p>
+
+            </div>
+
+
+            <div class="container orisa-container">
+
+                <div class="row">
+
+                    
+
+                    <div class="col-12 col-md-3">
+
+                        <div class="help-sidebar">
+
+                            <h5 style="color:#c5a059; margin-bottom: 20px; font-weight: bold; text-align: center;">فهرس المساعدة</h5>
+
+                            <div class="help-nav-scroll">
+
+                                <div class="help-link active" data-target="about">نبذة عن الموقع</div>
+
+                                <div class="help-link" data-target="new-file">فتح ملف جديد</div>
+
+                                <div class="help-link" data-target="login">تسجيل الدخول</div>
+
+                                <div class="help-link" data-target="password-recovery">اعادة تعيين كلمة المرور</div>
+
+                                <div class="help-link" data-target="account">إدارة الحساب</div>
+
+                                <div class="help-link" data-target="payment">السداد الإلكتروني</div>
+
+                                <div class="help-link" data-target="purchase">عملية الشراء</div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    
+
+                    <div class="col-12 col-md-9" data-tilt-feature="">
+
+                        <div class="help-content">
+
+                            
+
+                           <div id="about" class="help-section active" style="line-height: 1.8; color: #555;">
+    <h2 style="color: #c5a059; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 2px solid #f8f5ef;">نبذة عن منصة ORISA</h2>
+    <p style="margin-bottom: 25px;">منصة ORISA هي البوابة الرقمية المتطورة، صممت خصيصاً لرقمنة وتسهيل العمليات التجارية لعملائنا.</p>
+
+    <ul style="margin-bottom: 35px; padding-right: 20px;">
+        <li style="margin-bottom: 15px;">رقمنة العمليات لضمان السرعة والدقة.</li>
+        <li style="margin-bottom: 15px;">شفافية كاملة في تتبع الطلبات والفواتير.</li>
+        <li style="margin-bottom: 15px;">أدوات تحكم ذاتي لإدارة حسابك ومستحقاتك.</li>
+    </ul>
+
+   <h3>خدمات إدارة الحساب</h3>
+<p style="margin-bottom: 20px;">توفر لك لوحة التحكم أدوات متكاملة لإدارة أعمالك بكفاءة، وتشمل:</p>
+
+<ul class="styled-list">
+    <li><strong>طلباتي:</strong> تتبع حالة الطلبات وتفاصيل الشحن.</li>
+    <li><strong>فواتيري:</strong> عرض الفواتير المستحقة.</li>
+    <li><strong>السداد الإلكتروني:</strong> توفر المنصة نظام سداد إلكتروني متطور يتميز بسهولة الاستخدام وسرعة الإجراءات.</li>
+    <li><strong>كلمة المرور:</strong> تغيير وتحديث كلمة المرور.</li>
+    <li><strong>كشف حساب:</strong> مراجعة سجل المعاملات المالية.</li>
+    <li><strong>سنداتي:</strong> مراجعة السندات والوثائق الرسمية.</li>
+    <li><strong>كوبوناتي:</strong> استعراض وإدارة الكوبونات والعروض.</li>
+    <li><strong>مرفقاتي:</strong> الوصول المباشر للملفات والمستندات المرفقة.</li>
+    <li><strong>نقاط الولاء:</strong> متابعة رصيد النقاط واستبدالها بمكافآت حصرية.</li>
+</ul>
+    <img src="/web/image/585789-3b68c776/ChatGPT%20Image%20Jun%2023%2C%202026%2C%2004_41_51%20PM.webp" alt="" class="help-img img img-fluid o_we_custom_image" loading="lazy" style="margin-top: 30px;"/>
+</div>
+
+
+                            <div id="new-file" class="help-section">
+
+                                <h2>خطوات فتح ملف جديد</h2>
+
+                                <ul class="step-list">
+
+                                    <li>انتقل إلى صفحة "فتح ملف جديد" من القائمة الرئيسية.</li>
+
+                                    <li>قم برفع "شعار الشركة" في المكان المخصص.</li>
+
+                                    <li>اكتب اسم الشركة مطابقاً للسجل التجاري.</li>
+
+                                    <li>أدخل أرقام السجل التجاري والرقم الضريبي.</li>
+
+                                    <li>أكمل بيانات العنوان الوطني (المدينة، الحي، الشارع).</li>
+
+                                    <li>اضغط على "إرسال الطلب" لمراجعة البيانات وتفعيل حسابك.</li>
+
+                                </ul>
+
+                                <img src="/web/image/585800-bd7034e2/ChatGPT%20Image%20Jun%2023%2C%202026%2C%2004_55_19%20PM.webp" alt="" class="help-img img img-fluid o_we_custom_image" loading="lazy"/>
+
+                            </div>
+
+
+                            <div id="login" class="help-section">
+
+                                <h2>خطوات تسجيل الدخول</h2>
+
+                                <ul class="step-list">
+
+                                    <li>حدد الفرع التابع لمنشأتك من القائمة المنسدلة.</li>
+
+                                    <li>أدخل آخر 4 أرقام من "رقم العميل".</li>
+
+                                    <li>ضع كلمة المرور الخاصة بحسابك.</li>
+
+                                    <li>اضغط على زر "دخول" للوصول الي حسابك بالموقع .</li>
+
+                                </ul>
+
+                                <img src="/web/image/585803-67012b01/Screenshot%201448-01-08%20at%204.56.42%20PM.webp" alt="" class="help-img img img-fluid o_we_custom_image" loading="lazy"/>
+
+                            </div>
+
+
+                            
+
+                            <div id="password-recovery" class="help-section">
+
+    <h2>خطوات استعادة كلمة المرور</h2>
+
+
+    <ul class="step-list">
+
+        <li>الدخول إلى صفحة تسجيل الدخول.</li>
+
+        <li>النقر على رابط "إعادة تعيين كلمة المرور".</li>
+
+        <li>إدخال آخر 4 أرقام من رقم العميل الموضح في الفاتورة الضريبية ورقم السجل التجاري أو الرقم الموحد المسجل.</li>
+
+        <li>إدخال رقم الجوال المسجل لدينا.</li>
+
+        <li>استلام رمز التحقق (OTP).</li>
+
+        <li>كتابة كلمة المرور الجديدة.</li>
+
+        <li>إعادة الدخول إلى الموقع الإلكتروني باستخدام كلمة المرور الجديدة.</li>
+
+    </ul>
+
+
+    <div class="text-center mt-4">
+
+        <video class="w-100 rounded shadow" autoplay="autoplay" muted="muted" loop="loop" playsinline="playsinline" controls="controls">
+
+            <source src="/web/content/585855" type="video/mp4"/>
+
+        </video>
+
+    </div>
+
+</div>
+
+
+                           <div id="account" class="help-section">
+
+    <h2>إدارة الحساب</h2>
+
+    <p>تتيح لك لوحة التحكم الوصول السريع لكافة عملياتك التجارية، إليك تفاصيل الخدمات المتاحة:</p>
+
+    <br/>
+
+    <ul class="step-list">
+
+                <li> من القائمة الرئيسية للموقع الالكتروني ادخل علي رابط (حسابي).</li>
+
+
+        <li><strong>طلباتي:</strong> تتبع حالة طلباتك وتفاصيل الشحن بدقة.</li>
+
+        <li><strong>فواتيري:</strong> عرض ودفع الفواتير المستحقة عليك.</li>
+
+        <li><strong>كلمة المرور:</strong> إجراء عمليات تغيير وتحديث كلمة المرور لحماية حسابك.</li>
+
+        <li><strong>كشف حساب:</strong> مراجعة سجل المعاملات المالية التاريخية.</li>
+
+        <li><strong>الاتفاقية:</strong> عرض تفاصيل وشروط الاتفاقية التجارية.</li>
+
+        <li><strong>مرفقاتي:</strong> الوصول إلى الملفات والمستندات المرفقة الخاصة بحسابك.</li>
+
+        <li><strong>كوبوناتي:</strong> استعراض وإدارة الكوبونات والعروض المتاحة.</li>
+
+        <li><strong>سنداتي:</strong> مراجعة السندات والوثائق الرسمية الصادرة.</li>
+
+        <li><strong>السداد الإلكتروني:</strong> سداد المديونيات مع إمكانية الحصول على كوبونات خصم.</li>
+
+        <li><strong>نقاط الولاء:</strong> متابعة رصيد نقاطك واستبدالها بمكافآت وخصومات حصرية.</li>
+
+    </ul>
+
+    <img src="/web/image/585815-ed0d4583/Screenshot%201448-01-08%20at%205.23.05%20PM.webp" alt="" class="help-img img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="585814" data-original-src="/web/image/585814-5931def3/Screenshot%201448-01-08%20at%205.23.05%20PM.png" data-mimetype-before-conversion="image/png" data-resize-width="700" loading="lazy"/>
+
+</div>
+
+
+                            <div id="payment" class="help-section">
+
+    <h2>خطوات السداد الإلكتروني</h2>
+
+    <p>من القائمة الرئيسية للموقع الإلكتروني أو من خلال صفحة (حسابي)، انقر على رابط (السداد الإلكتروني).</p>
+
+
+    <ul class="step-list">
+
+        <li>
+
+            <strong>الخطوة الأولى: نوع السداد</strong><br/>
+
+            اختر نوع السداد حسب الخيارات المتاحة:<br/>
+
+            - <strong>كامل:</strong> سداد كامل المديونية.<br/>
+
+            - <strong>جزئي:</strong> سداد جزء من المديونية.<br/>
+
+            - <strong>متأخرات:</strong> سداد كامل المتأخرات.
+
+        </li>
+
+        <li>
+
+            <strong>الخطوة الثانية: تفاصيل السداد والمبالغ</strong><br/>
+
+            - <strong>السداد الكامل:</strong> يمكنك استخدام كوبونات الخصم للحصول على خصم من الرصيد أو سداد كامل المبلغ.<br/>
+
+            - <strong>السداد الجزئي:</strong> في حال تم اختيار سداد جزئي عليك إدخال المبلغ المراد سداده في الحقل المخصص.<br/>
+
+            - <strong>سداد المتأخرات:</strong> في هذا النوع من السداد يتم سداد كامل مبلغ المتأخرات.
+
+        </li>
+
+        <li>
+
+            <strong>الخطوة الثالثة: اختيار طريقة الدفع</strong><br/>
+
+            - في هذه الخطوة يتم تحديد طريقة السداد (نقدي - حوالة بنكية).<br/>
+
+            - إدخال تفاصيل الدفع المطلوبة في الحقول المخصصة.<br/>
+
+            - النقر على زر "تأكيد وإنشاء السند".
+
+        </li>
+
+    </ul>
+
+
+    <img src="/web/image/585828-cb58afa5/ChatGPT%20Image%20Jun%2023%2C%202026%2C%2006_02_47%20PM.webp" alt="" class="help-img img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="585827" data-original-src="/web/image/585827-5fbd0933/ChatGPT%20Image%20Jun%2023%2C%202026%2C%2006_02_47%20PM.png" data-mimetype-before-conversion="image/png" data-resize-width="700" loading="lazy"/>
+
+</div>
+
+
+                            <div id="purchase" class="help-section">
+
+                                <h2>خطوات عملية الشراء</h2>
+
+                                <ul class="step-list">
+
+                                    <li>تصفح الفئات و المنتجات عبر موقعنا الالكتروني  وأضف ما تحتاجه للسلة.</li>
+
+                                      <li>أضف المنتجات الي السلة .</li>
+
+                                    <li>أرسل طلب التسعير من سلة المشتريات.</li>
+
+                                    <li>تابع تحديث الأسعار من قسم "طلباتي".</li>
+
+                                    <li>أكد الطلب أو أضف ملاحظاتك ليتم اعتماده.</li>
+
+                                    <li>ابدأ التوريد فور اعتماد أمر البيع.</li>
+
+                                </ul>
+
+                                    <img src="/web/image/585833-dcc7a093/ChatGPT%20Image%20Jun%2023%2C%202026%2C%2006_30_44%20PM.webp" alt="" class="help-img img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="585832" data-original-src="/web/image/585832-2596e2e6/ChatGPT%20Image%20Jun%2023%2C%202026%2C%2006_30_44%20PM.png" data-mimetype-before-conversion="image/png" data-resize-width="700" loading="lazy"/>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <script>
+
+                document.addEventListener("DOMContentLoaded", function () {
+
+    // الكود الحالي الخاص بك...
+
+    
+
+    // سطر إضافي لضمان تعيين الحالة الافتراضية إذا لم تكن موجودة:
+
+    if (!document.querySelector(".help-link.active")) {
+
+        document.querySelector("[data-target='about']").classList.add("active");
+
+        document.getElementById("about").classList.add("active");
+
+    }
+
+});
+
+                document.addEventListener("DOMContentLoaded", function () {
+
+                    const links = document.querySelectorAll(".help-link");
+
+                    const sections = document.querySelectorAll(".help-section");
+
+                    links.forEach(link =&gt; {
+
+                        link.addEventListener("click", function () {
+
+                            const target = this.getAttribute("data-target");
+
+                            links.forEach(l =&gt; l.classList.remove("active"));
+
+                            sections.forEach(s =&gt; s.classList.remove("active"));
+
+                            this.classList.add("active");
+
+                            document.getElementById(target).classList.add("active");
+
+                            const contentArea = document.querySelector(".help-content");
+                            const scrollOffset = contentArea ? contentArea.getBoundingClientRect().top + window.scrollY - 16 : 200;
+                            window.scrollTo({ top: scrollOffset, behavior: "smooth" });
+
+                        });
+
+                    });
+
+                });
+
+            </script>
+
+        </div>
+
+    </t>
+
+</t>

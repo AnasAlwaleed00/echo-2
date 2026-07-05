@@ -1,0 +1,218 @@
+<data name="Invoice/Bill" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+        <t t-set="o_portal_fullwidth_alert" groups="sales_team.group_sale_salesman,account.group_account_invoice,account.group_account_readonly">
+            <t t-call="portal.portal_back_in_edit_mode">
+                <t t-set="backend_url" t-value="'/web#model=%s&amp;id=%s&amp;action=%s&amp;view_type=form' % (invoice._name, invoice.id, invoice.env.ref('account.action_move_out_invoice_type').id)"/>
+            </t>
+        </t>
+
+        <div class="row o_portal_invoice_sidebar">
+            <!-- Sidebar -->
+            <t t-call="portal.portal_record_sidebar">
+                <t t-set="classes" t-value="'col-lg-3 col-xl-4 d-print-none me-lg-auto'"/>
+                <t t-set="title">
+<div class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-2" style="border:1px solid #e6e6e6; border-radius:10px; padding:10px; background:#fafafa;">
+
+    <!-- المبلغ -->
+    <div class="text-center text-lg-start">
+        <div style="font-size:13px; color:#777;">
+            الإجمالي
+        </div>
+
+        <h2 style="font-size:22px; font-weight:700; margin:0;">
+            <span t-if="invoice.amount_residual &gt; 0" t-field="invoice.amount_residual"/>
+            <span t-else="1" t-field="invoice.amount_total"/>
+        </h2>
+    </div>
+
+    <!-- زر التحميل -->
+    <a class="btn btn-primary w-100 w-lg-auto text-center" style="font-size:14px; padding:8px 12px; border-radius:8px;" t-att-href="invoice.get_portal_url(report_type='pdf', download=False) + '&amp;pro_print=1'">
+
+        <i class="fa fa-download me-1"/> تحميل PDF
+    </a>
+
+</div>
+</t>
+
+                <t t-set="entries">
+                    <div class="d-flex flex-column gap-4">
+                        <div class="flex-basis-100 flex-basis-sm-50 flex-basis-lg-100 order-1 order-lg-0">
+                            <div class="o_download_pdf d-flex gap-1 flex-lg-column flex-xl-row">
+<!--                                    <div class="flex-grow-1">-->
+<!--<a class="btn btn-primary d-block shadow-sm" t-att-href="invoice.get_portal_url(report_type='pdf', download=True) + '&amp;pro_print=1'" title="Download">-->
+<!--   <i class="fa fa-download me-2"/> تحميل الفاتورة (PDF)-->
+<!--</a>                                    </div>-->
+                            </div>
+                        </div>
+                        <div t-if="invoice.invoice_user_id" class="flex-grow-1">
+                            <h6>
+                                <small class="text-muted">
+                                    <t t-if="invoice.move_type == 'out_invoice'">
+                                        Salesperson
+                                    </t>
+                                    <t t-if="invoice.move_type == 'in_invoice'">
+                                        Purchase Representative
+                                    </t>
+                                </small>
+                            </h6>
+                            <div class="o_portal_contact_details d-flex flex-column gap-2">
+                                <div class="d-flex justify-content-start align-items-center gap-2">
+                                    <img class="o_avatar o_portal_contact_img rounded" t-att-src="image_data_uri(invoice.invoice_user_id.avatar_128)" alt="Contact"/>
+                                    <div>
+                                        <h6 class="mb-0" t-out="invoice.invoice_user_id.name"/>
+                                        <a href="#discussion" class="d-flex align-items-center gap-2 small fw-bold">
+                                        Send message
+                                        </a>
+                                    </div>
+                                </div>
+                                <div t-field="invoice.invoice_user_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;city&quot;, &quot;phone&quot;]}"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+
+            <!-- Page Content -->
+            <div id="invoice_content" class="o_portal_content col-12 col-lg-9 col-xl-8">
+                <style>
+                    #invoice_content .eop-inv-actions {
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        gap: 10px;
+                        margin-bottom: 16px;
+                        direction: rtl;
+                    }
+
+                    #invoice_content .eop-inv-btn {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 8px;
+                        padding: 10px 18px;
+                        border-radius: 10px;
+                        font-size: 13px;
+                        font-weight: 700;
+                        font-family: "Cairo", sans-serif;
+                        line-height: 1;
+                        text-decoration: none !important;
+                        cursor: pointer;
+                        transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
+                    }
+
+                    #invoice_content .eop-inv-btn svg {
+                        width: 16px;
+                        height: 16px;
+                        flex-shrink: 0;
+                    }
+
+                    #invoice_content .eop-inv-btn-download {
+                        background: #C9982A;
+                        color: #fff !important;
+                        border: 1px solid #A87B1E;
+                        box-shadow: 0 2px 8px rgba(201, 152, 42, 0.25);
+                    }
+
+                    #invoice_content .eop-inv-btn-download:hover {
+                        background: #A87B1E;
+                        color: #fff !important;
+                        transform: translateY(-1px);
+                        box-shadow: 0 4px 12px rgba(201, 152, 42, 0.32);
+                    }
+
+                    #invoice_content .eop-inv-btn-share {
+                        background: #fff;
+                        color: #0D1B2E !important;
+                        border: 1px solid #E8E2D9;
+                    }
+
+                    #invoice_content .eop-inv-btn-share:hover,
+                    #invoice_content .eop-inv-btn-share.is-copied {
+                        background: rgba(201, 152, 42, 0.14);
+                        color: #A87B1E !important;
+                        border-color: rgba(201, 152, 42, 0.35);
+                    }
+                </style>
+
+                <div class="eop-inv-actions d-print-none">
+                    <a class="eop-inv-btn eop-inv-btn-download"
+                       t-att-href="invoice.get_portal_url(report_type='pdf', download=False) + '&amp;pro_print=1'"
+                       target="_blank"
+                       title="تحميل PDF"
+                       aria-label="تحميل PDF">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M12 15V3"/>
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <path d="m7 10 5 5 5-5"/>
+                        </svg>
+                        تحميل PDF
+                    </a>
+                    <button type="button"
+                            class="eop-inv-btn eop-inv-btn-share"
+                            t-att-data-share-url="invoice.get_portal_url()"
+                            title="مشاركة الرابط"
+                            aria-label="مشاركة الرابط">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="18" cy="5" r="3"/>
+                            <circle cx="6" cy="12" r="3"/>
+                            <circle cx="18" cy="19" r="3"/>
+                            <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/>
+                            <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
+                        </svg>
+                        <span class="eop-inv-share-label">مشاركة</span>
+                    </button>
+                </div>
+
+                <t t-if="error or warning" t-call="account.portal_invoice_error"/>
+                <t t-if="success and (not error and not warning)" t-call="account.portal_invoice_success"/>
+
+                <div class="o_portal_html_view shadow p-3">
+                    <div class="o_portal_html_loader text-center">
+                        <i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw text-black-50"/>
+                    </div>
+                    <iframe id="invoice_html" class="mt8 mb8" width="100%" height="100%" frameborder="0" scrolling="no" t-att-src="invoice.get_portal_url(report_type='html')"/>
+                </div>
+                <!-- chatter -->
+                <div id="invoice_communication" class="mt-4">
+                    <h3>Communication history</h3>
+                    <t t-call="portal.message_thread"/>
+                </div>
+
+                <script>
+                    (function () {
+                        var shareBtn = document.querySelector('#invoice_content .eop-inv-btn-share');
+                        if (!shareBtn) return;
+
+                        shareBtn.addEventListener('click', function () {
+                            var url = shareBtn.getAttribute('data-share-url') || window.location.href;
+                            var label = shareBtn.querySelector('.eop-inv-share-label');
+                            var originalLabel = label ? label.textContent : '';
+
+                            function showCopied() {
+                                shareBtn.classList.add('is-copied');
+                                if (label) label.textContent = 'تم النسخ!';
+                                setTimeout(function () {
+                                    shareBtn.classList.remove('is-copied');
+                                    if (label) label.textContent = originalLabel;
+                                }, 1800);
+                            }
+
+                            if (navigator.share) {
+                                navigator.share({ title: document.title, url: url }).catch(function () {
+                                    if (navigator.clipboard) {
+                                        navigator.clipboard.writeText(url).then(showCopied);
+                                    }
+                                });
+                                return;
+                            }
+
+                            if (navigator.clipboard) {
+                                navigator.clipboard.writeText(url).then(showCopied);
+                            }
+                        });
+                    })();
+                </script>
+            </div>
+        </div>
+    </xpath>
+<xpath expr="." position="attributes"><attribute name="t-name">account.portal_invoice_page</attribute></xpath></data>
